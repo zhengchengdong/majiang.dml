@@ -12,9 +12,19 @@ public class Design {
 	private static Map<Integer, List<Long>> paiZhangShuXuShuPaiZuListMap = new HashMap<>();
 
 	/**
-	 * 序数牌组和其对应的构型
+	 * 所有序数牌组的构型，按牌少到牌多排序
 	 */
-	private static Map<Long, List<Integer>> xuShuPaiZuCodeGouXingListMap = new HashMap<>();
+	private static int[][] xuShuPaiZuGouXingsArray;
+
+	/**
+	 * 序数牌构型索引,小空间序数牌组编码作为数组下标,值是xuShuPaiZuGouXingsArray的下标
+	 */
+	private static int[] xuShuPaiZuGouXingsIdxArray;
+
+	/**
+	 * 序数牌构型索引,key为大空间序数牌组编码,值是xuShuPaiZuGouXingsArray的下标
+	 */
+	private static Map<Long, Integer> xuShuPaiZuGouXingsIdxMap = new HashMap<>();;
 
 	public static void main(String[] args) {
 		// 花色: 什么牌，一万，三条，发财等
@@ -36,7 +46,8 @@ public class Design {
 		// 所以其构型list的索引空间其实很小。那么这就有利于实现直接数组下标查询多个序数牌组组合好后的结果。
 		// 刚才提到序数牌组编码空间会很大，然而不幸的是在双鬼牌的情况下一种花色的牌有可能多达10张，这样编码空间就会过大。
 		// 应对这种情况，我们在游戏过程中的手牌的结构中先按照约定的较小的比如3位一种牌编码，一旦摸牌太多出现3位不够存储的情况就整体改为4位一种牌编码。
-		// 构型存储两种结构。。。
+		// 有两种结构的构型list索引，一种是数组，直接用序数牌组编码作为数组下标来查询，用于序数牌组编码空间大小还能接受的情况
+		// 另一种是以hashmap作为存储结构，用序数牌组编码作为key来查询，用于序数牌组编码空间太大的情况
 
 		// 对于给定的所有牌张数和最多同花色牌张数，计算其所有可能的序数牌组，目的是前期过滤，缩小计算规模
 		calculateXuShuPaiZu(maxShouPai, maxTongHuaSePaiZhangShu, maxTongHuaSePaiZhangShuBiCount);
