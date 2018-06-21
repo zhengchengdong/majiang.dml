@@ -168,18 +168,66 @@ public class Design {
 		for (int shouPai = 3; shouPai <= maxShouPai; shouPai++) {
 			calculateXuShuPaiZuForShouPai(shouPai, maxGuiPai, list);
 		}
+		return list;
 	}
 
 	private static void calculateXuShuPaiZuForShouPai(int shouPai, int maxGuiPai, List<XuShuPaiZu> list) {
-		for (int lian = 3; lian <= shouPai; lian++) {
+		int maxLian = (shouPai < 9) ? shouPai : 9;
+		for (int lian = 3; lian <= maxLian; lian++) {
 			calculateXuShuPaiZuForShouPaiAndLian(shouPai, maxGuiPai, lian, list);
 		}
 	}
 
 	private static void calculateXuShuPaiZuForShouPaiAndLian(int shouPai, int maxGuiPai, int lian,
 			List<XuShuPaiZu> list) {
-		// TODO Auto-generated method stub
-
+		int maxPaiForXuHao = 4 + maxGuiPai;
+		int mod = maxPaiForXuHao + 1;
+		int codeSpace = (int) Math.pow(mod, lian);// 3连，一个花色最多7张牌的编码空间是 8的3次方（此编码是用于计算的压缩编码，尽可能小空间）
+		int[] paiQuantityArray = new int[lian];
+		for (int code = 0; code < codeSpace; code++) {
+			int num = code;
+			int totalPai = 0;
+			int atleastGuiPai = 0;
+			boolean bigCodeMode = false;
+			boolean gotOne = true;
+			for (int i = 0; i < lian; i++) {
+				int shang = num / mod;
+				if (shang == 0 && i < (lian - 1)) {
+					gotOne = false;
+					break;
+				}
+				int yu = num % mod;
+				if (yu == 0) {
+					gotOne = false;
+					break;
+				}
+				totalPai += yu;
+				if (totalPai > shouPai) {
+					gotOne = false;
+					break;
+				}
+				atleastGuiPai += ((yu > 4) ? (yu - 4) : 0);
+				if (atleastGuiPai > maxGuiPai) {
+					gotOne = false;
+					break;
+				}
+				paiQuantityArray[i] = yu;
+				if (yu > 7) {
+					bigCodeMode = true;
+				}
+				num = shang;
+			}
+			if (!gotOne) {
+				continue;
+			} else {
+				if (totalPai != shouPai) {
+					continue;
+				}
+				XuShuPaiZu xuShuPaiZu = new XuShuPaiZu(paiQuantityArray, totalPai, atleastGuiPai, bigCodeMode);
+				list.add(xuShuPaiZu);
+			}
+		}
+		System.out.println(shouPai + "张牌" + lian + "连计算完毕！已有" + list.size() + "个结果");
 	}
 
 }

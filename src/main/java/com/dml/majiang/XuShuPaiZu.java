@@ -8,7 +8,7 @@ package com.dml.majiang;
  */
 public class XuShuPaiZu {
 
-	private int[] paiQuantityArray = new int[9];
+	private int[] paiQuantityArray;
 
 	private int lian;
 
@@ -21,6 +21,15 @@ public class XuShuPaiZu {
 	private long bigCode;
 
 	private boolean bigCodeMode;
+
+	public XuShuPaiZu(int[] paiQuantityArray, int totalPai, int atleastGuiPai, boolean bigCodeMode) {
+		this.lian = paiQuantityArray.length;
+		this.paiQuantityArray = new int[lian];
+		System.arraycopy(paiQuantityArray, 0, this.paiQuantityArray, 0, lian);
+		this.totalPai = totalPai;
+		this.atleastGuiPai = atleastGuiPai;
+		this.bigCodeMode = bigCodeMode;
+	}
 
 	public int getLian() {
 		return lian;
