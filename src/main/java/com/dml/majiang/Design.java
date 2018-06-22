@@ -33,6 +33,8 @@ public class Design {
 	 * 三个序数牌组组成手牌的构型
 	 */
 	private static int[][] sanXuShuPaiZuGouXingsArray;
+	private static int sanXuShuPaiZuGouXingsArrayIdx1Mod;
+	private static int sanXuShuPaiZuGouXingsArrayIdx2Mod;
 
 	/**
 	 * 四个序数牌组组成手牌的构型
@@ -180,12 +182,12 @@ public class Design {
 			for (int i = 0; i < xuShuPaiZuList.size(); i++) {
 				XuShuPaiZu zu1 = xuShuPaiZuList.get(i);
 				int totalPai1 = zu1.getTotalPai();
-				int atleastGuiPai1=zu1.getAtleastGuiPai();
+				int atleastGuiPai1 = zu1.getAtleastGuiPai();
 				for (int j = i; j < xuShuPaiZuList.size(); j++) {
 					XuShuPaiZu zu2 = xuShuPaiZuList.get(j);
 					int totalPai = totalPai1 + zu2.getTotalPai();
 					if (totalPai <= maxShouPai) {
-						int atleastGuiPai =atleastGuiPai1 + zu2.getAtleastGuiPai();
+						int atleastGuiPai = atleastGuiPai1 + zu2.getAtleastGuiPai();
 						if (atleastGuiPai <= maxGuiPai) {
 							maxi = (i > maxi) ? i : maxi;
 							maxj = (j > maxj) ? j : maxj;
@@ -195,19 +197,23 @@ public class Design {
 					}
 				}
 			}
-			erXuShuPaiZuGouXingsArrayIdx1Mod = maxj + 1;
+			erXuShuPaiZuGouXingsArrayIdx1Mod = (maxj + 1);
 
 			// 再计算组合
 			erXuShuPaiZuGouXingsArray = new int[(maxi + 1) * erXuShuPaiZuGouXingsArrayIdx1Mod][];
 			for (int i = 0; i < xuShuPaiZuList.size(); i++) {
 				XuShuPaiZu zu1 = xuShuPaiZuList.get(i);
+				int totalPai1 = zu1.getTotalPai();
+				int atleastGuiPai1 = zu1.getAtleastGuiPai();
+				int[] gouXingArray1 = zu1.getGouXingArray();
 				for (int j = i; j < xuShuPaiZuList.size(); j++) {
 					XuShuPaiZu zu2 = xuShuPaiZuList.get(j);
-					int totalPai = zu1.getTotalPai() + zu2.getTotalPai();
+					int totalPai = totalPai1 + zu2.getTotalPai();
 					if (totalPai <= maxShouPai) {
-						int atleastGuiPai = zu1.getAtleastGuiPai() + zu2.getAtleastGuiPai();
+						int atleastGuiPai = atleastGuiPai1 + zu2.getAtleastGuiPai();
 						if (atleastGuiPai <= maxGuiPai) {
-							erXuShuPaiZuGouXingsArray[i*erXuShuPaiZuGouXingsArrayIdx1Mod+j]=
+							int[] joindGouXingArray = joinGouXingArray(gouXingArray1, zu2.getGouXingArray());
+							erXuShuPaiZuGouXingsArray[i * erXuShuPaiZuGouXingsArrayIdx1Mod + j] = joindGouXingArray;
 						}
 					} else {
 						break;
@@ -216,6 +222,93 @@ public class Design {
 			}
 		}
 
+		if (maxShouPaiXuShuPaiZu >= 3) {
+			// 先计算数组规模
+			int maxi = 0;
+			int maxj = 0;
+			int maxk = 0;
+			for (int i = 0; i < xuShuPaiZuList.size(); i++) {
+				XuShuPaiZu zu1 = xuShuPaiZuList.get(i);
+				int totalPai1 = zu1.getTotalPai();
+				int atleastGuiPai1 = zu1.getAtleastGuiPai();
+				for (int j = i; j < xuShuPaiZuList.size(); j++) {
+					XuShuPaiZu zu2 = xuShuPaiZuList.get(j);
+					int totalPai2 = totalPai1 + zu2.getTotalPai();
+					int atleastGuiPai2 = atleastGuiPai1 + zu2.getAtleastGuiPai();
+					if (totalPai2 <= maxShouPai) {
+						if (atleastGuiPai2 <= maxGuiPai) {
+							for (int k = j; k < xuShuPaiZuList.size(); k++) {
+								XuShuPaiZu zu3 = xuShuPaiZuList.get(k);
+								int totalPai3 = totalPai2 + zu3.getTotalPai();
+								int atleastGuiPai3 = atleastGuiPai2 + zu3.getAtleastGuiPai();
+								if (totalPai3 <= maxShouPai) {
+									if (atleastGuiPai3 <= maxGuiPai) {
+										maxi = (i > maxi) ? i : maxi;
+										maxj = (j > maxj) ? j : maxj;
+										maxk = (k > maxk) ? k : maxk;
+									}
+								} else {
+									break;
+								}
+							}
+						}
+					} else {
+						break;
+					}
+				}
+			}
+			sanXuShuPaiZuGouXingsArrayIdx2Mod = (maxk + 1);
+			sanXuShuPaiZuGouXingsArrayIdx1Mod = (maxj + 1) * sanXuShuPaiZuGouXingsArrayIdx2Mod;
+
+			// 再计算组合
+			sanXuShuPaiZuGouXingsArray = new int[(maxi + 1) * sanXuShuPaiZuGouXingsArrayIdx1Mod][];
+			for (int i = 0; i < xuShuPaiZuList.size(); i++) {
+				XuShuPaiZu zu1 = xuShuPaiZuList.get(i);
+				int totalPai1 = zu1.getTotalPai();
+				int atleastGuiPai1 = zu1.getAtleastGuiPai();
+				for (int j = i; j < xuShuPaiZuList.size(); j++) {
+					XuShuPaiZu zu2 = xuShuPaiZuList.get(j);
+					int totalPai2 = totalPai1 + zu2.getTotalPai();
+					int atleastGuiPai2 = atleastGuiPai1 + zu2.getAtleastGuiPai();
+					if (totalPai2 <= maxShouPai) {
+						if (atleastGuiPai2 <= maxGuiPai) {
+							int[] joindGouXingArray = erXuShuPaiZuGouXingsArray[i * erXuShuPaiZuGouXingsArrayIdx1Mod
+									+ j];
+							for (int k = j; k < xuShuPaiZuList.size(); k++) {
+								XuShuPaiZu zu3 = xuShuPaiZuList.get(k);
+								int totalPai3 = totalPai2 + zu3.getTotalPai();
+								int atleastGuiPai3 = atleastGuiPai2 + zu3.getAtleastGuiPai();
+								if (totalPai3 <= maxShouPai) {
+									if (atleastGuiPai3 <= maxGuiPai) {
+										sanXuShuPaiZuGouXingsArray[i * sanXuShuPaiZuGouXingsArrayIdx1Mod
+												+ j * sanXuShuPaiZuGouXingsArrayIdx2Mod + k] = joinGouXingArray(
+														joindGouXingArray, zu3.getGouXingArray());
+									}
+								} else {
+									break;
+								}
+							}
+						}
+					} else {
+						break;
+					}
+				}
+			}
+
+		}
+
+	}
+
+	private static int[] joinGouXingArray(int[] gouXingArray1, int[] gouXingArray2) {
+		int[] result = new int[gouXingArray1.length * gouXingArray2.length];
+		int ri = 0;
+		for (int i = 0; i < gouXingArray1.length; i++) {
+			int gouXing1 = gouXingArray1[i];
+			for (int j = 0; j < gouXingArray2.length; j++) {
+				result[ri++] = gouXing1 + gouXingArray2[j];
+			}
+		}
+		return result;
 	}
 
 	private static void calculateGouXingForXuShuPaiZu(List<XuShuPaiZu> xuShuPaiZuList) {
