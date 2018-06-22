@@ -1,6 +1,7 @@
 package com.dml.majiang;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,12 +9,12 @@ import java.util.Map;
 public class Design {
 
 	/**
-	 * 序数牌组构型索引,小空间序数牌组编码作为数组下标,值是xuShuPaiZuGouXingsArray的下标
+	 * 序数牌组构型索引,小空间序数牌组编码作为数组下标,值为 排好序的 List<XuShuPaiZu> 的下标
 	 */
-	private static int[] xuShuPaiZuGouXingsIdxArray;
+	private static int[] xuShuPaiZuGouXingsIdxArray = new int[134217728];// 9连顺子*3位牌数=27,27个1=134217727
 
 	/**
-	 * 序数牌组构型索引,key为大空间序数牌组编码,值是xuShuPaiZuGouXingsArray的下标
+	 * 序数牌组构型索引,key为大空间序数牌组编码,值为 排好序的 List<XuShuPaiZu> 的下标
 	 */
 	private static Map<Long, Integer> xuShuPaiZuGouXingsIdxMap = new HashMap<>();
 
@@ -26,6 +27,7 @@ public class Design {
 	 * 二个序数牌组组成手牌的构型
 	 */
 	private static int[][] erXuShuPaiZuGouXingsArray;
+	private static int erXuShuPaiZuGouXingsArrayIdx1Mod;
 
 	/**
 	 * 三个序数牌组组成手牌的构型
@@ -78,6 +80,8 @@ public class Design {
 	private static int[][] wuXuShuPaiZuAndZiPaiZuGouXingsArray;
 
 	public static void main(String[] args) {
+		long startTime = System.currentTimeMillis();
+
 		// 花色: 什么牌，一万，三条，发财等
 		// 牌型: 完全描述了指定的牌的集合，什么花色的牌有几张
 		// 构型: 面向和牌关心的几个点，单牌个数，对子个数，刻子个数，杠子个数，顺子个数
@@ -102,11 +106,11 @@ public class Design {
 		// 有两种结构的构型list索引，一种是数组，直接用序数牌组编码作为数组下标来查询，用于序数牌组编码空间大小还能接受的情况
 		// 另一种是以hashmap作为存储结构，用序数牌组编码作为key来查询，用于序数牌组编码空间太大的情况
 
-		// 对于给定的所有牌张数和最多鬼牌数，计算其所有可能的序数牌组，目的是前期过滤，缩小计算规模，计算结果是一个已经排好序的list
+		// 对于给定的所有牌张数和最多鬼牌数，计算其所有可能的序数牌组，目的是前期过滤，缩小计算规模，计算结果是一个已经排好序的list，按牌少到牌多排序
 		List<XuShuPaiZu> xuShuPaiZuList = calculateXuShuPaiZu(maxShouPai, maxGuiPai);
 
-		// 为序数牌组计算构型，按牌少到牌多排序
-		int[][] xuShuPaiZuGouXingsArray = calculateGouXingForXuShuPaiZu(xuShuPaiZuList);
+		// 为序数牌组计算构型
+		calculateGouXingForXuShuPaiZu(xuShuPaiZuList);
 
 		// 考虑手牌由多个序数牌组组成。这个时候可以在游戏中每次要判断和的时候都去把各个序数牌组的构型查出来，再做组合计算。这样效率太浪费。
 		// 我们希望在这里把多个序数牌组组合好后的所有构型计算好，到时候提供直接查询结果。
@@ -116,9 +120,8 @@ public class Design {
 		// 考虑2个序数牌组，取第一个序数牌组的时候考虑到还要取第二个序数牌组，所以牌不能取满，至少要给第二个组留3张牌，这样一来，必然在xuShuPaiZuList中取到前面的某一段。
 		// 所以2个序数牌组的查询空间必然不会是xuShuPaiZuList.size()*xuShuPaiZuList.size()，而是要小一些。
 
-		// 计算序数牌组组合构型，key是代表几个序数牌组
-		Map<Integer, XuShuPaiZuZuHeGouXingGroup> xuShuPaiZuZuHeGouXingGroupMap = calculateXuShuPaiZuZuHeGouXing(
-				xuShuPaiZuList, xuShuPaiZuGouXingsArray, maxShouPai, maxGuiPai);
+		// 计算序数牌组组合构型
+		calculateXuShuPaiZuZuHeGouXing(xuShuPaiZuList, maxShouPai, maxGuiPai, maxShouPaiXuShuPaiZu);
 
 		// 如果手牌中没有任何的序数牌，那就是一些字牌（花牌一般和和牌没什么关系）。这些字牌形成一个字牌组。
 
@@ -132,6 +135,10 @@ public class Design {
 
 		// 为序数牌组和字牌组组合的计算构型，按牌少到牌多排序
 		calculateGouXingForXuShuPaiZuAndZiPaiZu(xuShuPaiZuList, ziPaiZuList);
+
+		long finishTime = System.currentTimeMillis();
+
+		System.out.println("耗时(毫秒):" + (finishTime - startTime));
 
 	}
 
@@ -151,16 +158,75 @@ public class Design {
 		return null;
 	}
 
-	private static Map<Integer, XuShuPaiZuZuHeGouXingGroup> calculateXuShuPaiZuZuHeGouXing(
-			List<XuShuPaiZu> xuShuPaiZuList, int[][] xuShuPaiZuGouXingsArray, int maxShouPai, int maxGuiPai) {
-		// TODO Auto-generated method stub
-		return null;
+	private static void calculateXuShuPaiZuZuHeGouXing(List<XuShuPaiZu> xuShuPaiZuList, int maxShouPai, int maxGuiPai,
+			int maxShouPaiXuShuPaiZu) {
+		if (maxShouPaiXuShuPaiZu >= 1) {
+			yiXuShuPaiZuGouXingsArray = new int[xuShuPaiZuList.size()][];
+			for (int i = 0; i < xuShuPaiZuList.size(); i++) {
+				XuShuPaiZu xuShuPaiZu = xuShuPaiZuList.get(i);
+				yiXuShuPaiZuGouXingsArray[i] = xuShuPaiZu.getGouXingArray();
+				if (!xuShuPaiZu.isBigCodeMode()) {
+					xuShuPaiZuGouXingsIdxArray[xuShuPaiZu.getSmallCode()] = i;
+				} else {
+					xuShuPaiZuGouXingsIdxMap.put(xuShuPaiZu.getBigCode(), i);
+				}
+			}
+		}
+
+		if (maxShouPaiXuShuPaiZu >= 2) {
+			// 先计算数组规模
+			int maxi = 0;
+			int maxj = 0;
+			for (int i = 0; i < xuShuPaiZuList.size(); i++) {
+				XuShuPaiZu zu1 = xuShuPaiZuList.get(i);
+				int totalPai1 = zu1.getTotalPai();
+				int atleastGuiPai1=zu1.getAtleastGuiPai();
+				for (int j = i; j < xuShuPaiZuList.size(); j++) {
+					XuShuPaiZu zu2 = xuShuPaiZuList.get(j);
+					int totalPai = totalPai1 + zu2.getTotalPai();
+					if (totalPai <= maxShouPai) {
+						int atleastGuiPai =atleastGuiPai1 + zu2.getAtleastGuiPai();
+						if (atleastGuiPai <= maxGuiPai) {
+							maxi = (i > maxi) ? i : maxi;
+							maxj = (j > maxj) ? j : maxj;
+						}
+					} else {
+						break;
+					}
+				}
+			}
+			erXuShuPaiZuGouXingsArrayIdx1Mod = maxj + 1;
+
+			// 再计算组合
+			erXuShuPaiZuGouXingsArray = new int[(maxi + 1) * erXuShuPaiZuGouXingsArrayIdx1Mod][];
+			for (int i = 0; i < xuShuPaiZuList.size(); i++) {
+				XuShuPaiZu zu1 = xuShuPaiZuList.get(i);
+				for (int j = i; j < xuShuPaiZuList.size(); j++) {
+					XuShuPaiZu zu2 = xuShuPaiZuList.get(j);
+					int totalPai = zu1.getTotalPai() + zu2.getTotalPai();
+					if (totalPai <= maxShouPai) {
+						int atleastGuiPai = zu1.getAtleastGuiPai() + zu2.getAtleastGuiPai();
+						if (atleastGuiPai <= maxGuiPai) {
+							erXuShuPaiZuGouXingsArray[i*erXuShuPaiZuGouXingsArrayIdx1Mod+j]=
+						}
+					} else {
+						break;
+					}
+				}
+			}
+		}
+
 	}
 
-	private static int[][] calculateGouXingForXuShuPaiZu(List<XuShuPaiZu> xuShuPaiZuList) {
-		// TODO Auto-generated method stub
-		return null;
-
+	private static void calculateGouXingForXuShuPaiZu(List<XuShuPaiZu> xuShuPaiZuList) {
+		int count = 0;
+		int total = 0;
+		for (XuShuPaiZu xuShuPaiZu : xuShuPaiZuList) {
+			System.out.println("计算第" + (++count) + "个序数牌组的构型");
+			xuShuPaiZu.calculateGouXing();
+			total += xuShuPaiZu.getGouXingArray().length;
+		}
+		System.out.println("所有序数牌组总共" + total + "个构型");
 	}
 
 	private static List<XuShuPaiZu> calculateXuShuPaiZu(int maxShouPai, int maxGuiPai) {
@@ -168,6 +234,8 @@ public class Design {
 		for (int shouPai = 3; shouPai <= maxShouPai; shouPai++) {
 			calculateXuShuPaiZuForShouPai(shouPai, maxGuiPai, list);
 		}
+		list.forEach((xuShuPaiZu) -> xuShuPaiZu.calculateCode());
+		Collections.sort(list);
 		return list;
 	}
 
@@ -227,7 +295,7 @@ public class Design {
 				list.add(xuShuPaiZu);
 			}
 		}
-		System.out.println(shouPai + "张牌" + lian + "连计算完毕！已有" + list.size() + "个结果");
+		System.out.println(shouPai + "张牌" + lian + "连序数牌组计算完毕！已有" + list.size() + "个结果");
 	}
 
 }
