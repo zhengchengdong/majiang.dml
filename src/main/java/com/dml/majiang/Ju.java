@@ -10,13 +10,13 @@ public class Ju {
 
 	private Pan currentPan;
 
-	private PlayersPositionDeterminer playersPositionDeterminer;
+	private PlayersMenFengDeterminer playersMenFengDeterminerForFirstPan;
 	private ZhuangDeterminer zhuangDeterminerForFirstPan;
 	private AvaliablePaiFiller avaliablePaiFiller;
 	private GuipaiDeterminer guipaiDeterminer;
 
-	public void determinePlayersPosition() throws Exception {
-		playersPositionDeterminer.determinePlayersPosition(this);
+	public void determinePlayersMenFengForFirstPan() throws Exception {
+		playersMenFengDeterminerForFirstPan.determinePlayersMenFeng(this);
 	}
 
 	public void determineZhuangForFirstPan() throws Exception {
@@ -39,12 +39,12 @@ public class Ju {
 		this.currentPan = currentPan;
 	}
 
-	public PlayersPositionDeterminer getPlayersPositionDeterminer() {
-		return playersPositionDeterminer;
+	public PlayersMenFengDeterminer getPlayersMenFengDeterminerForFirstPan() {
+		return playersMenFengDeterminerForFirstPan;
 	}
 
-	public void setPlayersPositionDeterminer(PlayersPositionDeterminer playersPositionDeterminer) {
-		this.playersPositionDeterminer = playersPositionDeterminer;
+	public void setPlayersMenFengDeterminerForFirstPan(PlayersMenFengDeterminer playersMenFengDeterminerForFirstPan) {
+		this.playersMenFengDeterminerForFirstPan = playersMenFengDeterminerForFirstPan;
 	}
 
 	public ZhuangDeterminer getZhuangDeterminerForFirstPan() {

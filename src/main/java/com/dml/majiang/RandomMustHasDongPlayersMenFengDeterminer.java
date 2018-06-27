@@ -4,19 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class RandomMustHasDongPlayersPositionDeterminer implements PlayersPositionDeterminer {
+public class RandomMustHasDongPlayersMenFengDeterminer implements PlayersMenFengDeterminer {
 
 	private long seed;
 
-	public RandomMustHasDongPlayersPositionDeterminer() {
+	public RandomMustHasDongPlayersMenFengDeterminer() {
 	}
 
-	public RandomMustHasDongPlayersPositionDeterminer(long seed) {
+	public RandomMustHasDongPlayersMenFengDeterminer(long seed) {
 		this.seed = seed;
 	}
 
 	@Override
-	public void determinePlayersPosition(Ju ju) throws Exception {
+	public void determinePlayersMenFeng(Ju ju) throws Exception {
 		Pan currentPan = ju.getCurrentPan();
 		List<String> sortedPlayerIdList = currentPan.sortedPlayerIdList();
 		List<MajiangPosition> pList = new ArrayList<>();
@@ -26,16 +26,16 @@ public class RandomMustHasDongPlayersPositionDeterminer implements PlayersPositi
 
 		Random r = new Random(seed);
 		String dongPlayerId = sortedPlayerIdList.get(r.nextInt(sortedPlayerIdList.size()));
-		currentPan.updatePlayerPosition(dongPlayerId, MajiangPosition.dong);
+		currentPan.updatePlayerMenFeng(dongPlayerId, MajiangPosition.dong);
 		sortedPlayerIdList.remove(dongPlayerId);
 
 		if (sortedPlayerIdList.size() == 1) {
-			currentPan.updatePlayerPosition(sortedPlayerIdList.get(0), MajiangPosition.xi);
+			currentPan.updatePlayerMenFeng(sortedPlayerIdList.get(0), MajiangPosition.xi);
 		} else {
 			while (!sortedPlayerIdList.isEmpty()) {
 				String playerId = sortedPlayerIdList.remove(0);
 				MajiangPosition position = pList.remove(r.nextInt(pList.size()));
-				currentPan.updatePlayerPosition(playerId, position);
+				currentPan.updatePlayerMenFeng(playerId, position);
 			}
 		}
 

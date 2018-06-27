@@ -18,7 +18,7 @@ public class Pan {
 
 	private Map<String, MajiangPlayer> majiangPlayerIdMajiangPlayerMap = new HashMap<>();
 
-	private Map<MajiangPosition, String> majiangPositionMajiangPlayerIdMap = new HashMap<>();
+	private Map<MajiangPosition, String> menFengMajiangPlayerIdMap = new HashMap<>();
 
 	private String zhuangPlayerId;
 
@@ -46,21 +46,21 @@ public class Pan {
 		return list;
 	}
 
-	public void updatePlayerPosition(String playerId, MajiangPosition position) throws MajiangPlayerNotFoundException {
+	public void updatePlayerMenFeng(String playerId, MajiangPosition menFeng) throws MajiangPlayerNotFoundException {
 		MajiangPlayer player = majiangPlayerIdMajiangPlayerMap.get(playerId);
 		if (player == null) {
 			throw new MajiangPlayerNotFoundException();
 		}
-		player.setPosition(position);
-		majiangPositionMajiangPlayerIdMap.put(position, playerId);
+		player.setMenFeng(menFeng);
+		menFengMajiangPlayerIdMap.put(menFeng, playerId);
 	}
 
 	public void addPublicGuipai(MajiangPai guipai) {
 		publicGuipaiSet.add(guipai);
 	}
 
-	public String playerIdForPosition(MajiangPosition position) {
-		return majiangPositionMajiangPlayerIdMap.get(position);
+	public String playerIdForMenFeng(MajiangPosition menFeng) {
+		return menFengMajiangPlayerIdMap.get(menFeng);
 	}
 
 	public Map<String, MajiangPlayer> getMajiangPlayerIdMajiangPlayerMap() {
@@ -71,12 +71,12 @@ public class Pan {
 		this.majiangPlayerIdMajiangPlayerMap = majiangPlayerIdMajiangPlayerMap;
 	}
 
-	public Map<MajiangPosition, String> getMajiangPositionMajiangPlayerIdMap() {
-		return majiangPositionMajiangPlayerIdMap;
+	public Map<MajiangPosition, String> getMenFengMajiangPlayerIdMap() {
+		return menFengMajiangPlayerIdMap;
 	}
 
-	public void setMajiangPositionMajiangPlayerIdMap(Map<MajiangPosition, String> majiangPositionMajiangPlayerIdMap) {
-		this.majiangPositionMajiangPlayerIdMap = majiangPositionMajiangPlayerIdMap;
+	public void setMenFengMajiangPlayerIdMap(Map<MajiangPosition, String> menFengMajiangPlayerIdMap) {
+		this.menFengMajiangPlayerIdMap = menFengMajiangPlayerIdMap;
 	}
 
 	public String getZhuangPlayerId() {
