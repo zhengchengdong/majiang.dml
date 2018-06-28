@@ -1,17 +1,68 @@
 package com.dml.majiang;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 public class MajiangPlayer {
+
 	private String id;
 	/**
 	 * 门风
 	 */
 	private MajiangPosition menFeng;
-	// - shouPaiList:List<MajiangPai>
+	private List<MajiangPai> shoupaiList = new ArrayList<>();
 	// - actionCandidates:Map<Integer,MajiangPlayerAction>
-	// - publicPaiList:List<MajiangPai>//公开的牌，不能行牌
-	// - guiPaiList:List<MajiangPai>//手牌中的鬼牌
-	// - guiPaiSet:Set<MajiangPai>//标示什么牌是鬼牌
+	/**
+	 * 公开的牌，不能行牌
+	 */
+	private List<MajiangPai> publicPaiList = new ArrayList<>();;
+	/**
+	 * 手牌中的鬼牌
+	 */
+	private List<MajiangPai> guipaiList = new ArrayList<>();;
+	/**
+	 * 标示什么牌是鬼牌
+	 */
+	private Set<MajiangPai> guipaiTypeSet = new HashSet<>();
 	// - xingPaiMap:Map<MajiangPai,MajiangPai>//什么牌当成了什么牌
+
+	private Map<Integer, MajiangPlayerAction> actionCandidates = new HashMap<>();
+
+	private GouXingCalculator gouXingCalculator = new GouXingCalculator();
+
+	public void addGuipaiType(MajiangPai guipaiType) {
+		guipaiTypeSet.add(guipaiType);
+	}
+
+	public void addShoupai(MajiangPai pai) {
+		shoupaiList.add(pai);
+		Collections.sort(shoupaiList);
+		if (guipaiTypeSet.contains(pai)) {
+			guipaiList.add(pai);
+			Collections.sort(guipaiList);
+		}
+		gouXingCalculator.addPai(pai);
+	}
+
+	public void moveShoupaiToPublicPaiForType(MajiangPai paiTypeToMove) {
+		while (shoupaiList.remove(paiTypeToMove)) {
+			publicPaiList.add(paiTypeToMove);
+		}
+		Collections.sort(publicPaiList);
+	}
+
+	public void addActionCandidate(MajiangPlayerAction action) {
+		actionCandidates.put(action.getId(), action);
+	}
+
+	public MajiangPlayerAction findActionCandidate(int actionId) {
+		return actionCandidates.get(actionId);
+	}
 
 	public String getId() {
 		return id;
@@ -27,6 +78,54 @@ public class MajiangPlayer {
 
 	public void setMenFeng(MajiangPosition menFeng) {
 		this.menFeng = menFeng;
+	}
+
+	public List<MajiangPai> getShoupaiList() {
+		return shoupaiList;
+	}
+
+	public void setShoupaiList(List<MajiangPai> shoupaiList) {
+		this.shoupaiList = shoupaiList;
+	}
+
+	public List<MajiangPai> getGuipaiList() {
+		return guipaiList;
+	}
+
+	public void setGuipaiList(List<MajiangPai> guipaiList) {
+		this.guipaiList = guipaiList;
+	}
+
+	public Set<MajiangPai> getGuipaiTypeSet() {
+		return guipaiTypeSet;
+	}
+
+	public void setGuipaiTypeSet(Set<MajiangPai> guipaiTypeSet) {
+		this.guipaiTypeSet = guipaiTypeSet;
+	}
+
+	public List<MajiangPai> getPublicPaiList() {
+		return publicPaiList;
+	}
+
+	public void setPublicPaiList(List<MajiangPai> publicPaiList) {
+		this.publicPaiList = publicPaiList;
+	}
+
+	public Map<Integer, MajiangPlayerAction> getActionCandidates() {
+		return actionCandidates;
+	}
+
+	public void setActionCandidates(Map<Integer, MajiangPlayerAction> actionCandidates) {
+		this.actionCandidates = actionCandidates;
+	}
+
+	public GouXingCalculator getGouXingCalculator() {
+		return gouXingCalculator;
+	}
+
+	public void setGouXingCalculator(GouXingCalculator gouXingCalculator) {
+		this.gouXingCalculator = gouXingCalculator;
 	}
 
 }

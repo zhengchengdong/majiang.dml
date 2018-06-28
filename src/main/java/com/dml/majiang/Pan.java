@@ -34,6 +34,11 @@ public class Pan {
 	 */
 	private List<MajiangPai> paiTypeList;
 
+	/**
+	 * 给用户看得到的等待箭头，实际等的不一定是他
+	 */
+	private String publicWaitingPlayerId;
+
 	public void addPlayer(String playerId) {
 		MajiangPlayer majiangPlayer = new MajiangPlayer();
 		majiangPlayer.setId(playerId);
@@ -55,12 +60,66 @@ public class Pan {
 		menFengMajiangPlayerIdMap.put(menFeng, playerId);
 	}
 
-	public void addPublicGuipai(MajiangPai guipai) {
-		publicGuipaiSet.add(guipai);
-	}
-
 	public String playerIdForMenFeng(MajiangPosition menFeng) {
 		return menFengMajiangPlayerIdMap.get(menFeng);
+	}
+
+	public void publicGuipaiAndRemoveFromList(MajiangPai guipaiType) {
+		avaliablePaiList.remove(guipaiType);
+		publicGuipaiSet.add(guipaiType);
+	}
+
+	/**
+	 * 初始摸牌，从庄开始挨个顺序摸
+	 * 
+	 * @param quanCount
+	 *            摸几圈
+	 */
+	public void sequentialPlayersInitialMoPai(int quanCount) {
+		MajiangPlayer zhuangPlayer = majiangPlayerIdMajiangPlayerMap.get(zhuangPlayerId);
+		MajiangPosition zhuangPlayerMenFeng = zhuangPlayer.getMenFeng();
+		for (int i = 0; i < quanCount; i++) {
+			MajiangPosition playerMenFeng = zhuangPlayerMenFeng;
+			for (int j = 0; j < 4; j++) {
+				String playerId = menFengMajiangPlayerIdMap.get(playerMenFeng);
+				if (playerId != null) {
+					MajiangPlayer player = majiangPlayerIdMajiangPlayerMap.get(playerId);
+					player.addShoupai(avaliablePaiList.remove(0));
+				}
+				playerMenFeng = MajiangPositionCircle.nextClockwise(playerMenFeng);
+			}
+		}
+	}
+
+	public void updatePublicWaitingPlayerIdToZhuang() {
+		publicWaitingPlayerId = zhuangPlayerId;
+	}
+
+	public void addPlayerActionCandidate(String playerId, MajiangPlayerAction action)
+			throws MajiangPlayerNotFoundException {
+		MajiangPlayer player = majiangPlayerIdMajiangPlayerMap.get(playerId);
+		if (player == null) {
+			throw new MajiangPlayerNotFoundException();
+		}
+		player.addActionCandidate(action);
+	}
+
+	public MajiangPlayerAction findPlayerActionCandidate(String playerId, int actionId)
+			throws MajiangPlayerNotFoundException {
+		MajiangPlayer player = majiangPlayerIdMajiangPlayerMap.get(playerId);
+		if (player == null) {
+			throw new MajiangPlayerNotFoundException();
+		}
+		return player.findActionCandidate(actionId);
+	}
+
+	public void sequentialMoPai(String playerId) throws MajiangPlayerNotFoundException {
+		MajiangPlayer player = majiangPlayerIdMajiangPlayerMap.get(playerId);
+		if (player == null) {
+			throw new MajiangPlayerNotFoundException();
+		}
+		MajiangPai pai = avaliablePaiList.remove(0);
+		player.addShoupai(pai);
 	}
 
 	public Map<String, MajiangPlayer> getMajiangPlayerIdMajiangPlayerMap() {
@@ -109,6 +168,14 @@ public class Pan {
 
 	public void setPublicGuipaiSet(Set<MajiangPai> publicGuipaiSet) {
 		this.publicGuipaiSet = publicGuipaiSet;
+	}
+
+	public String getPublicWaitingPlayerId() {
+		return publicWaitingPlayerId;
+	}
+
+	public void setPublicWaitingPlayerId(String publicWaitingPlayerId) {
+		this.publicWaitingPlayerId = publicWaitingPlayerId;
 	}
 
 }

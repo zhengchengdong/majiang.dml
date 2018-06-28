@@ -14,6 +14,9 @@ public class Ju {
 	private ZhuangDeterminer zhuangDeterminerForFirstPan;
 	private AvaliablePaiFiller avaliablePaiFiller;
 	private GuipaiDeterminer guipaiDeterminer;
+	private FaPaiStrategy faPaiStrategy;
+	private MajiangPlayerInitialActionUpdater initialActionUpdater;
+	private MajiangPlayerMoActionProcessor moActionProcessor;
 
 	public void determinePlayersMenFengForFirstPan() throws Exception {
 		playersMenFengDeterminerForFirstPan.determinePlayersMenFeng(this);
@@ -29,6 +32,32 @@ public class Ju {
 
 	public void determineGuipai() throws Exception {
 		guipaiDeterminer.determineGuipai(this);
+	}
+
+	public void faPai() throws Exception {
+		faPaiStrategy.faPai(this);
+	}
+
+	public void updateInitialAction() throws Exception {
+		initialActionUpdater.updateActions(this);
+	}
+
+	public void action(String playerId, int actionId)
+			throws MajiangPlayerNotFoundException, MajiangPlayerActionNotFoundException {
+		MajiangPlayerAction action = currentPan.findPlayerActionCandidate(playerId, actionId);
+		if (action == null) {
+			throw new MajiangPlayerActionNotFoundException();
+		}
+		processAction(playerId, action);
+	}
+
+	private void processAction(String playerId, MajiangPlayerAction action) {
+
+		if (action instanceof MajiangMoAction) {
+			moActionProcessor.process(playerId, (MajiangMoAction) action, this);
+		} else {
+		}
+
 	}
 
 	public Pan getCurrentPan() {
@@ -69,6 +98,30 @@ public class Ju {
 
 	public void setGuipaiDeterminer(GuipaiDeterminer guipaiDeterminer) {
 		this.guipaiDeterminer = guipaiDeterminer;
+	}
+
+	public FaPaiStrategy getFaPaiStrategy() {
+		return faPaiStrategy;
+	}
+
+	public void setFaPaiStrategy(FaPaiStrategy faPaiStrategy) {
+		this.faPaiStrategy = faPaiStrategy;
+	}
+
+	public MajiangPlayerInitialActionUpdater getInitialActionUpdater() {
+		return initialActionUpdater;
+	}
+
+	public void setInitialActionUpdater(MajiangPlayerInitialActionUpdater initialActionUpdater) {
+		this.initialActionUpdater = initialActionUpdater;
+	}
+
+	public MajiangPlayerMoActionProcessor getMoActionProcessor() {
+		return moActionProcessor;
+	}
+
+	public void setMoActionProcessor(MajiangPlayerMoActionProcessor moActionProcessor) {
+		this.moActionProcessor = moActionProcessor;
 	}
 
 }
