@@ -16,7 +16,6 @@ public class MajiangPlayer {
 	 */
 	private MajiangPosition menFeng;
 	private List<MajiangPai> shoupaiList = new ArrayList<>();
-	// - actionCandidates:Map<Integer,MajiangPlayerAction>
 	/**
 	 * 公开的牌，不能行牌
 	 */
@@ -45,15 +44,9 @@ public class MajiangPlayer {
 		if (guipaiTypeSet.contains(pai)) {
 			guipaiList.add(pai);
 			Collections.sort(guipaiList);
+		} else {
+			gouXingCalculator.addPai(pai);
 		}
-		gouXingCalculator.addPai(pai);
-	}
-
-	public void moveShoupaiToPublicPaiForType(MajiangPai paiTypeToMove) {
-		while (shoupaiList.remove(paiTypeToMove)) {
-			publicPaiList.add(paiTypeToMove);
-		}
-		Collections.sort(publicPaiList);
 	}
 
 	public void addActionCandidate(MajiangPlayerAction action) {
@@ -62,6 +55,10 @@ public class MajiangPlayer {
 
 	public MajiangPlayerAction findActionCandidate(int actionId) {
 		return actionCandidates.get(actionId);
+	}
+
+	public void addPublicPai(MajiangPai pai) {
+		publicPaiList.add(pai);
 	}
 
 	public String getId() {

@@ -42,8 +42,7 @@ public class Ju {
 		initialActionUpdater.updateActions(this);
 	}
 
-	public void action(String playerId, int actionId)
-			throws MajiangPlayerNotFoundException, MajiangPlayerActionNotFoundException {
+	public void action(String playerId, int actionId) throws Exception {
 		MajiangPlayerAction action = currentPan.findPlayerActionCandidate(playerId, actionId);
 		if (action == null) {
 			throw new MajiangPlayerActionNotFoundException();
@@ -51,7 +50,7 @@ public class Ju {
 		processAction(playerId, action);
 	}
 
-	private void processAction(String playerId, MajiangPlayerAction action) {
+	private void processAction(String playerId, MajiangPlayerAction action) throws Exception {
 
 		if (action instanceof MajiangMoAction) {
 			moActionProcessor.process(playerId, (MajiangMoAction) action, this);

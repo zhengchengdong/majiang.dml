@@ -69,28 +69,6 @@ public class Pan {
 		publicGuipaiSet.add(guipaiType);
 	}
 
-	/**
-	 * 初始摸牌，从庄开始挨个顺序摸
-	 * 
-	 * @param quanCount
-	 *            摸几圈
-	 */
-	public void sequentialPlayersInitialMoPai(int quanCount) {
-		MajiangPlayer zhuangPlayer = majiangPlayerIdMajiangPlayerMap.get(zhuangPlayerId);
-		MajiangPosition zhuangPlayerMenFeng = zhuangPlayer.getMenFeng();
-		for (int i = 0; i < quanCount; i++) {
-			MajiangPosition playerMenFeng = zhuangPlayerMenFeng;
-			for (int j = 0; j < 4; j++) {
-				String playerId = menFengMajiangPlayerIdMap.get(playerMenFeng);
-				if (playerId != null) {
-					MajiangPlayer player = majiangPlayerIdMajiangPlayerMap.get(playerId);
-					player.addShoupai(avaliablePaiList.remove(0));
-				}
-				playerMenFeng = MajiangPositionCircle.nextClockwise(playerMenFeng);
-			}
-		}
-	}
-
 	public void updatePublicWaitingPlayerIdToZhuang() {
 		publicWaitingPlayerId = zhuangPlayerId;
 	}
@@ -120,6 +98,24 @@ public class Pan {
 		}
 		MajiangPai pai = avaliablePaiList.remove(0);
 		player.addShoupai(pai);
+	}
+
+	public MajiangPosition findMenFengForZhuang() {
+		MajiangPlayer zhuangPlayer = majiangPlayerIdMajiangPlayerMap.get(zhuangPlayerId);
+		return zhuangPlayer.getMenFeng();
+	}
+
+	public MajiangPlayer findPlayerByMenFeng(MajiangPosition playerMenFeng) {
+		String playerId = menFengMajiangPlayerIdMap.get(playerMenFeng);
+		if (playerId != null) {
+			return majiangPlayerIdMajiangPlayerMap.get(playerId);
+		} else {
+			return null;
+		}
+	}
+
+	public MajiangPlayer findPlayerById(String playerId) {
+		return majiangPlayerIdMajiangPlayerMap.get(playerId);
 	}
 
 	public Map<String, MajiangPlayer> getMajiangPlayerIdMajiangPlayerMap() {

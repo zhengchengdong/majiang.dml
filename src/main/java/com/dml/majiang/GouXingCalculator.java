@@ -18,10 +18,31 @@ public class GouXingCalculator {
 	private int beifengQuantity;
 	private int hongzhongQuantity;
 	private int facaiQuantity;
+	private int baibanQuantity;
 
 	public void addPai(MajiangPai pai) {
-		// TODO Auto-generated method stub
-
+		int paiOrdinal = pai.ordinal();
+		if (paiOrdinal >= 0 && paiOrdinal <= 8) {// 万
+			wanPaiQuantityArray[paiOrdinal]++;
+		} else if (paiOrdinal >= 9 && paiOrdinal <= 17) {// 筒
+			tongPaiQuantityArray[paiOrdinal - 9]++;
+		} else if (paiOrdinal >= 18 && paiOrdinal <= 26) {// 条
+			tiaoPaiQuantityArray[paiOrdinal - 18]++;
+		} else if (pai.equals(MajiangPai.dongfeng)) {
+			dongfengQuantity++;
+		} else if (pai.equals(MajiangPai.nanfeng)) {
+			nanfengQuantity++;
+		} else if (pai.equals(MajiangPai.xifeng)) {
+			xifengQuantity++;
+		} else if (pai.equals(MajiangPai.beifeng)) {
+			beifengQuantity++;
+		} else if (pai.equals(MajiangPai.hongzhong)) {
+			hongzhongQuantity++;
+		} else if (pai.equals(MajiangPai.facai)) {
+			facaiQuantity++;
+		} else if (pai.equals(MajiangPai.baiban)) {
+			baibanQuantity++;
+		}
 	}
 
 	public int[] getWanPaiQuantityArray() {
@@ -94,6 +115,14 @@ public class GouXingCalculator {
 
 	public void setFacaiQuantity(int facaiQuantity) {
 		this.facaiQuantity = facaiQuantity;
+	}
+
+	public int getBaibanQuantity() {
+		return baibanQuantity;
+	}
+
+	public void setBaibanQuantity(int baibanQuantity) {
+		this.baibanQuantity = baibanQuantity;
 	}
 
 }

@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * 字牌组
+ * 独立牌组
  * 
  * @author Neo
  *
  */
-public class ZiPaiZu implements Comparable<ZiPaiZu> {
+public class DuLiPaiZu implements Comparable<DuLiPaiZu> {
 
 	private static int[][] tongpaiGouXingArray;
 
@@ -75,7 +75,7 @@ public class ZiPaiZu implements Comparable<ZiPaiZu> {
 		return result;
 	}
 
-	public ZiPaiZu(int code, int[] paiCountArray, int totalPai, int atleastGuiPai) {
+	public DuLiPaiZu(int code, int[] paiCountArray, int totalPai, int atleastGuiPai) {
 		this.code = code;
 		this.paiCountArray = paiCountArray;
 		this.totalPai = totalPai;
@@ -94,13 +94,12 @@ public class ZiPaiZu implements Comparable<ZiPaiZu> {
 	private int[] gouXingArray;
 
 	/**
-	 * 低到高
-	 * 3位单牌个数，3位对子个数，3位刻子个数，3位杠子个数，2位5同牌个数，2位6同牌个数，2位7同牌个数，1位8同牌个数，1位9同牌个数，1位10同牌个数
+	 * 低到高--5位单牌个数，4位对子个数，3位刻子个数，3位杠子个数，2位5同牌个数，2位6同牌个数，2位7同牌个数，1位8同牌个数，1位9同牌个数，1位10同牌个数
 	 */
 	private int code;
 
 	@Override
-	public int compareTo(ZiPaiZu another) {
+	public int compareTo(DuLiPaiZu another) {
 		if (totalPai < another.totalPai) {
 			return -1;
 		} else if (totalPai > another.totalPai) {

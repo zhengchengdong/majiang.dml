@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * 序数牌组
+ * 连续牌组
  * 
  * @author Neo
  *
  */
-public class XuShuPaiZu implements Comparable<XuShuPaiZu> {
+public class LianXuPaiZu implements Comparable<LianXuPaiZu> {
 
 	private int[] paiQuantityArray;
 
@@ -29,7 +29,7 @@ public class XuShuPaiZu implements Comparable<XuShuPaiZu> {
 
 	private int[] gouXingArray;
 
-	public XuShuPaiZu(int[] paiQuantityArray, int totalPai, int atleastGuiPai, boolean bigCodeMode) {
+	public LianXuPaiZu(int[] paiQuantityArray, int totalPai, int atleastGuiPai, boolean bigCodeMode) {
 		this.lian = paiQuantityArray.length;
 		this.paiQuantityArray = new int[lian];
 		System.arraycopy(paiQuantityArray, 0, this.paiQuantityArray, 0, lian);
@@ -154,7 +154,7 @@ public class XuShuPaiZu implements Comparable<XuShuPaiZu> {
 	}
 
 	@Override
-	public int compareTo(XuShuPaiZu another) {
+	public int compareTo(LianXuPaiZu another) {
 		if (totalPai < another.totalPai) {
 			return -1;
 		} else if (totalPai > another.totalPai) {
