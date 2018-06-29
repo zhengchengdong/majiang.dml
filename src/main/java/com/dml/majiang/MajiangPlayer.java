@@ -34,6 +34,11 @@ public class MajiangPlayer {
 
 	private GouXingCalculator gouXingCalculator = new GouXingCalculator();
 
+	/**
+	 * 摸进的牌。只是展示，实际在手牌中。
+	 */
+	private MajiangPai publicMoPai;
+
 	public void addGuipaiType(MajiangPai guipaiType) {
 		guipaiTypeSet.add(guipaiType);
 	}
@@ -44,7 +49,11 @@ public class MajiangPlayer {
 		if (guipaiTypeSet.contains(pai)) {
 			guipaiList.add(pai);
 			Collections.sort(guipaiList);
-		} else {
+		}
+	}
+
+	public void addPaiToGouXingCalculator(MajiangPai pai) {
+		if (!guipaiTypeSet.contains(pai)) {
 			gouXingCalculator.addPai(pai);
 		}
 	}
@@ -123,6 +132,14 @@ public class MajiangPlayer {
 
 	public void setGouXingCalculator(GouXingCalculator gouXingCalculator) {
 		this.gouXingCalculator = gouXingCalculator;
+	}
+
+	public MajiangPai getPublicMoPai() {
+		return publicMoPai;
+	}
+
+	public void setPublicMoPai(MajiangPai publicMoPai) {
+		this.publicMoPai = publicMoPai;
 	}
 
 }

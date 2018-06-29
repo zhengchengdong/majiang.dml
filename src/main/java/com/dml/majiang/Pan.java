@@ -91,15 +91,6 @@ public class Pan {
 		return player.findActionCandidate(actionId);
 	}
 
-	public void sequentialMoPai(String playerId) throws MajiangPlayerNotFoundException {
-		MajiangPlayer player = majiangPlayerIdMajiangPlayerMap.get(playerId);
-		if (player == null) {
-			throw new MajiangPlayerNotFoundException();
-		}
-		MajiangPai pai = avaliablePaiList.remove(0);
-		player.addShoupai(pai);
-	}
-
 	public MajiangPosition findMenFengForZhuang() {
 		MajiangPlayer zhuangPlayer = majiangPlayerIdMajiangPlayerMap.get(zhuangPlayerId);
 		return zhuangPlayer.getMenFeng();
