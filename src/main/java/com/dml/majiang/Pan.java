@@ -39,6 +39,10 @@ public class Pan {
 	 */
 	private String publicWaitingPlayerId;
 
+	private List<PanActionFrame> actionFrameList = new ArrayList<>();
+
+	private PanResult result;
+
 	public void addPlayer(String playerId) {
 		MajiangPlayer majiangPlayer = new MajiangPlayer();
 		majiangPlayer.setId(playerId);
@@ -109,6 +113,10 @@ public class Pan {
 		return majiangPlayerIdMajiangPlayerMap.get(playerId);
 	}
 
+	public PanActionFrame recordPanActionFrame(MajiangPlayerAction action) {
+
+	}
+
 	public Map<String, MajiangPlayer> getMajiangPlayerIdMajiangPlayerMap() {
 		return majiangPlayerIdMajiangPlayerMap;
 	}
@@ -163,6 +171,22 @@ public class Pan {
 
 	public void setPublicWaitingPlayerId(String publicWaitingPlayerId) {
 		this.publicWaitingPlayerId = publicWaitingPlayerId;
+	}
+
+	public List<PanActionFrame> getActionFrameList() {
+		return actionFrameList;
+	}
+
+	public void setActionFrameList(List<PanActionFrame> actionFrameList) {
+		this.actionFrameList = actionFrameList;
+	}
+
+	public PanResult getResult() {
+		return result;
+	}
+
+	public void setResult(PanResult result) {
+		this.result = result;
 	}
 
 }

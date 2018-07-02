@@ -38,11 +38,12 @@ public class Ju {
 		faPaiStrategy.faPai(this);
 	}
 
-	public void updateInitialAction() throws Exception {
+	public PanActionFrame updateInitialAction() throws Exception {
 		initialActionUpdater.updateActions(this);
+		return currentPan.recordPanActionFrame(null);
 	}
 
-	public void action(String playerId, int actionId) throws Exception {
+	public PanActionFrame action(String playerId, int actionId) throws Exception {
 		MajiangPlayerAction action = currentPan.findPlayerActionCandidate(playerId, actionId);
 		if (action == null) {
 			throw new MajiangPlayerActionNotFoundException();

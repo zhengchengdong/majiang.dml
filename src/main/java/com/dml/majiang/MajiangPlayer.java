@@ -19,16 +19,15 @@ public class MajiangPlayer {
 	/**
 	 * 公开的牌，不能行牌
 	 */
-	private List<MajiangPai> publicPaiList = new ArrayList<>();;
+	private List<MajiangPai> publicPaiList = new ArrayList<>();
 	/**
 	 * 手牌中的鬼牌
 	 */
-	private List<MajiangPai> guipaiList = new ArrayList<>();;
+	private List<MajiangPai> guipaiList = new ArrayList<>();
 	/**
 	 * 标示什么牌是鬼牌
 	 */
 	private Set<MajiangPai> guipaiTypeSet = new HashSet<>();
-	// - xingPaiMap:Map<MajiangPai,MajiangPai>//什么牌当成了什么牌
 
 	private Map<Integer, MajiangPlayerAction> actionCandidates = new HashMap<>();
 
@@ -38,6 +37,15 @@ public class MajiangPlayer {
 	 * 摸进的牌。只是展示，实际在手牌中。
 	 */
 	private MajiangPai publicMoPai;
+
+	/**
+	 * 打出的牌
+	 */
+	private List<MajiangPai> dachupaiList = new ArrayList<>();
+
+	private List<ChichuPai> chichuPaiList = new ArrayList<>();
+	private List<PengchuPai> pengchuPaiList = new ArrayList<>();
+	private List<GangchuPai> gangchuPaiList = new ArrayList<>();
 
 	public void addGuipaiType(MajiangPai guipaiType) {
 		guipaiTypeSet.add(guipaiType);
@@ -140,6 +148,38 @@ public class MajiangPlayer {
 
 	public void setPublicMoPai(MajiangPai publicMoPai) {
 		this.publicMoPai = publicMoPai;
+	}
+
+	public List<MajiangPai> getDachupaiList() {
+		return dachupaiList;
+	}
+
+	public void setDachupaiList(List<MajiangPai> dachupaiList) {
+		this.dachupaiList = dachupaiList;
+	}
+
+	public List<ChichuPai> getChichuPaiList() {
+		return chichuPaiList;
+	}
+
+	public void setChichuPaiList(List<ChichuPai> chichuPaiList) {
+		this.chichuPaiList = chichuPaiList;
+	}
+
+	public List<PengchuPai> getPengchuPaiList() {
+		return pengchuPaiList;
+	}
+
+	public void setPengchuPaiList(List<PengchuPai> pengchuPaiList) {
+		this.pengchuPaiList = pengchuPaiList;
+	}
+
+	public List<GangchuPai> getGangchuPaiList() {
+		return gangchuPaiList;
+	}
+
+	public void setGangchuPaiList(List<GangchuPai> gangchuPaiList) {
+		this.gangchuPaiList = gangchuPaiList;
 	}
 
 }
