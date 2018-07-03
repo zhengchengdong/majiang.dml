@@ -10,6 +10,11 @@ public class Ju {
 
 	private Pan currentPan;
 
+	/**
+	 * 一局打几盘
+	 */
+	private int panShu;
+
 	private PlayersMenFengDeterminer playersMenFengDeterminerForFirstPan;
 	private ZhuangDeterminer zhuangDeterminerForFirstPan;
 	private AvaliablePaiFiller avaliablePaiFiller;
@@ -49,6 +54,8 @@ public class Ju {
 			throw new MajiangPlayerActionNotFoundException();
 		}
 		processAction(playerId, action);
+		// TODO updateaction
+		// TODO recordPanActionFrame
 	}
 
 	private void processAction(String playerId, MajiangPlayerAction action) throws Exception {
@@ -66,6 +73,14 @@ public class Ju {
 
 	public void setCurrentPan(Pan currentPan) {
 		this.currentPan = currentPan;
+	}
+
+	public int getPanShu() {
+		return panShu;
+	}
+
+	public void setPanShu(int panShu) {
+		this.panShu = panShu;
 	}
 
 	public PlayersMenFengDeterminer getPlayersMenFengDeterminerForFirstPan() {
