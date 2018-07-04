@@ -114,7 +114,8 @@ public class Pan {
 	}
 
 	public PanActionFrame recordPanActionFrame(MajiangPlayerAction action) {
-
+		// TODO
+		return null;
 	}
 
 	public Map<String, MajiangPlayer> getMajiangPlayerIdMajiangPlayerMap() {

@@ -7,4 +7,12 @@ public class PanActionFrame {
 	 */
 	private byte[] frameData;
 
+	public byte[] getFrameData() {
+		return frameData;
+	}
+
+	public void setFrameData(byte[] frameData) {
+		this.frameData = frameData;
+	}
+
 }

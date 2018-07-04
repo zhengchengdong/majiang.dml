@@ -56,6 +56,7 @@ public class Ju {
 		processAction(playerId, action);
 		// TODO updateaction
 		// TODO recordPanActionFrame
+		return null;
 	}
 
 	private void processAction(String playerId, MajiangPlayerAction action) throws Exception {
