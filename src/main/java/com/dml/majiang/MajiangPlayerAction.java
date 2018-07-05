@@ -6,7 +6,7 @@ package com.dml.majiang;
  * @author Neo
  *
  */
-public abstract class MajiangPlayerAction {
+public abstract class MajiangPlayerAction implements ByteBufferAble {
 
 	private int id;
 

@@ -22,6 +22,9 @@ public class Ju {
 	private FaPaiStrategy faPaiStrategy;
 	private MajiangPlayerInitialActionUpdater initialActionUpdater;
 	private MajiangPlayerMoActionProcessor moActionProcessor;
+	private MajiangPlayerMoActionUpdater moActionUpdater;
+
+	private int panActionFrameBufferSize;
 
 	public void determinePlayersMenFengForFirstPan() throws Exception {
 		playersMenFengDeterminerForFirstPan.determinePlayersMenFeng(this);
@@ -43,26 +46,34 @@ public class Ju {
 		faPaiStrategy.faPai(this);
 	}
 
-	public PanActionFrame updateInitialAction() throws Exception {
+	public byte[] updateInitialAction() throws Exception {
 		initialActionUpdater.updateActions(this);
 		return currentPan.recordPanActionFrame(null);
 	}
 
-	public PanActionFrame action(String playerId, int actionId) throws Exception {
+	public byte[] action(String playerId, int actionId) throws Exception {
 		MajiangPlayerAction action = currentPan.findPlayerActionCandidate(playerId, actionId);
 		if (action == null) {
 			throw new MajiangPlayerActionNotFoundException();
 		}
 		processAction(playerId, action);
-		// TODO updateaction
-		// TODO recordPanActionFrame
-		return null;
+		updateAction(playerId, action);
+		return currentPan.recordPanActionFrame(action);
 	}
 
 	private void processAction(String playerId, MajiangPlayerAction action) throws Exception {
 
 		if (action instanceof MajiangMoAction) {
 			moActionProcessor.process(playerId, (MajiangMoAction) action, this);
+		} else {
+		}
+
+	}
+
+	private void updateAction(String playerId, MajiangPlayerAction action) throws Exception {
+
+		if (action instanceof MajiangMoAction) {
+			moActionUpdater.updateActions(playerId, (MajiangMoAction) action, this);
 		} else {
 		}
 
@@ -138,6 +149,22 @@ public class Ju {
 
 	public void setMoActionProcessor(MajiangPlayerMoActionProcessor moActionProcessor) {
 		this.moActionProcessor = moActionProcessor;
+	}
+
+	public MajiangPlayerMoActionUpdater getMoActionUpdater() {
+		return moActionUpdater;
+	}
+
+	public void setMoActionUpdater(MajiangPlayerMoActionUpdater moActionUpdater) {
+		this.moActionUpdater = moActionUpdater;
+	}
+
+	public int getPanActionFrameBufferSize() {
+		return panActionFrameBufferSize;
+	}
+
+	public void setPanActionFrameBufferSize(int panActionFrameBufferSize) {
+		this.panActionFrameBufferSize = panActionFrameBufferSize;
 	}
 
 }

@@ -1,6 +1,8 @@
 package com.dml.majiang;
 
-public class Gangzi {
+import java.nio.ByteBuffer;
+
+public class Gangzi implements ByteBufferAble {
 	private MajiangPai paiType;
 
 	public MajiangPai getPaiType() {
@@ -9,6 +11,16 @@ public class Gangzi {
 
 	public void setPaiType(MajiangPai paiType) {
 		this.paiType = paiType;
+	}
+
+	@Override
+	public void toByteBuffer(ByteBuffer bb) throws Throwable {
+		bb.put((byte) paiType.ordinal());
+	}
+
+	@Override
+	public void fillByByteBuffer(ByteBuffer bb) throws Throwable {
+		paiType = MajiangPai.valueOf(Byte.toUnsignedInt(bb.get()));
 	}
 
 }

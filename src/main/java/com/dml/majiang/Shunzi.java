@@ -1,6 +1,8 @@
 package com.dml.majiang;
 
-public class Shunzi {
+import java.nio.ByteBuffer;
+
+public class Shunzi implements ByteBufferAble {
 
 	private MajiangPai pai1;
 	private MajiangPai pai2;
@@ -28,6 +30,20 @@ public class Shunzi {
 
 	public void setPai3(MajiangPai pai3) {
 		this.pai3 = pai3;
+	}
+
+	@Override
+	public void toByteBuffer(ByteBuffer bb) throws Throwable {
+		bb.put((byte) pai1.ordinal());
+		bb.put((byte) pai2.ordinal());
+		bb.put((byte) pai3.ordinal());
+	}
+
+	@Override
+	public void fillByByteBuffer(ByteBuffer bb) throws Throwable {
+		pai1 = MajiangPai.valueOf(Byte.toUnsignedInt(bb.get()));
+		pai2 = MajiangPai.valueOf(Byte.toUnsignedInt(bb.get()));
+		pai3 = MajiangPai.valueOf(Byte.toUnsignedInt(bb.get()));
 	}
 
 }

@@ -1,6 +1,8 @@
 package com.dml.majiang;
 
-public class GangchuPai {
+import java.nio.ByteBuffer;
+
+public class GangchuPai implements ByteBufferAble {
 
 	private Gangzi gangzi;
 	private String dachuPlayerId;
@@ -37,6 +39,22 @@ public class GangchuPai {
 
 	public void setGangType(GangType gangType) {
 		this.gangType = gangType;
+	}
+
+	@Override
+	public void toByteBuffer(ByteBuffer bb) throws Throwable {
+		ByteBufferSerializer.objToByteBuffer(gangzi, bb);
+		ByteBufferSerializer.stringToByteBuffer(dachuPlayerId, bb);
+		ByteBufferSerializer.stringToByteBuffer(gangPlayerId, bb);
+		bb.put((byte) gangType.ordinal());
+	}
+
+	@Override
+	public void fillByByteBuffer(ByteBuffer bb) throws Throwable {
+		gangzi = ByteBufferSerializer.byteBufferToObj(bb);
+		dachuPlayerId = ByteBufferSerializer.byteBufferToString(bb);
+		gangPlayerId = ByteBufferSerializer.byteBufferToString(bb);
+		gangType = GangType.valueOf(bb.get());
 	}
 
 }

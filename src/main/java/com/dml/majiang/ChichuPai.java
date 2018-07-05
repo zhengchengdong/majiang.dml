@@ -1,6 +1,8 @@
 package com.dml.majiang;
 
-public class ChichuPai {
+import java.nio.ByteBuffer;
+
+public class ChichuPai implements ByteBufferAble {
 	private Shunzi shunzi;
 	private String dachuPlayerId;
 	private String chiPlayerId;
@@ -27,6 +29,20 @@ public class ChichuPai {
 
 	public void setChiPlayerId(String chiPlayerId) {
 		this.chiPlayerId = chiPlayerId;
+	}
+
+	@Override
+	public void toByteBuffer(ByteBuffer bb) throws Throwable {
+		ByteBufferSerializer.objToByteBuffer(shunzi, bb);
+		ByteBufferSerializer.stringToByteBuffer(dachuPlayerId, bb);
+		ByteBufferSerializer.stringToByteBuffer(chiPlayerId, bb);
+	}
+
+	@Override
+	public void fillByByteBuffer(ByteBuffer bb) throws Throwable {
+		shunzi = ByteBufferSerializer.byteBufferToObj(bb);
+		dachuPlayerId = ByteBufferSerializer.byteBufferToString(bb);
+		chiPlayerId = ByteBufferSerializer.byteBufferToString(bb);
 	}
 
 }
