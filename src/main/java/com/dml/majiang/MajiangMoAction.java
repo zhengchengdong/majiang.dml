@@ -9,14 +9,14 @@ public class MajiangMoAction extends MajiangPlayerAction {
 	}
 
 	public MajiangMoAction(int id) {
-		super(id);
+		super(id, MajiangPlayerActionType.mo);
 	}
 
 	@Override
-	public void toByteBuffer(ByteBuffer bb) throws Throwable {
+	protected void contentToByteBuffer(ByteBuffer bb) throws Throwable {
 	}
 
 	@Override
-	public void fillByByteBuffer(ByteBuffer bb) throws Throwable {
+	protected void fillContentByByteBuffer(ByteBuffer bb) throws Throwable {
 	}
 }

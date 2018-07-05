@@ -16,14 +16,12 @@ public class MajiangPlayer {
 	 */
 	private MajiangPosition menFeng;
 	private List<MajiangPai> shoupaiList = new ArrayList<>();
+
 	/**
 	 * 公开的牌，不能行牌
 	 */
 	private List<MajiangPai> publicPaiList = new ArrayList<>();
-	/**
-	 * 手牌中的鬼牌
-	 */
-	private List<MajiangPai> guipaiList = new ArrayList<>();
+
 	/**
 	 * 标示什么牌是鬼牌
 	 */
@@ -54,10 +52,6 @@ public class MajiangPlayer {
 	public void addShoupai(MajiangPai pai) {
 		shoupaiList.add(pai);
 		Collections.sort(shoupaiList);
-		if (guipaiTypeSet.contains(pai)) {
-			guipaiList.add(pai);
-			Collections.sort(guipaiList);
-		}
 	}
 
 	public void addPaiToGouXingCalculator(MajiangPai pai) {
@@ -76,6 +70,21 @@ public class MajiangPlayer {
 
 	public void addPublicPai(MajiangPai pai) {
 		publicPaiList.add(pai);
+	}
+
+	public void generateDaActions() {
+		Set<MajiangPai> daPaiSet = new HashSet<>();
+		shoupaiList.forEach((shoupai) -> {
+			if (!guipaiTypeSet.contains(shoupai)) {
+				if (!daPaiSet.contains(shoupai)) {
+					int actionId = actionCandidates.size() + 1;
+					MajiangDaAction daAction = new MajiangDaAction(actionId, shoupai);
+					actionCandidates.put(actionId, daAction);
+					daPaiSet.add(shoupai);
+				}
+			}
+		});
+
 	}
 
 	public String getId() {
@@ -100,14 +109,6 @@ public class MajiangPlayer {
 
 	public void setShoupaiList(List<MajiangPai> shoupaiList) {
 		this.shoupaiList = shoupaiList;
-	}
-
-	public List<MajiangPai> getGuipaiList() {
-		return guipaiList;
-	}
-
-	public void setGuipaiList(List<MajiangPai> guipaiList) {
-		this.guipaiList = guipaiList;
 	}
 
 	public Set<MajiangPai> getGuipaiTypeSet() {
