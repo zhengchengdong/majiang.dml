@@ -41,9 +41,9 @@ public class MajiangPlayer {
 	 */
 	private List<MajiangPai> dachupaiList = new ArrayList<>();
 
-	private List<ChichuPai> chichuPaiList = new ArrayList<>();
-	private List<PengchuPai> pengchuPaiList = new ArrayList<>();
-	private List<GangchuPai> gangchuPaiList = new ArrayList<>();
+	private List<ChichuPai> chichupaiList = new ArrayList<>();
+	private List<PengchuPai> pengchupaiList = new ArrayList<>();
+	private List<GangchuPai> gangchupaiList = new ArrayList<>();
 
 	public void addGuipaiType(MajiangPai guipaiType) {
 		guipaiTypeSet.add(guipaiType);
@@ -85,6 +85,10 @@ public class MajiangPlayer {
 			}
 		});
 
+	}
+
+	public void clearActionCandidates() {
+		actionCandidates.clear();
 	}
 
 	public String getId() {
@@ -159,28 +163,28 @@ public class MajiangPlayer {
 		this.dachupaiList = dachupaiList;
 	}
 
-	public List<ChichuPai> getChichuPaiList() {
-		return chichuPaiList;
+	public List<ChichuPai> getChichupaiList() {
+		return chichupaiList;
 	}
 
-	public void setChichuPaiList(List<ChichuPai> chichuPaiList) {
-		this.chichuPaiList = chichuPaiList;
+	public void setChichupaiList(List<ChichuPai> chichupaiList) {
+		this.chichupaiList = chichupaiList;
 	}
 
-	public List<PengchuPai> getPengchuPaiList() {
-		return pengchuPaiList;
+	public List<PengchuPai> getPengchupaiList() {
+		return pengchupaiList;
 	}
 
-	public void setPengchuPaiList(List<PengchuPai> pengchuPaiList) {
-		this.pengchuPaiList = pengchuPaiList;
+	public void setPengchupaiList(List<PengchuPai> pengchupaiList) {
+		this.pengchupaiList = pengchupaiList;
 	}
 
-	public List<GangchuPai> getGangchuPaiList() {
-		return gangchuPaiList;
+	public List<GangchuPai> getGangchupaiList() {
+		return gangchupaiList;
 	}
 
-	public void setGangchuPaiList(List<GangchuPai> gangchuPaiList) {
-		this.gangchuPaiList = gangchuPaiList;
+	public void setGangchupaiList(List<GangchuPai> gangchupaiList) {
+		this.gangchupaiList = gangchupaiList;
 	}
 
 }

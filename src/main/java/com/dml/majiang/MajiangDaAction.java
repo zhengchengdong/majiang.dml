@@ -25,4 +25,12 @@ public class MajiangDaAction extends MajiangPlayerAction {
 		pai = MajiangPai.valueOf(Byte.toUnsignedInt(bb.get()));
 	}
 
+	public MajiangPai getPai() {
+		return pai;
+	}
+
+	public void setPai(MajiangPai pai) {
+		this.pai = pai;
+	}
+
 }

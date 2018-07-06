@@ -14,9 +14,9 @@ public class LiangangangPanValueObjectPlayerViewFilter implements PanValueObject
 			if (player.getId().equals(playerId)) {// 是自己
 				// 什么都不过滤，全要看
 			} else {// 是其他玩家
-				player.getActionCandidates().clear();
+				player.setActionCandidates(null);
 				player.setPublicMoPai(null);
-				player.getShoupaiList().clear();
+				player.getShoupaiList().setPaiList(null);
 			}
 		});
 	}
