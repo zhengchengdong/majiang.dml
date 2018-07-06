@@ -151,7 +151,12 @@ public class MajiangPlayerValueObject implements ByteBufferAble {
 		majiangPaiListToByteBuffer(publicPaiList, bb);
 		majiangPaiListToByteBuffer(guipaiTypeList, bb);
 		ByteBufferSerializer.listToByteBuffer(new ArrayList<>(actionCandidates), bb);
-		bb.put((byte) publicMoPai.ordinal());
+		if (publicMoPai != null) {
+			bb.put((byte) 1);
+			bb.put((byte) publicMoPai.ordinal());
+		} else {
+			bb.put((byte) 0);
+		}
 		majiangPaiListToByteBuffer(dachupaiList, bb);
 		ByteBufferSerializer.listToByteBuffer(new ArrayList<>(chichuPaiList), bb);
 		ByteBufferSerializer.listToByteBuffer(new ArrayList<>(pengchuPaiList), bb);
@@ -167,7 +172,12 @@ public class MajiangPlayerValueObject implements ByteBufferAble {
 		guipaiTypeList = fillMajiangPaiList(bb);
 		actionCandidates = new ArrayList<>();
 		ByteBufferSerializer.byteBufferToList(bb).forEach((o) -> actionCandidates.add((MajiangPlayerAction) o));
-		publicMoPai = MajiangPai.valueOf(Byte.toUnsignedInt(bb.get()));
+		byte notNull = bb.get();
+		if (notNull == 1) {
+			publicMoPai = MajiangPai.valueOf(Byte.toUnsignedInt(bb.get()));
+		} else {
+			publicMoPai = null;
+		}
 		dachupaiList = fillMajiangPaiList(bb);
 		chichuPaiList = new ArrayList<>();
 		ByteBufferSerializer.byteBufferToList(bb).forEach((o) -> chichuPaiList.add((ChichuPai) o));

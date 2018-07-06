@@ -19,10 +19,12 @@ public class ByteBufferSerializer {
 	 * @throws Throwable
 	 */
 	public static void stringToByteBuffer(String str, ByteBuffer bb) throws Throwable {
-		if (str == null) {
-			str = "";
+		if (str != null) {
+			bb.put((byte) 1);
+			byteArrayToByteBuffer(str.getBytes("UTF-8"), bb);
+		} else {
+			bb.put((byte) 0);
 		}
-		byteArrayToByteBuffer(str.getBytes("UTF-8"), bb);
 	}
 
 	/**
@@ -88,7 +90,12 @@ public class ByteBufferSerializer {
 	 * @throws Throwable
 	 */
 	public static String byteBufferToString(ByteBuffer bb) throws Throwable {
-		return new String(byteBufferTobyteArray(bb), "UTF-8");
+		byte notNull = bb.get();
+		if (notNull == 1) {
+			return new String(byteBufferTobyteArray(bb), "UTF-8");
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -236,8 +243,13 @@ public class ByteBufferSerializer {
 	 * @throws Throwable
 	 */
 	public static void objToByteBuffer(ByteBufferAble obj, ByteBuffer bb) throws Throwable {
-		stringToByteBuffer(obj.getClass().getName(), bb);
-		obj.toByteBuffer(bb);
+		if (obj != null) {
+			bb.put((byte) 1);
+			stringToByteBuffer(obj.getClass().getName(), bb);
+			obj.toByteBuffer(bb);
+		} else {
+			bb.put((byte) 0);
+		}
 	}
 
 	/**
@@ -248,10 +260,15 @@ public class ByteBufferSerializer {
 	 * @return
 	 */
 	public static <E extends ByteBufferAble> E byteBufferToObj(ByteBuffer bb) throws Throwable {
-		String typeStr = byteBufferToString(bb);
-		ByteBufferAble obj = (ByteBufferAble) Class.forName(typeStr).newInstance();
-		obj.fillByByteBuffer(bb);
-		return (E) obj;
+		byte notNull = bb.get();
+		if (notNull == 1) {
+			String typeStr = byteBufferToString(bb);
+			ByteBufferAble obj = (ByteBufferAble) Class.forName(typeStr).newInstance();
+			obj.fillByByteBuffer(bb);
+			return (E) obj;
+		} else {
+			return null;
+		}
 	}
 
 }
