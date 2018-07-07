@@ -32,7 +32,7 @@ public class MajiangPlayer {
 	private GouXingCalculator gouXingCalculator = new GouXingCalculator();
 
 	/**
-	 * 摸进的牌。只是展示，实际在手牌中。
+	 * 摸进的牌。只是展示(只能自己看见)，实际在手牌中。
 	 */
 	private MajiangPai publicMoPai;
 
@@ -89,6 +89,24 @@ public class MajiangPlayer {
 
 	public void clearActionCandidates() {
 		actionCandidates.clear();
+	}
+
+	/**
+	 * 不能打鬼牌是常识
+	 * 
+	 * @param pai
+	 */
+	public void daChuPai(MajiangPai pai) {
+		shoupaiList.remove(pai);
+		dachupaiList.add(pai);
+		publicMoPai = null;
+		gouXingCalculator.removePai(pai);
+	}
+
+	public void moPai(MajiangPai pai) {
+		addShoupai(pai);
+		addPaiToGouXingCalculator(pai);
+		publicMoPai = pai;
 	}
 
 	public String getId() {

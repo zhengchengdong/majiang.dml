@@ -4,15 +4,15 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShoupaiListValueObject implements ByteBufferAble {
+public class PaiListValueObject implements ByteBufferAble {
 
 	private List<MajiangPai> paiList;
 	private int paiCount;
 
-	public ShoupaiListValueObject() {
+	public PaiListValueObject() {
 	}
 
-	public ShoupaiListValueObject(List<MajiangPai> shoupaiList) {
+	public PaiListValueObject(List<MajiangPai> shoupaiList) {
 		paiList = new ArrayList<>(shoupaiList);
 		paiCount = shoupaiList.size();
 	}

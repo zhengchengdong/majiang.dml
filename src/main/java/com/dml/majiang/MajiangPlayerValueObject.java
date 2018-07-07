@@ -11,7 +11,7 @@ public class MajiangPlayerValueObject implements ByteBufferAble {
 	 * 门风
 	 */
 	private MajiangPosition menFeng;
-	private ShoupaiListValueObject shoupaiList;
+	private PaiListValueObject shoupaiList;
 	/**
 	 * 公开的牌，不能行牌
 	 */
@@ -25,7 +25,7 @@ public class MajiangPlayerValueObject implements ByteBufferAble {
 	private List<MajiangPlayerAction> actionCandidates;
 
 	/**
-	 * 摸进的牌。只是展示，实际在手牌中。
+	 * 摸进的牌。只是展示(只能自己看见)，实际在手牌中。
 	 */
 	private MajiangPai publicMoPai;
 
@@ -44,7 +44,7 @@ public class MajiangPlayerValueObject implements ByteBufferAble {
 	public MajiangPlayerValueObject(MajiangPlayer player) {
 		id = player.getId();
 		menFeng = player.getMenFeng();
-		shoupaiList = new ShoupaiListValueObject(player.getShoupaiList());
+		shoupaiList = new PaiListValueObject(player.getShoupaiList());
 		publicPaiList = new ArrayList<>(player.getPublicPaiList());
 		guipaiTypeList = new ArrayList<>(player.getGuipaiTypeSet());
 		actionCandidates = new ArrayList<>(player.getActionCandidates().values());
@@ -71,11 +71,11 @@ public class MajiangPlayerValueObject implements ByteBufferAble {
 		this.menFeng = menFeng;
 	}
 
-	public ShoupaiListValueObject getShoupaiList() {
+	public PaiListValueObject getShoupaiList() {
 		return shoupaiList;
 	}
 
-	public void setShoupaiList(ShoupaiListValueObject shoupaiList) {
+	public void setShoupaiList(PaiListValueObject shoupaiList) {
 		this.shoupaiList = shoupaiList;
 	}
 

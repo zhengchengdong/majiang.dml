@@ -45,6 +45,31 @@ public class GouXingCalculator {
 		}
 	}
 
+	public void removePai(MajiangPai pai) {
+		int paiOrdinal = pai.ordinal();
+		if (paiOrdinal >= 0 && paiOrdinal <= 8) {// 万
+			wanPaiQuantityArray[paiOrdinal]--;
+		} else if (paiOrdinal >= 9 && paiOrdinal <= 17) {// 筒
+			tongPaiQuantityArray[paiOrdinal - 9]--;
+		} else if (paiOrdinal >= 18 && paiOrdinal <= 26) {// 条
+			tiaoPaiQuantityArray[paiOrdinal - 18]--;
+		} else if (pai.equals(MajiangPai.dongfeng)) {
+			dongfengQuantity--;
+		} else if (pai.equals(MajiangPai.nanfeng)) {
+			nanfengQuantity--;
+		} else if (pai.equals(MajiangPai.xifeng)) {
+			xifengQuantity--;
+		} else if (pai.equals(MajiangPai.beifeng)) {
+			beifengQuantity--;
+		} else if (pai.equals(MajiangPai.hongzhong)) {
+			hongzhongQuantity--;
+		} else if (pai.equals(MajiangPai.facai)) {
+			facaiQuantity--;
+		} else if (pai.equals(MajiangPai.baiban)) {
+			baibanQuantity--;
+		}
+	}
+
 	public int[] getWanPaiQuantityArray() {
 		return wanPaiQuantityArray;
 	}

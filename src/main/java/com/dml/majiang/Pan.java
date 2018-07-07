@@ -131,6 +131,14 @@ public class Pan {
 		return frameData;
 	}
 
+	public void playerDaChuPai(String playerId, MajiangPai pai) throws MajiangPlayerNotFoundException {
+		MajiangPlayer player = majiangPlayerIdMajiangPlayerMap.get(playerId);
+		if (player == null) {
+			throw new MajiangPlayerNotFoundException();
+		}
+		player.daChuPai(pai);
+	}
+
 	public Map<String, MajiangPlayer> getMajiangPlayerIdMajiangPlayerMap() {
 		return majiangPlayerIdMajiangPlayerMap;
 	}
