@@ -70,6 +70,135 @@ public class GouXingCalculator {
 		}
 	}
 
+	public Shunzi tryAndMakeShunziWithPai1(MajiangPai pai1) {
+		int paiOrdinal = pai1.ordinal();
+		if (paiOrdinal >= 0 && paiOrdinal <= 8) {// 万
+			if (paiOrdinal <= 6) {
+				if (wanPaiQuantityArray[paiOrdinal + 1] > 0 && wanPaiQuantityArray[paiOrdinal + 2] > 0) {
+					Shunzi shunzi = new Shunzi(pai1, MajiangPai.valueOf(paiOrdinal + 1),
+							MajiangPai.valueOf(paiOrdinal + 2));
+					return shunzi;
+				} else {
+					return null;
+				}
+			} else {
+				return null;
+			}
+		} else if (paiOrdinal >= 9 && paiOrdinal <= 17) {// 筒
+			if (paiOrdinal <= 15) {
+				if (tongPaiQuantityArray[paiOrdinal + 1] > 0 && tongPaiQuantityArray[paiOrdinal + 2] > 0) {
+					Shunzi shunzi = new Shunzi(pai1, MajiangPai.valueOf(paiOrdinal + 1),
+							MajiangPai.valueOf(paiOrdinal + 2));
+					return shunzi;
+				} else {
+					return null;
+				}
+			} else {
+				return null;
+			}
+		} else if (paiOrdinal >= 18 && paiOrdinal <= 26) {// 条
+			if (paiOrdinal <= 24) {
+				if (tiaoPaiQuantityArray[paiOrdinal + 1] > 0 && tiaoPaiQuantityArray[paiOrdinal + 2] > 0) {
+					Shunzi shunzi = new Shunzi(pai1, MajiangPai.valueOf(paiOrdinal + 1),
+							MajiangPai.valueOf(paiOrdinal + 2));
+					return shunzi;
+				} else {
+					return null;
+				}
+			} else {
+				return null;
+			}
+		} else {
+			return null;
+		}
+	}
+
+	public Shunzi tryAndMakeShunziWithPai2(MajiangPai pai2) {
+		int paiOrdinal = pai2.ordinal();
+		if (paiOrdinal >= 0 && paiOrdinal <= 8) {// 万
+			if (paiOrdinal >= 1 && paiOrdinal <= 7) {
+				if (wanPaiQuantityArray[paiOrdinal - 1] > 0 && wanPaiQuantityArray[paiOrdinal + 1] > 0) {
+					Shunzi shunzi = new Shunzi(MajiangPai.valueOf(paiOrdinal - 1), pai2,
+							MajiangPai.valueOf(paiOrdinal + 1));
+					return shunzi;
+				} else {
+					return null;
+				}
+			} else {
+				return null;
+			}
+		} else if (paiOrdinal >= 9 && paiOrdinal <= 17) {// 筒
+			if (paiOrdinal >= 8 && paiOrdinal <= 16) {
+				if (tongPaiQuantityArray[paiOrdinal - 1] > 0 && tongPaiQuantityArray[paiOrdinal + 1] > 0) {
+					Shunzi shunzi = new Shunzi(MajiangPai.valueOf(paiOrdinal - 1), pai2,
+							MajiangPai.valueOf(paiOrdinal + 1));
+					return shunzi;
+				} else {
+					return null;
+				}
+			} else {
+				return null;
+			}
+		} else if (paiOrdinal >= 18 && paiOrdinal <= 26) {// 条
+			if (paiOrdinal >= 17 && paiOrdinal <= 25) {
+				if (tiaoPaiQuantityArray[paiOrdinal - 1] > 0 && tiaoPaiQuantityArray[paiOrdinal + 1] > 0) {
+					Shunzi shunzi = new Shunzi(MajiangPai.valueOf(paiOrdinal - 1), pai2,
+							MajiangPai.valueOf(paiOrdinal + 1));
+					return shunzi;
+				} else {
+					return null;
+				}
+			} else {
+				return null;
+			}
+		} else {
+			return null;
+		}
+	}
+
+	public Shunzi tryAndMakeShunziWithPai3(MajiangPai pai3) {
+		int paiOrdinal = pai3.ordinal();
+		if (paiOrdinal >= 0 && paiOrdinal <= 8) {// 万
+			if (paiOrdinal >= 2) {
+				if (wanPaiQuantityArray[paiOrdinal - 1] > 0 && wanPaiQuantityArray[paiOrdinal - 2] > 0) {
+					Shunzi shunzi = new Shunzi(MajiangPai.valueOf(paiOrdinal - 2), MajiangPai.valueOf(paiOrdinal - 1),
+							pai3);
+					return shunzi;
+				} else {
+					return null;
+				}
+			} else {
+				return null;
+			}
+		} else if (paiOrdinal >= 9 && paiOrdinal <= 17) {// 筒
+			if (paiOrdinal >= 11) {
+				if (tongPaiQuantityArray[paiOrdinal - 1] > 0 && tongPaiQuantityArray[paiOrdinal - 2] > 0) {
+					Shunzi shunzi = new Shunzi(MajiangPai.valueOf(paiOrdinal - 2), MajiangPai.valueOf(paiOrdinal - 1),
+							pai3);
+					return shunzi;
+				} else {
+					return null;
+				}
+			} else {
+				return null;
+			}
+		} else if (paiOrdinal >= 18 && paiOrdinal <= 26) {// 条
+			if (paiOrdinal >= 20) {
+				if (tiaoPaiQuantityArray[paiOrdinal - 1] > 0 && tiaoPaiQuantityArray[paiOrdinal - 2] > 0) {
+					Shunzi shunzi = new Shunzi(MajiangPai.valueOf(paiOrdinal - 2), MajiangPai.valueOf(paiOrdinal - 1),
+							pai3);
+					return shunzi;
+				} else {
+					return null;
+				}
+			} else {
+				return null;
+			}
+		} else {
+			return null;
+		}
+	}
+
 	public int[] getWanPaiQuantityArray() {
 		return wanPaiQuantityArray;
 	}

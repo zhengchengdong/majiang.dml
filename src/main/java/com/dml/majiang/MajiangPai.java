@@ -7,4 +7,9 @@ public enum MajiangPai {
 	public static MajiangPai valueOf(int ordinal) {
 		return array[ordinal];
 	}
+
+	public static boolean isXushupai(MajiangPai pai) {
+		int ordinal = pai.ordinal();
+		return (ordinal >= 0 && ordinal <= 26);
+	}
 }

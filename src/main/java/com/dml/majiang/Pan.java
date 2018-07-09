@@ -159,10 +159,24 @@ public class Pan {
 
 	}
 
-	private MajiangPlayer findShangjia(MajiangPlayer player) {
+	public MajiangPlayer findShangjia(MajiangPlayer player) {
 		MajiangPosition shangjiaMenFeng = MajiangPositionCircle.nextClockwise(player.getMenFeng());
 		String shangjiaPlayerId = menFengMajiangPlayerIdMap.get(shangjiaMenFeng);
+		while (shangjiaPlayerId == null) {
+			shangjiaMenFeng = MajiangPositionCircle.nextClockwise(shangjiaMenFeng);
+			shangjiaPlayerId = menFengMajiangPlayerIdMap.get(shangjiaMenFeng);
+		}
 		return majiangPlayerIdMajiangPlayerMap.get(shangjiaPlayerId);
+	}
+
+	public MajiangPlayer findXiajia(MajiangPlayer player) {
+		MajiangPosition xiajiaMenFeng = MajiangPositionCircle.nextAntiClockwise(player.getMenFeng());
+		String xiajiaPlayerId = menFengMajiangPlayerIdMap.get(xiajiaMenFeng);
+		while (xiajiaPlayerId == null) {
+			xiajiaMenFeng = MajiangPositionCircle.nextAntiClockwise(xiajiaMenFeng);
+			xiajiaPlayerId = menFengMajiangPlayerIdMap.get(xiajiaMenFeng);
+		}
+		return majiangPlayerIdMajiangPlayerMap.get(xiajiaPlayerId);
 	}
 
 	public Map<String, MajiangPlayer> getMajiangPlayerIdMajiangPlayerMap() {

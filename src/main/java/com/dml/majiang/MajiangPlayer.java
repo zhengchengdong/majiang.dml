@@ -134,6 +134,29 @@ public class MajiangPlayer {
 		dachupaiList.remove(dachupaiList.size() - 1);
 	}
 
+	public void tryChiAndGenerateCandidateActions(MajiangPai pai) {
+		if (MajiangPai.isXushupai(pai)) {
+			Shunzi shunzi1 = gouXingCalculator.tryAndMakeShunziWithPai1(pai);
+			if (shunzi1 != null) {
+				actionCandidates.put(actionCandidates.size() + 1,
+						new MajiangChiAction(actionCandidates.size() + 1, id, pai, shunzi1));
+			}
+
+			Shunzi shunzi2 = gouXingCalculator.tryAndMakeShunziWithPai2(pai);
+			if (shunzi2 != null) {
+				actionCandidates.put(actionCandidates.size() + 1,
+						new MajiangChiAction(actionCandidates.size() + 1, id, pai, shunzi2));
+			}
+
+			Shunzi shunzi3 = gouXingCalculator.tryAndMakeShunziWithPai3(pai);
+			if (shunzi3 != null) {
+				actionCandidates.put(actionCandidates.size() + 1,
+						new MajiangChiAction(actionCandidates.size() + 1, id, pai, shunzi3));
+			}
+
+		}
+	}
+
 	public String getId() {
 		return id;
 	}

@@ -8,6 +8,15 @@ public class Shunzi implements ByteBufferAble {
 	private MajiangPai pai2;
 	private MajiangPai pai3;
 
+	public Shunzi() {
+	}
+
+	public Shunzi(MajiangPai pai1, MajiangPai pai2, MajiangPai pai3) {
+		this.pai1 = pai1;
+		this.pai2 = pai2;
+		this.pai3 = pai3;
+	}
+
 	public MajiangPai getPai1() {
 		return pai1;
 	}
