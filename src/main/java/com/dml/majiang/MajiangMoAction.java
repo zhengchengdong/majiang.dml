@@ -8,8 +8,8 @@ public class MajiangMoAction extends MajiangPlayerAction {
 
 	}
 
-	public MajiangMoAction(int id) {
-		super(id, MajiangPlayerActionType.mo);
+	public MajiangMoAction(int id, String actionPlayerId) {
+		super(id, MajiangPlayerActionType.mo, actionPlayerId);
 	}
 
 	@Override

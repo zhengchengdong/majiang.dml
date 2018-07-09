@@ -14,18 +14,22 @@ public abstract class MajiangPlayerAction implements ByteBufferAble {
 
 	private MajiangPlayerActionType type;
 
+	private String actionPlayerId;
+
 	public MajiangPlayerAction() {
 	}
 
-	public MajiangPlayerAction(int id, MajiangPlayerActionType type) {
+	public MajiangPlayerAction(int id, MajiangPlayerActionType type, String actionPlayerId) {
 		this.id = id;
 		this.type = type;
+		this.actionPlayerId = actionPlayerId;
 	}
 
 	@Override
 	public void toByteBuffer(ByteBuffer bb) throws Throwable {
 		bb.putInt(id);
 		bb.put((byte) type.ordinal());
+		ByteBufferSerializer.stringToByteBuffer(actionPlayerId, bb);
 		contentToByteBuffer(bb);
 	}
 
@@ -35,6 +39,7 @@ public abstract class MajiangPlayerAction implements ByteBufferAble {
 	public void fillByByteBuffer(ByteBuffer bb) throws Throwable {
 		id = bb.getInt();
 		type = MajiangPlayerActionType.valueOf(bb.get());
+		actionPlayerId = ByteBufferSerializer.byteBufferToString(bb);
 		fillContentByByteBuffer(bb);
 	}
 
@@ -54,6 +59,14 @@ public abstract class MajiangPlayerAction implements ByteBufferAble {
 
 	public void setType(MajiangPlayerActionType type) {
 		this.type = type;
+	}
+
+	public String getActionPlayerId() {
+		return actionPlayerId;
+	}
+
+	public void setActionPlayerId(String actionPlayerId) {
+		this.actionPlayerId = actionPlayerId;
 	}
 
 }

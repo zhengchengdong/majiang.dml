@@ -10,8 +10,8 @@ public class MajiangDaAction extends MajiangPlayerAction {
 
 	}
 
-	public MajiangDaAction(int id, MajiangPai pai) {
-		super(id, MajiangPlayerActionType.da);
+	public MajiangDaAction(int id, MajiangPai pai, String actionPlayerId) {
+		super(id, MajiangPlayerActionType.da, actionPlayerId);
 		this.pai = pai;
 	}
 

@@ -37,7 +37,7 @@ public class MajiangPlayer {
 	private MajiangPai publicMoPai;
 
 	/**
-	 * 打出的牌
+	 * 打出的牌列表
 	 */
 	private List<MajiangPai> dachupaiList = new ArrayList<>();
 
@@ -78,7 +78,7 @@ public class MajiangPlayer {
 			if (!guipaiTypeSet.contains(shoupai)) {
 				if (!daPaiSet.contains(shoupai)) {
 					int actionId = actionCandidates.size() + 1;
-					MajiangDaAction daAction = new MajiangDaAction(actionId, shoupai);
+					MajiangDaAction daAction = new MajiangDaAction(actionId, shoupai, id);
 					actionCandidates.put(actionId, daAction);
 					daPaiSet.add(shoupai);
 				}
@@ -99,14 +99,39 @@ public class MajiangPlayer {
 	public void daChuPai(MajiangPai pai) {
 		shoupaiList.remove(pai);
 		dachupaiList.add(pai);
-		publicMoPai = null;
 		gouXingCalculator.removePai(pai);
+		publicMoPai = null;
 	}
 
 	public void moPai(MajiangPai pai) {
 		addShoupai(pai);
 		addPaiToGouXingCalculator(pai);
 		publicMoPai = pai;
+	}
+
+	public void chiPai(MajiangPlayer dachupaiPlayer, MajiangPai chijinpai, Shunzi chifaShunzi) {
+		dachupaiPlayer.removeLatestDachupai();
+		MajiangPai pai1 = chifaShunzi.getPai1();
+		if (!pai1.equals(chijinpai)) {
+			shoupaiList.remove(pai1);
+			gouXingCalculator.removePai(pai1);
+		}
+		MajiangPai pai2 = chifaShunzi.getPai2();
+		if (!pai2.equals(chijinpai)) {
+			shoupaiList.remove(pai2);
+			gouXingCalculator.removePai(pai2);
+		}
+		MajiangPai pai3 = chifaShunzi.getPai3();
+		if (!pai3.equals(chijinpai)) {
+			shoupaiList.remove(pai3);
+			gouXingCalculator.removePai(pai3);
+		}
+		ChichuPai chichuPai = new ChichuPai(chifaShunzi, dachupaiPlayer.getId(), id);
+		chichupaiList.add(chichuPai);
+	}
+
+	private void removeLatestDachupai() {
+		dachupaiList.remove(dachupaiList.size() - 1);
 	}
 
 	public String getId() {

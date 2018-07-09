@@ -6,10 +6,12 @@ package com.dml.majiang;
  * @author Neo
  *
  */
-public class LiangangangPanValueObjectPlayerViewFilter implements PanValueObjectPlayerViewFilter {
+public class LiangangangPanActionFramePlayerViewFilter implements PanActionFramePlayerViewFilter {
 
 	@Override
-	public void filter(PanValueObject pan, String playerId) {
+	public void filter(PanActionFrame frame, String playerId) {
+
+		PanValueObject pan = frame.getPanAfterAction();
 		pan.getPlayerList().forEach((player) -> {
 			if (player.getId().equals(playerId)) {// 是自己
 				// 什么都不过滤，全要看

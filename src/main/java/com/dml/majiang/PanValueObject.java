@@ -22,6 +22,11 @@ public class PanValueObject implements ByteBufferAble {
 	 */
 	private String publicWaitingPlayerId;
 
+	/**
+	 * 当前活跃的那张牌的定位
+	 */
+	private PaiCursor activePaiCursor;
+
 	private PanResult result;
 
 	public PanValueObject() {
@@ -35,6 +40,7 @@ public class PanValueObject implements ByteBufferAble {
 		avaliablePaiList = new ArrayList<>(pan.getAvaliablePaiList());
 		publicGuipaiList = new ArrayList<>(pan.getPublicGuipaiSet());
 		publicWaitingPlayerId = pan.getPublicWaitingPlayerId();
+		activePaiCursor = pan.getActivePaiCursor();
 		result = pan.getResult();
 	}
 
@@ -78,6 +84,14 @@ public class PanValueObject implements ByteBufferAble {
 		this.publicWaitingPlayerId = publicWaitingPlayerId;
 	}
 
+	public PaiCursor getActivePaiCursor() {
+		return activePaiCursor;
+	}
+
+	public void setActivePaiCursor(PaiCursor activePaiCursor) {
+		this.activePaiCursor = activePaiCursor;
+	}
+
 	public PanResult getResult() {
 		return result;
 	}
@@ -93,6 +107,7 @@ public class PanValueObject implements ByteBufferAble {
 		majiangPaiListToByteBuffer(avaliablePaiList, bb);
 		majiangPaiListToByteBuffer(publicGuipaiList, bb);
 		ByteBufferSerializer.stringToByteBuffer(publicWaitingPlayerId, bb);
+		ByteBufferSerializer.objToByteBuffer(activePaiCursor, bb);
 		ByteBufferSerializer.objToByteBuffer(result, bb);
 	}
 
@@ -113,6 +128,7 @@ public class PanValueObject implements ByteBufferAble {
 		avaliablePaiList = fillMajiangPaiList(bb);
 		publicGuipaiList = fillMajiangPaiList(bb);
 		publicWaitingPlayerId = ByteBufferSerializer.byteBufferToString(bb);
+		activePaiCursor = ByteBufferSerializer.byteBufferToObj(bb);
 		result = ByteBufferSerializer.byteBufferToObj(bb);
 	}
 

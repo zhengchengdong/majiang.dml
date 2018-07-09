@@ -40,6 +40,11 @@ public class Pan {
 	 */
 	private String publicWaitingPlayerId;
 
+	/**
+	 * 当前活跃的那张牌的定位
+	 */
+	private PaiCursor activePaiCursor;
+
 	private List<byte[]> actionFrameDataList = new ArrayList<>();
 
 	private PanResult result;
@@ -137,6 +142,27 @@ public class Pan {
 			throw new MajiangPlayerNotFoundException();
 		}
 		player.daChuPai(pai);
+		activePaiCursor = new PlayerLatestDachupaiCursor(playerId);
+	}
+
+	public void playerChiPai(String chijinpaiPlayerId, MajiangPai chijinpai, Shunzi chifaShunzi)
+			throws MajiangPlayerNotFoundException {
+
+		MajiangPlayer chijinpaiPlayer = majiangPlayerIdMajiangPlayerMap.get(chijinpaiPlayerId);
+		if (chijinpaiPlayer == null) {
+			throw new MajiangPlayerNotFoundException();
+		}
+
+		// 打出牌的一定是上家
+		MajiangPlayer dachupaiPlayer = findShangjia(chijinpaiPlayer);
+		chijinpaiPlayer.chiPai(dachupaiPlayer, chijinpai, chifaShunzi);
+
+	}
+
+	private MajiangPlayer findShangjia(MajiangPlayer player) {
+		MajiangPosition shangjiaMenFeng = MajiangPositionCircle.nextClockwise(player.getMenFeng());
+		String shangjiaPlayerId = menFengMajiangPlayerIdMap.get(shangjiaMenFeng);
+		return majiangPlayerIdMajiangPlayerMap.get(shangjiaPlayerId);
 	}
 
 	public Map<String, MajiangPlayer> getMajiangPlayerIdMajiangPlayerMap() {
@@ -193,6 +219,14 @@ public class Pan {
 
 	public void setPublicWaitingPlayerId(String publicWaitingPlayerId) {
 		this.publicWaitingPlayerId = publicWaitingPlayerId;
+	}
+
+	public PaiCursor getActivePaiCursor() {
+		return activePaiCursor;
+	}
+
+	public void setActivePaiCursor(PaiCursor activePaiCursor) {
+		this.activePaiCursor = activePaiCursor;
 	}
 
 	public List<byte[]> getActionFrameDataList() {

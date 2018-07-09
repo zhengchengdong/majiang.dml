@@ -26,16 +26,10 @@ public class Ju {
 	private MajiangPlayerMoActionUpdater moActionUpdater;
 	private MajiangPlayerDaActionProcessor daActionProcessor;
 	private MajiangPlayerDaActionUpdater daActionUpdater;
+	private MajiangPlayerChiActionProcessor chiActionProcessor;
+	private MajiangPlayerChiActionUpdater chiActionUpdater;
 
 	private int panActionFrameBufferSize;
-
-	public ActionStatisticsListenerManager getActionStatisticsListenerManager() {
-		return actionStatisticsListenerManager;
-	}
-
-	public void setActionStatisticsListenerManager(ActionStatisticsListenerManager actionStatisticsListenerManager) {
-		this.actionStatisticsListenerManager = actionStatisticsListenerManager;
-	}
 
 	public void determinePlayersMenFengForFirstPan() throws Exception {
 		playersMenFengDeterminerForFirstPan.determinePlayersMenFeng(this);
@@ -67,20 +61,24 @@ public class Ju {
 		if (action == null) {
 			throw new MajiangPlayerActionNotFoundException();
 		}
-		doAction(playerId, action);
+		doAction(action);
 		return currentPan.recordPanActionFrame(action);
 	}
 
-	private void doAction(String playerId, MajiangPlayerAction action) throws Exception {
+	private void doAction(MajiangPlayerAction action) throws Exception {
 
 		if (action instanceof MajiangMoAction) {
-			moActionProcessor.process(playerId, (MajiangMoAction) action, this);
+			moActionProcessor.process((MajiangMoAction) action, this);
 			// TODO listener
-			moActionUpdater.updateActions(playerId, (MajiangMoAction) action, this);
+			moActionUpdater.updateActions((MajiangMoAction) action, this);
 		} else if (action instanceof MajiangDaAction) {
-			daActionProcessor.process(playerId, (MajiangDaAction) action, this);
+			daActionProcessor.process((MajiangDaAction) action, this);
 			actionStatisticsListenerManager.updateDaActionListener((MajiangDaAction) action, this);
-			daActionUpdater.updateActions(playerId, (MajiangDaAction) action, this);
+			daActionUpdater.updateActions((MajiangDaAction) action, this);
+		} else if (action instanceof MajiangChiAction) {
+			daActionProcessor.process((MajiangDaAction) action, this);
+			// TODO listener
+			daActionUpdater.updateActions((MajiangDaAction) action, this);
 		} else {
 		}
 
@@ -186,12 +184,36 @@ public class Ju {
 		this.daActionUpdater = daActionUpdater;
 	}
 
+	public MajiangPlayerChiActionProcessor getChiActionProcessor() {
+		return chiActionProcessor;
+	}
+
+	public void setChiActionProcessor(MajiangPlayerChiActionProcessor chiActionProcessor) {
+		this.chiActionProcessor = chiActionProcessor;
+	}
+
+	public MajiangPlayerChiActionUpdater getChiActionUpdater() {
+		return chiActionUpdater;
+	}
+
+	public void setChiActionUpdater(MajiangPlayerChiActionUpdater chiActionUpdater) {
+		this.chiActionUpdater = chiActionUpdater;
+	}
+
 	public int getPanActionFrameBufferSize() {
 		return panActionFrameBufferSize;
 	}
 
 	public void setPanActionFrameBufferSize(int panActionFrameBufferSize) {
 		this.panActionFrameBufferSize = panActionFrameBufferSize;
+	}
+
+	public ActionStatisticsListenerManager getActionStatisticsListenerManager() {
+		return actionStatisticsListenerManager;
+	}
+
+	public void setActionStatisticsListenerManager(ActionStatisticsListenerManager actionStatisticsListenerManager) {
+		this.actionStatisticsListenerManager = actionStatisticsListenerManager;
 	}
 
 }

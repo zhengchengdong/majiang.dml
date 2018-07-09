@@ -7,6 +7,15 @@ public class ChichuPai implements ByteBufferAble {
 	private String dachuPlayerId;
 	private String chiPlayerId;
 
+	public ChichuPai() {
+	}
+
+	public ChichuPai(Shunzi shunzi, String dachuPlayerId, String chiPlayerId) {
+		this.shunzi = shunzi;
+		this.dachuPlayerId = dachuPlayerId;
+		this.chiPlayerId = chiPlayerId;
+	}
+
 	public Shunzi getShunzi() {
 		return shunzi;
 	}

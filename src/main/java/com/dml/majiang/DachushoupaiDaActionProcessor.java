@@ -9,9 +9,9 @@ package com.dml.majiang;
 public class DachushoupaiDaActionProcessor implements MajiangPlayerDaActionProcessor {
 
 	@Override
-	public void process(String playerId, MajiangDaAction action, Ju ju) throws Exception {
+	public void process(MajiangDaAction action, Ju ju) throws Exception {
 		Pan currentPan = ju.getCurrentPan();
-		currentPan.playerDaChuPai(playerId, action.getPai());
+		currentPan.playerDaChuPai(action.getActionPlayerId(), action.getPai());
 	}
 
 }
