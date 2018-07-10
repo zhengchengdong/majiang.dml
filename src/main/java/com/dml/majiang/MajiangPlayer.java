@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -29,7 +30,7 @@ public class MajiangPlayer {
 
 	private Map<Integer, MajiangPlayerAction> actionCandidates = new HashMap<>();
 
-	private GouXingCalculator gouXingCalculator = new GouXingCalculator();
+	private ShoupaiCalculator shoupaiCalculator = new ShoupaiCalculator();
 
 	/**
 	 * 摸进的牌。只是展示(只能自己看见)，实际在手牌中。
@@ -56,12 +57,14 @@ public class MajiangPlayer {
 
 	public void addPaiToGouXingCalculator(MajiangPai pai) {
 		if (!guipaiTypeSet.contains(pai)) {
-			gouXingCalculator.addPai(pai);
+			shoupaiCalculator.addPai(pai);
 		}
 	}
 
 	public void addActionCandidate(MajiangPlayerAction action) {
-		actionCandidates.put(action.getId(), action);
+		int idForNewAction = actionCandidates.size() + 1;
+		action.setId(idForNewAction);
+		actionCandidates.put(idForNewAction, action);
 	}
 
 	public MajiangPlayerAction findActionCandidate(int actionId) {
@@ -77,9 +80,7 @@ public class MajiangPlayer {
 		shoupaiList.forEach((shoupai) -> {
 			if (!guipaiTypeSet.contains(shoupai)) {
 				if (!daPaiSet.contains(shoupai)) {
-					int actionId = actionCandidates.size() + 1;
-					MajiangDaAction daAction = new MajiangDaAction(actionId, shoupai, id);
-					actionCandidates.put(actionId, daAction);
+					addActionCandidate(new MajiangDaAction(id, shoupai));
 					daPaiSet.add(shoupai);
 				}
 			}
@@ -99,7 +100,7 @@ public class MajiangPlayer {
 	public void daChuPai(MajiangPai pai) {
 		shoupaiList.remove(pai);
 		dachupaiList.add(pai);
-		gouXingCalculator.removePai(pai);
+		shoupaiCalculator.removePai(pai);
 		publicMoPai = null;
 	}
 
@@ -114,46 +115,113 @@ public class MajiangPlayer {
 		MajiangPai pai1 = chifaShunzi.getPai1();
 		if (!pai1.equals(chijinpai)) {
 			shoupaiList.remove(pai1);
-			gouXingCalculator.removePai(pai1);
+			shoupaiCalculator.removePai(pai1);
 		}
 		MajiangPai pai2 = chifaShunzi.getPai2();
 		if (!pai2.equals(chijinpai)) {
 			shoupaiList.remove(pai2);
-			gouXingCalculator.removePai(pai2);
+			shoupaiCalculator.removePai(pai2);
 		}
 		MajiangPai pai3 = chifaShunzi.getPai3();
 		if (!pai3.equals(chijinpai)) {
 			shoupaiList.remove(pai3);
-			gouXingCalculator.removePai(pai3);
+			shoupaiCalculator.removePai(pai3);
 		}
 		ChichuPai chichuPai = new ChichuPai(chifaShunzi, dachupaiPlayer.getId(), id);
 		chichupaiList.add(chichuPai);
+	}
+
+	public void pengPai(MajiangPlayer dachupaiPlayer, MajiangPai pai) {
+		dachupaiPlayer.removeLatestDachupai();
+		shoupaiList.remove(pai);
+		shoupaiList.remove(pai);
+		shoupaiCalculator.removePai(pai, 2);
+		PengchuPai pengchuPai = new PengchuPai(new Kezi(pai), dachupaiPlayer.getId(), id);
+		pengchupaiList.add(pengchuPai);
+	}
+
+	public void gangDachupai(MajiangPlayer dachupaiPlayer, MajiangPai pai) {
+		dachupaiPlayer.removeLatestDachupai();
+		shoupaiList.remove(pai);
+		shoupaiList.remove(pai);
+		shoupaiList.remove(pai);
+		shoupaiCalculator.removePai(pai, 3);
+		GangchuPai gangchuPai = new GangchuPai(new Gangzi(pai), dachupaiPlayer.getId(), id, GangType.gangdachu);
+		gangchupaiList.add(gangchuPai);
+	}
+
+	public void gangMopai(MajiangPai pai) {
+		shoupaiList.remove(pai);
+		shoupaiList.remove(pai);
+		shoupaiList.remove(pai);
+		shoupaiCalculator.removePai(pai, 3);
+		GangchuPai gangchuPai = new GangchuPai(new Gangzi(pai), null, id, GangType.shoupaigangmo);
+		gangchupaiList.add(gangchuPai);
+		publicMoPai = null;
+	}
+
+	public void keziGangMopai(MajiangPai pai) {
+		Iterator<PengchuPai> i = pengchupaiList.iterator();
+		while (i.hasNext()) {
+			PengchuPai pengchuPai = i.next();
+			if (pengchuPai.getKezi().getPaiType().equals(pai)) {
+				i.remove();
+				break;
+			}
+		}
+		GangchuPai gangchuPai = new GangchuPai(new Gangzi(pai), null, id, GangType.kezigangmo);
+		gangchupaiList.add(gangchuPai);
+		publicMoPai = null;
 	}
 
 	private void removeLatestDachupai() {
 		dachupaiList.remove(dachupaiList.size() - 1);
 	}
 
-	public void tryChiAndGenerateCandidateActions(MajiangPai pai) {
+	public void tryChiAndGenerateCandidateActions(String dachupaiPlayerId, MajiangPai pai) {
 		if (MajiangPai.isXushupai(pai)) {
-			Shunzi shunzi1 = gouXingCalculator.tryAndMakeShunziWithPai1(pai);
+			Shunzi shunzi1 = shoupaiCalculator.tryAndMakeShunziWithPai1(pai);
 			if (shunzi1 != null) {
-				actionCandidates.put(actionCandidates.size() + 1,
-						new MajiangChiAction(actionCandidates.size() + 1, id, pai, shunzi1));
+				addActionCandidate(new MajiangChiAction(id, dachupaiPlayerId, pai, shunzi1));
 			}
 
-			Shunzi shunzi2 = gouXingCalculator.tryAndMakeShunziWithPai2(pai);
+			Shunzi shunzi2 = shoupaiCalculator.tryAndMakeShunziWithPai2(pai);
 			if (shunzi2 != null) {
-				actionCandidates.put(actionCandidates.size() + 1,
-						new MajiangChiAction(actionCandidates.size() + 1, id, pai, shunzi2));
+				addActionCandidate(new MajiangChiAction(id, dachupaiPlayerId, pai, shunzi2));
 			}
 
-			Shunzi shunzi3 = gouXingCalculator.tryAndMakeShunziWithPai3(pai);
+			Shunzi shunzi3 = shoupaiCalculator.tryAndMakeShunziWithPai3(pai);
 			if (shunzi3 != null) {
-				actionCandidates.put(actionCandidates.size() + 1,
-						new MajiangChiAction(actionCandidates.size() + 1, id, pai, shunzi3));
+				addActionCandidate(new MajiangChiAction(id, dachupaiPlayerId, pai, shunzi3));
 			}
 
+		}
+	}
+
+	public void tryPengAndGenerateCandidateAction(String dachupaiPlayerId, MajiangPai pai) {
+		int count = shoupaiCalculator.count(pai);
+		if (count >= 2) {
+			addActionCandidate(new MajiangPengAction(id, dachupaiPlayerId, pai));
+		}
+	}
+
+	public void tryGangdachuAndGenerateCandidateAction(String dachupaiPlayerId, MajiangPai pai) {
+		int count = shoupaiCalculator.count(pai);
+		if (count >= 3) {
+			addActionCandidate(new MajiangGangAction(id, dachupaiPlayerId, pai, GangType.gangdachu));
+		}
+	}
+
+	public void checkAndGenerateGuoCandidateAction() {
+		for (int i = 1; i <= actionCandidates.size(); i++) {
+			MajiangPlayerAction action = actionCandidates.get(i);
+			if (action.getType().equals(MajiangPlayerActionType.chi)
+					|| action.getType().equals(MajiangPlayerActionType.peng)
+					|| action.getType().equals(MajiangPlayerActionType.gang)
+					|| action.getType().equals(MajiangPlayerActionType.hu)) {
+				addActionCandidate(new MajiangGuoAction(id));
+				return;
+			}
 		}
 	}
 
@@ -205,12 +273,12 @@ public class MajiangPlayer {
 		this.actionCandidates = actionCandidates;
 	}
 
-	public GouXingCalculator getGouXingCalculator() {
-		return gouXingCalculator;
+	public ShoupaiCalculator getShoupaiCalculator() {
+		return shoupaiCalculator;
 	}
 
-	public void setGouXingCalculator(GouXingCalculator gouXingCalculator) {
-		this.gouXingCalculator = gouXingCalculator;
+	public void setShoupaiCalculator(ShoupaiCalculator shoupaiCalculator) {
+		this.shoupaiCalculator = shoupaiCalculator;
 	}
 
 	public MajiangPai getPublicMoPai() {

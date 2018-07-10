@@ -6,6 +6,13 @@ public class Kezi implements ByteBufferAble {
 
 	private MajiangPai paiType;
 
+	public Kezi() {
+	}
+
+	public Kezi(MajiangPai paiType) {
+		this.paiType = paiType;
+	}
+
 	public MajiangPai getPaiType() {
 		return paiType;
 	}

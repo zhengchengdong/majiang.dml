@@ -2,14 +2,14 @@ package com.dml.majiang;
 
 import java.nio.ByteBuffer;
 
-public class MajiangMoAction extends MajiangPlayerAction {
+public class MajiangGuoAction extends MajiangPlayerAction {
 
-	public MajiangMoAction() {
+	public MajiangGuoAction() {
 
 	}
 
-	public MajiangMoAction(String actionPlayerId) {
-		super(MajiangPlayerActionType.mo, actionPlayerId);
+	public MajiangGuoAction(String actionPlayerId) {
+		super(MajiangPlayerActionType.guo, actionPlayerId);
 	}
 
 	@Override

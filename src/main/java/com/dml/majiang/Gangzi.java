@@ -5,6 +5,13 @@ import java.nio.ByteBuffer;
 public class Gangzi implements ByteBufferAble {
 	private MajiangPai paiType;
 
+	public Gangzi() {
+	}
+
+	public Gangzi(MajiangPai paiType) {
+		this.paiType = paiType;
+	}
+
 	public MajiangPai getPaiType() {
 		return paiType;
 	}

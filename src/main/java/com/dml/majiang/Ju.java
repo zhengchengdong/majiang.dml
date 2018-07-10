@@ -28,6 +28,12 @@ public class Ju {
 	private MajiangPlayerDaActionUpdater daActionUpdater;
 	private MajiangPlayerChiActionProcessor chiActionProcessor;
 	private MajiangPlayerChiActionUpdater chiActionUpdater;
+	private MajiangPlayerPengActionProcessor pengActionProcessor;
+	private MajiangPlayerPengActionUpdater pengActionUpdater;
+	private MajiangPlayerGangActionProcessor gangActionProcessor;
+	private MajiangPlayerGangActionUpdater gangActionUpdater;
+	private MajiangPlayerGuoActionProcessor guoActionProcessor;
+	private MajiangPlayerGuoActionUpdater guoActionUpdater;
 
 	private int panActionFrameBufferSize;
 
@@ -66,19 +72,31 @@ public class Ju {
 	}
 
 	private void doAction(MajiangPlayerAction action) throws Exception {
-
-		if (action instanceof MajiangMoAction) {
+		MajiangPlayerActionType actionType = action.getType();
+		if (actionType.equals(MajiangPlayerActionType.mo)) {
 			moActionProcessor.process((MajiangMoAction) action, this);
 			// TODO listener
 			moActionUpdater.updateActions((MajiangMoAction) action, this);
-		} else if (action instanceof MajiangDaAction) {
+		} else if (actionType.equals(MajiangPlayerActionType.da)) {
 			daActionProcessor.process((MajiangDaAction) action, this);
 			actionStatisticsListenerManager.updateDaActionListener((MajiangDaAction) action, this);
 			daActionUpdater.updateActions((MajiangDaAction) action, this);
-		} else if (action instanceof MajiangChiAction) {
+		} else if (actionType.equals(MajiangPlayerActionType.chi)) {
 			daActionProcessor.process((MajiangDaAction) action, this);
 			// TODO listener
 			daActionUpdater.updateActions((MajiangDaAction) action, this);
+		} else if (actionType.equals(MajiangPlayerActionType.peng)) {
+			pengActionProcessor.process((MajiangPengAction) action, this);
+			// TODO listener
+			pengActionUpdater.updateActions((MajiangPengAction) action, this);
+		} else if (actionType.equals(MajiangPlayerActionType.gang)) {
+			gangActionProcessor.process((MajiangGangAction) action, this);
+			// TODO listener
+			gangActionUpdater.updateActions((MajiangGangAction) action, this);
+		} else if (actionType.equals(MajiangPlayerActionType.guo)) {
+			guoActionProcessor.process((MajiangGuoAction) action, this);
+			// TODO listener
+			guoActionUpdater.updateActions((MajiangGuoAction) action, this);
 		} else {
 		}
 
@@ -198,6 +216,54 @@ public class Ju {
 
 	public void setChiActionUpdater(MajiangPlayerChiActionUpdater chiActionUpdater) {
 		this.chiActionUpdater = chiActionUpdater;
+	}
+
+	public MajiangPlayerPengActionProcessor getPengActionProcessor() {
+		return pengActionProcessor;
+	}
+
+	public void setPengActionProcessor(MajiangPlayerPengActionProcessor pengActionProcessor) {
+		this.pengActionProcessor = pengActionProcessor;
+	}
+
+	public MajiangPlayerPengActionUpdater getPengActionUpdater() {
+		return pengActionUpdater;
+	}
+
+	public void setPengActionUpdater(MajiangPlayerPengActionUpdater pengActionUpdater) {
+		this.pengActionUpdater = pengActionUpdater;
+	}
+
+	public MajiangPlayerGangActionProcessor getGangActionProcessor() {
+		return gangActionProcessor;
+	}
+
+	public void setGangActionProcessor(MajiangPlayerGangActionProcessor gangActionProcessor) {
+		this.gangActionProcessor = gangActionProcessor;
+	}
+
+	public MajiangPlayerGangActionUpdater getGangActionUpdater() {
+		return gangActionUpdater;
+	}
+
+	public void setGangActionUpdater(MajiangPlayerGangActionUpdater gangActionUpdater) {
+		this.gangActionUpdater = gangActionUpdater;
+	}
+
+	public MajiangPlayerGuoActionProcessor getGuoActionProcessor() {
+		return guoActionProcessor;
+	}
+
+	public void setGuoActionProcessor(MajiangPlayerGuoActionProcessor guoActionProcessor) {
+		this.guoActionProcessor = guoActionProcessor;
+	}
+
+	public MajiangPlayerGuoActionUpdater getGuoActionUpdater() {
+		return guoActionUpdater;
+	}
+
+	public void setGuoActionUpdater(MajiangPlayerGuoActionUpdater guoActionUpdater) {
+		this.guoActionUpdater = guoActionUpdater;
 	}
 
 	public int getPanActionFrameBufferSize() {

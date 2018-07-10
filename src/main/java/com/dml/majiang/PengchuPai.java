@@ -8,6 +8,15 @@ public class PengchuPai implements ByteBufferAble {
 	private String dachuPlayerId;
 	private String pengPlayerId;
 
+	public PengchuPai() {
+	}
+
+	public PengchuPai(Kezi kezi, String dachuPlayerId, String pengPlayerId) {
+		this.kezi = kezi;
+		this.dachuPlayerId = dachuPlayerId;
+		this.pengPlayerId = pengPlayerId;
+	}
+
 	public Kezi getKezi() {
 		return kezi;
 	}

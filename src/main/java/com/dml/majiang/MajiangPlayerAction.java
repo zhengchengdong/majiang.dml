@@ -19,8 +19,7 @@ public abstract class MajiangPlayerAction implements ByteBufferAble {
 	public MajiangPlayerAction() {
 	}
 
-	public MajiangPlayerAction(int id, MajiangPlayerActionType type, String actionPlayerId) {
-		this.id = id;
+	public MajiangPlayerAction(MajiangPlayerActionType type, String actionPlayerId) {
 		this.type = type;
 		this.actionPlayerId = actionPlayerId;
 	}

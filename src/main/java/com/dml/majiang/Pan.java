@@ -85,9 +85,8 @@ public class Pan {
 		publicWaitingPlayerId = zhuangPlayerId;
 	}
 
-	public void addPlayerActionCandidate(String playerId, MajiangPlayerAction action)
-			throws MajiangPlayerNotFoundException {
-		MajiangPlayer player = majiangPlayerIdMajiangPlayerMap.get(playerId);
+	public void addPlayerActionCandidate(MajiangPlayerAction action) throws MajiangPlayerNotFoundException {
+		MajiangPlayer player = majiangPlayerIdMajiangPlayerMap.get(action.getActionPlayerId());
 		if (player == null) {
 			throw new MajiangPlayerNotFoundException();
 		}
@@ -145,18 +144,63 @@ public class Pan {
 		activePaiCursor = new PlayerLatestDachupaiCursor(playerId);
 	}
 
-	public void playerChiPai(String chijinpaiPlayerId, MajiangPai chijinpai, Shunzi chifaShunzi)
-			throws MajiangPlayerNotFoundException {
+	public void playerChiPai(String chijinpaiPlayerId, String dachupaiPlayerId, MajiangPai chijinpai,
+			Shunzi chifaShunzi) throws MajiangPlayerNotFoundException {
 
 		MajiangPlayer chijinpaiPlayer = majiangPlayerIdMajiangPlayerMap.get(chijinpaiPlayerId);
 		if (chijinpaiPlayer == null) {
 			throw new MajiangPlayerNotFoundException();
 		}
 
-		// 打出牌的一定是上家
-		MajiangPlayer dachupaiPlayer = findShangjia(chijinpaiPlayer);
+		MajiangPlayer dachupaiPlayer = majiangPlayerIdMajiangPlayerMap.get(dachupaiPlayerId);
 		chijinpaiPlayer.chiPai(dachupaiPlayer, chijinpai, chifaShunzi);
 
+	}
+
+	public void playerPengPai(String pengjinpaiPlayerId, String dachupaiPlayerId, MajiangPai pai)
+			throws MajiangPlayerNotFoundException {
+		MajiangPlayer pengjinpaiPlayer = majiangPlayerIdMajiangPlayerMap.get(pengjinpaiPlayerId);
+		if (pengjinpaiPlayer == null) {
+			throw new MajiangPlayerNotFoundException();
+		}
+
+		MajiangPlayer dachupaiPlayer = majiangPlayerIdMajiangPlayerMap.get(dachupaiPlayerId);
+		pengjinpaiPlayer.pengPai(dachupaiPlayer, pai);
+	}
+
+	public void playerGangDachupai(String gangjinpaiPlayerId, String dachupaiPlayerId, MajiangPai pai)
+			throws MajiangPlayerNotFoundException {
+		MajiangPlayer gangjinpaiPlayer = majiangPlayerIdMajiangPlayerMap.get(gangjinpaiPlayerId);
+		if (gangjinpaiPlayer == null) {
+			throw new MajiangPlayerNotFoundException();
+		}
+
+		MajiangPlayer dachupaiPlayer = majiangPlayerIdMajiangPlayerMap.get(dachupaiPlayerId);
+		gangjinpaiPlayer.gangDachupai(dachupaiPlayer, pai);
+	}
+
+	public void playerShoupaiGangMo(String playerId, MajiangPai pai) throws MajiangPlayerNotFoundException {
+		MajiangPlayer player = majiangPlayerIdMajiangPlayerMap.get(playerId);
+		if (player == null) {
+			throw new MajiangPlayerNotFoundException();
+		}
+		player.gangMopai(pai);
+	}
+
+	public void playerKeziGangMo(String playerId, MajiangPai pai) throws MajiangPlayerNotFoundException {
+		MajiangPlayer player = majiangPlayerIdMajiangPlayerMap.get(playerId);
+		if (player == null) {
+			throw new MajiangPlayerNotFoundException();
+		}
+		player.keziGangMopai(pai);
+	}
+
+	public void playerClearActionCandidates(String playerId) throws MajiangPlayerNotFoundException {
+		MajiangPlayer player = majiangPlayerIdMajiangPlayerMap.get(playerId);
+		if (player == null) {
+			throw new MajiangPlayerNotFoundException();
+		}
+		player.clearActionCandidates();
 	}
 
 	public MajiangPlayer findShangjia(MajiangPlayer player) {

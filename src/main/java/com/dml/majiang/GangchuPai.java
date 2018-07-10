@@ -9,6 +9,16 @@ public class GangchuPai implements ByteBufferAble {
 	private String gangPlayerId;
 	private GangType gangType;
 
+	public GangchuPai() {
+	}
+
+	public GangchuPai(Gangzi gangzi, String dachuPlayerId, String gangPlayerId, GangType gangType) {
+		this.gangzi = gangzi;
+		this.dachuPlayerId = dachuPlayerId;
+		this.gangPlayerId = gangPlayerId;
+		this.gangType = gangType;
+	}
+
 	public Gangzi getGangzi() {
 		return gangzi;
 	}
