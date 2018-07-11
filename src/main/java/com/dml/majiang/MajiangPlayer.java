@@ -1,7 +1,6 @@
 package com.dml.majiang;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -12,11 +11,21 @@ import java.util.Set;
 public class MajiangPlayer {
 
 	private String id;
+
 	/**
 	 * 门风
 	 */
 	private MajiangPosition menFeng;
-	private List<MajiangPai> shoupaiList = new ArrayList<>();
+
+	/**
+	 * 已放入的手牌列表（包含鬼牌，不包含公开牌）
+	 */
+	private List<MajiangPai> fangruShoupaiList = new ArrayList<>();
+
+	/**
+	 * 刚摸进待处理的手牌（未放入）
+	 */
+	private MajiangPai gangmoShoupai;
 
 	/**
 	 * 公开的牌，不能行牌
@@ -30,12 +39,10 @@ public class MajiangPlayer {
 
 	private Map<Integer, MajiangPlayerAction> actionCandidates = new HashMap<>();
 
-	private ShoupaiCalculator shoupaiCalculator = new ShoupaiCalculator();
-
 	/**
-	 * 摸进的牌。只是展示(只能自己看见)，实际在手牌中。
+	 * 不包含鬼牌或者公开牌。
 	 */
-	private MajiangPai publicMoPai;
+	private ShoupaiCalculator shoupaiCalculator = new ShoupaiCalculator();
 
 	/**
 	 * 打出的牌列表
@@ -48,11 +55,6 @@ public class MajiangPlayer {
 
 	public void addGuipaiType(MajiangPai guipaiType) {
 		guipaiTypeSet.add(guipaiType);
-	}
-
-	public void addShoupai(MajiangPai pai) {
-		shoupaiList.add(pai);
-		Collections.sort(shoupaiList);
 	}
 
 	public void addPaiToGouXingCalculator(MajiangPai pai) {
@@ -75,9 +77,12 @@ public class MajiangPlayer {
 		publicPaiList.add(pai);
 	}
 
+	/**
+	 * 通常不能打鬼牌
+	 */
 	public void generateDaActions() {
 		Set<MajiangPai> daPaiSet = new HashSet<>();
-		shoupaiList.forEach((shoupai) -> {
+		fangruShoupaiList.forEach((shoupai) -> {
 			if (!guipaiTypeSet.contains(shoupai)) {
 				if (!daPaiSet.contains(shoupai)) {
 					addActionCandidate(new MajiangDaAction(id, shoupai));
@@ -86,6 +91,10 @@ public class MajiangPlayer {
 			}
 		});
 
+		if (gangmoShoupai != null && !guipaiTypeSet.contains(gangmoShoupai) && !daPaiSet.contains(gangmoShoupai)) {
+			addActionCandidate(new MajiangDaAction(id, gangmoShoupai));
+		}
+
 	}
 
 	public void clearActionCandidates() {
@@ -93,21 +102,25 @@ public class MajiangPlayer {
 	}
 
 	/**
-	 * 不能打鬼牌是常识
+	 * 通常不能打鬼牌
 	 * 
 	 * @param pai
 	 */
 	public void daChuPai(MajiangPai pai) {
-		shoupaiList.remove(pai);
+		fangruShoupai();
+		fangruShoupaiList.remove(pai);
 		dachupaiList.add(pai);
 		shoupaiCalculator.removePai(pai);
-		publicMoPai = null;
 	}
 
-	public void moPai(MajiangPai pai) {
-		addShoupai(pai);
-		addPaiToGouXingCalculator(pai);
-		publicMoPai = pai;
+	/**
+	 * 把刚摸的牌放入手牌
+	 */
+	public void fangruShoupai() {
+		if (gangmoShoupai != null) {
+			fangruShoupaiList.add(gangmoShoupai);
+			gangmoShoupai = null;
+		}
 	}
 
 	public void chiPai(MajiangPlayer dachupaiPlayer, MajiangPai chijinpai, Shunzi chifaShunzi) {
@@ -209,6 +222,22 @@ public class MajiangPlayer {
 		int count = shoupaiCalculator.count(pai);
 		if (count >= 3) {
 			addActionCandidate(new MajiangGangAction(id, dachupaiPlayerId, pai, GangType.gangdachu));
+		}
+	}
+
+	public void tryShoupaigangmoAndGenerateCandidateAction() {
+		int count = shoupaiCalculator.count(publicMoPai);
+		if (count >= 3) {
+			addActionCandidate(new MajiangGangAction(id, null, publicMoPai, GangType.shoupaigangmo));
+		}
+	}
+
+	public void tryKezigangmoAndGenerateCandidateAction() {
+		for (PengchuPai pengchuPai : pengchupaiList) {
+			if (pengchuPai.getKezi().getPaiType().equals(publicMoPai)) {
+				addActionCandidate(new MajiangGangAction(id, null, publicMoPai, GangType.kezigangmo));
+				return;
+			}
 		}
 	}
 

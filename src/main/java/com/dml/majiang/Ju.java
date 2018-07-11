@@ -35,8 +35,6 @@ public class Ju {
 	private MajiangPlayerGuoActionProcessor guoActionProcessor;
 	private MajiangPlayerGuoActionUpdater guoActionUpdater;
 
-	private int panActionFrameBufferSize;
-
 	public void determinePlayersMenFengForFirstPan() throws Exception {
 		playersMenFengDeterminerForFirstPan.determinePlayersMenFeng(this);
 	}
@@ -57,12 +55,12 @@ public class Ju {
 		faPaiStrategy.faPai(this);
 	}
 
-	public byte[] updateInitialAction() throws Exception {
+	public PanActionFrame updateInitialAction() throws Exception {
 		initialActionUpdater.updateActions(this);
 		return currentPan.recordPanActionFrame(null);
 	}
 
-	public byte[] action(String playerId, int actionId) throws Exception {
+	public PanActionFrame action(String playerId, int actionId) throws Exception {
 		MajiangPlayerAction action = currentPan.findPlayerActionCandidate(playerId, actionId);
 		if (action == null) {
 			throw new MajiangPlayerActionNotFoundException();
@@ -264,14 +262,6 @@ public class Ju {
 
 	public void setGuoActionUpdater(MajiangPlayerGuoActionUpdater guoActionUpdater) {
 		this.guoActionUpdater = guoActionUpdater;
-	}
-
-	public int getPanActionFrameBufferSize() {
-		return panActionFrameBufferSize;
-	}
-
-	public void setPanActionFrameBufferSize(int panActionFrameBufferSize) {
-		this.panActionFrameBufferSize = panActionFrameBufferSize;
 	}
 
 	public ActionStatisticsListenerManager getActionStatisticsListenerManager() {

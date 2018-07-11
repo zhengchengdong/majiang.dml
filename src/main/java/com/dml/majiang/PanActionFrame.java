@@ -43,4 +43,26 @@ public class PanActionFrame implements ByteBufferAble {
 		panAfterAction = ByteBufferSerializer.byteBufferToObj(bb);
 	}
 
+	public byte[] toByteArray(int bufferSize) {
+		byte[] buffer = new byte[bufferSize];
+		ByteBuffer bb = ByteBuffer.wrap(buffer);
+		try {
+			ByteBufferSerializer.objToByteBuffer(this, bb);
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+		byte[] byteArray = new byte[bb.position()];
+		System.arraycopy(buffer, 0, byteArray, 0, byteArray.length);
+		return byteArray;
+	}
+
+	public static PanActionFrame fromByteArray(byte[] byteArray) {
+		try {
+			return ByteBufferSerializer.byteBufferToObj(ByteBuffer.wrap(byteArray));
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }

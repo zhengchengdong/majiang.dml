@@ -1,6 +1,5 @@
 package com.dml.majiang;
 
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -45,11 +44,9 @@ public class Pan {
 	 */
 	private PaiCursor activePaiCursor;
 
-	private List<byte[]> actionFrameDataList = new ArrayList<>();
+	private List<PanActionFrame> actionFrameDataList = new ArrayList<>();
 
 	private PanResult result;
-
-	private int panActionFrameBufferSize;
 
 	public void addPlayer(String playerId) {
 		MajiangPlayer majiangPlayer = new MajiangPlayer();
@@ -120,19 +117,10 @@ public class Pan {
 		return majiangPlayerIdMajiangPlayerMap.get(playerId);
 	}
 
-	public byte[] recordPanActionFrame(MajiangPlayerAction action) {
+	public PanActionFrame recordPanActionFrame(MajiangPlayerAction action) {
 		PanActionFrame frame = new PanActionFrame(action, new PanValueObject(this));
-		byte[] buffer = new byte[panActionFrameBufferSize];
-		ByteBuffer bb = ByteBuffer.wrap(buffer);
-		try {
-			ByteBufferSerializer.objToByteBuffer(frame, bb);
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
-		byte[] frameData = new byte[bb.position()];
-		System.arraycopy(buffer, 0, frameData, 0, frameData.length);
-		actionFrameDataList.add(frameData);
-		return frameData;
+		actionFrameDataList.add(frame);
+		return frame;
 	}
 
 	public void playerDaChuPai(String playerId, MajiangPai pai) throws MajiangPlayerNotFoundException {
@@ -287,11 +275,11 @@ public class Pan {
 		this.activePaiCursor = activePaiCursor;
 	}
 
-	public List<byte[]> getActionFrameDataList() {
+	public List<PanActionFrame> getActionFrameDataList() {
 		return actionFrameDataList;
 	}
 
-	public void setActionFrameDataList(List<byte[]> actionFrameDataList) {
+	public void setActionFrameDataList(List<PanActionFrame> actionFrameDataList) {
 		this.actionFrameDataList = actionFrameDataList;
 	}
 
@@ -301,14 +289,6 @@ public class Pan {
 
 	public void setResult(PanResult result) {
 		this.result = result;
-	}
-
-	public int getPanActionFrameBufferSize() {
-		return panActionFrameBufferSize;
-	}
-
-	public void setPanActionFrameBufferSize(int panActionFrameBufferSize) {
-		this.panActionFrameBufferSize = panActionFrameBufferSize;
 	}
 
 }
