@@ -123,6 +123,15 @@ public class Pan {
 		return frame;
 	}
 
+	public void playerMoPai(String playerId) throws MajiangPlayerNotFoundException {
+		MajiangPlayer player = majiangPlayerIdMajiangPlayerMap.get(playerId);
+		if (player == null) {
+			throw new MajiangPlayerNotFoundException();
+		}
+		MajiangPai pai = avaliablePaiList.remove(0);
+		player.setGangmoShoupai(pai);
+	}
+
 	public void playerDaChuPai(String playerId, MajiangPai pai) throws MajiangPlayerNotFoundException {
 		MajiangPlayer player = majiangPlayerIdMajiangPlayerMap.get(playerId);
 		if (player == null) {

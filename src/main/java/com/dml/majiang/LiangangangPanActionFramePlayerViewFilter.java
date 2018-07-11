@@ -17,8 +17,8 @@ public class LiangangangPanActionFramePlayerViewFilter implements PanActionFrame
 				// 什么都不过滤，全要看
 			} else {// 是其他玩家
 				player.setActionCandidates(null);
-				player.setPublicMoPai(null);
-				player.getShoupaiList().setPaiList(null);
+				player.getGangmoShoupai().setPai(null);
+				player.getFangruShoupaiList().setPaiList(null);
 			}
 		});
 	}
