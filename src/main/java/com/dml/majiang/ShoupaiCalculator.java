@@ -1,5 +1,8 @@
 package com.dml.majiang;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 手牌计算器
  * 
@@ -155,6 +158,16 @@ public class ShoupaiCalculator {
 		} else {
 			return null;
 		}
+	}
+
+	public List<MajiangPai> findAllPaiQuantityIsFour() {
+		List<MajiangPai> allGangzi = new ArrayList<>();
+		for (int i = 0; i < paiQuantityArray.length; i++) {
+			if (paiQuantityArray[i] == 4) {
+				allGangzi.add(MajiangPai.valueOf(i));
+			}
+		}
+		return allGangzi;
 	}
 
 	public int count(MajiangPai pai) {

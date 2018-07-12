@@ -126,6 +126,16 @@ public class MajiangPlayer {
 		}
 	}
 
+	/**
+	 * 把刚摸的牌放入公开牌
+	 */
+	public void fangruPublicPai() {
+		if (gangmoShoupai != null) {
+			publicPaiList.add(gangmoShoupai);
+			gangmoShoupai = null;
+		}
+	}
+
 	public void chiPai(MajiangPlayer dachupaiPlayer, MajiangPai chijinpai, Shunzi chifaShunzi) {
 		dachupaiPlayer.removeLatestDachupai();
 		MajiangPai pai1 = chifaShunzi.getPai1();
@@ -233,6 +243,12 @@ public class MajiangPlayer {
 		if (count >= 3) {
 			addActionCandidate(new MajiangGangAction(id, null, gangmoShoupai, GangType.shoupaigangmo));
 		}
+	}
+
+	public void tryGangsigeshoupaiAndGenerateCandidateAction() {
+		List<MajiangPai> gangpaiList = shoupaiCalculator.findAllPaiQuantityIsFour();
+		gangpaiList.forEach(
+				(gangpai) -> addActionCandidate(new MajiangGangAction(id, null, gangpai, GangType.gangsigeshoupai)));
 	}
 
 	public void tryKezigangmoAndGenerateCandidateAction() {

@@ -48,7 +48,9 @@ public class MajiangPlayerValueObject implements ByteBufferAble {
 		publicPaiList = new ArrayList<>(player.getPublicPaiList());
 		guipaiTypeList = new ArrayList<>(player.getGuipaiTypeSet());
 		actionCandidates = new ArrayList<>(player.getActionCandidates().values());
-		gangmoShoupai = new MajiangPaiValueObject(player.getGangmoShoupai());
+		if (player.getGangmoShoupai() != null) {
+			gangmoShoupai = new MajiangPaiValueObject(player.getGangmoShoupai());
+		}
 		dachupaiList = new ArrayList<>(player.getDachupaiList());
 		chichupaiList = new ArrayList<>(player.getChichupaiList());
 		pengchupaiList = new ArrayList<>(player.getPengchupaiList());

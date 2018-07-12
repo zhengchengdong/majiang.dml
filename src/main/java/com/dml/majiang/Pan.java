@@ -200,6 +200,10 @@ public class Pan {
 		player.clearActionCandidates();
 	}
 
+	public void clearAllPlayersActionCandidates() {
+		majiangPlayerIdMajiangPlayerMap.values().forEach((player) -> player.clearActionCandidates());
+	}
+
 	public MajiangPlayer findShangjia(MajiangPlayer player) {
 		MajiangPosition shangjiaMenFeng = MajiangPositionCircle.nextClockwise(player.getMenFeng());
 		String shangjiaPlayerId = menFengMajiangPlayerIdMap.get(shangjiaMenFeng);
