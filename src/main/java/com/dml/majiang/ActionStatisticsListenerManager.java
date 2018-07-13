@@ -41,4 +41,8 @@ public class ActionStatisticsListenerManager {
 		}
 	}
 
+	public <T extends MajiangPlayerActionStatisticsListener> T findListener(Class<T> type) {
+		return (T) listenerTypeNameListenerMap.get(type.getName());
+	}
+
 }

@@ -12,13 +12,18 @@ public class LiangangangPanActionFramePlayerViewFilter implements PanActionFrame
 	public void filter(PanActionFrame frame, String playerId) {
 
 		PanValueObject pan = frame.getPanAfterAction();
+		pan.getAvaliablePaiList().setPaiList(null);
 		pan.getPlayerList().forEach((player) -> {
 			if (player.getId().equals(playerId)) {// 是自己
 				// 什么都不过滤，全要看
 			} else {// 是其他玩家
 				player.setActionCandidates(null);
-				player.getGangmoShoupai().setPai(null);
-				player.getFangruShoupaiList().setPaiList(null);
+				MajiangPaiValueObject gangmoShoupai = player.getGangmoShoupai();
+				if (gangmoShoupai != null) {
+					gangmoShoupai.setPai(null);
+				}
+				player.getFangruShoupaiList().setGuipaiShoupaiList(null);
+				player.getFangruShoupaiList().setPutongShoupaiList(null);
 			}
 		});
 	}

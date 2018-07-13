@@ -10,7 +10,7 @@ public class PanValueObject implements ByteBufferAble {
 
 	private String zhuangPlayerId;
 
-	private List<MajiangPai> avaliablePaiList;
+	private PaiListValueObject avaliablePaiList;
 
 	/**
 	 * 公示的鬼牌集合,不能行牌
@@ -37,7 +37,7 @@ public class PanValueObject implements ByteBufferAble {
 		pan.getMajiangPlayerIdMajiangPlayerMap().values()
 				.forEach((player) -> playerList.add(new MajiangPlayerValueObject(player)));
 		zhuangPlayerId = pan.getZhuangPlayerId();
-		avaliablePaiList = new ArrayList<>(pan.getAvaliablePaiList());
+		avaliablePaiList = new PaiListValueObject(pan.getAvaliablePaiList());
 		publicGuipaiList = new ArrayList<>(pan.getPublicGuipaiSet());
 		publicWaitingPlayerId = pan.getPublicWaitingPlayerId();
 		activePaiCursor = pan.getActivePaiCursor();
@@ -60,11 +60,11 @@ public class PanValueObject implements ByteBufferAble {
 		this.zhuangPlayerId = zhuangPlayerId;
 	}
 
-	public List<MajiangPai> getAvaliablePaiList() {
+	public PaiListValueObject getAvaliablePaiList() {
 		return avaliablePaiList;
 	}
 
-	public void setAvaliablePaiList(List<MajiangPai> avaliablePaiList) {
+	public void setAvaliablePaiList(PaiListValueObject avaliablePaiList) {
 		this.avaliablePaiList = avaliablePaiList;
 	}
 
@@ -104,7 +104,7 @@ public class PanValueObject implements ByteBufferAble {
 	public void toByteBuffer(ByteBuffer bb) throws Throwable {
 		ByteBufferSerializer.listToByteBuffer(new ArrayList<>(playerList), bb);
 		ByteBufferSerializer.stringToByteBuffer(zhuangPlayerId, bb);
-		majiangPaiListToByteBuffer(avaliablePaiList, bb);
+		ByteBufferSerializer.objToByteBuffer(avaliablePaiList, bb);
 		majiangPaiListToByteBuffer(publicGuipaiList, bb);
 		ByteBufferSerializer.stringToByteBuffer(publicWaitingPlayerId, bb);
 		ByteBufferSerializer.objToByteBuffer(activePaiCursor, bb);
@@ -125,7 +125,7 @@ public class PanValueObject implements ByteBufferAble {
 		ByteBufferSerializer.byteBufferToList(bb)
 				.forEach((player) -> playerList.add((MajiangPlayerValueObject) player));
 		zhuangPlayerId = ByteBufferSerializer.byteBufferToString(bb);
-		avaliablePaiList = fillMajiangPaiList(bb);
+		avaliablePaiList = ByteBufferSerializer.byteBufferToObj(bb);
 		publicGuipaiList = fillMajiangPaiList(bb);
 		publicWaitingPlayerId = ByteBufferSerializer.byteBufferToString(bb);
 		activePaiCursor = ByteBufferSerializer.byteBufferToObj(bb);

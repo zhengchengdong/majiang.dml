@@ -273,6 +273,19 @@ public class MajiangPlayer {
 		}
 	}
 
+	/**
+	 * 刚摸的是否是鬼牌
+	 * 
+	 * @return
+	 */
+	public boolean gangmoGuipai() {
+		if (gangmoShoupai != null) {
+			return guipaiTypeSet.contains(gangmoShoupai);
+		} else {
+			return false;
+		}
+	}
+
 	public String getId() {
 		return id;
 	}
