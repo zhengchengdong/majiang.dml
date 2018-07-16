@@ -21,7 +21,7 @@ public class Design {
 	/**
 	 * 一个连续牌组组成手牌的构型
 	 */
-	private static LianXuPaiZuGouXing[] yiLianXuPaiZuGouXingsArray;
+	private static LianXuPaiZuGouXing[][] yiLianXuPaiZuGouXingsArray;
 
 	/**
 	 * 二个连续牌组组成手牌的构型
@@ -176,6 +176,8 @@ public class Design {
 
 		System.out.println("耗时(毫秒):" + (finishTime - startTime));
 
+		System.gc();
+
 	}
 
 	private static void calculateGouXingForLianXuPaiZuAndDuLiPaiZu(List<LianXuPaiZu> lianXuPaiZuList,
@@ -211,7 +213,7 @@ public class Design {
 				LianXuPaiZu zu1 = lianXuPaiZuList.get(i);
 				int totalPai1 = zu1.getTotalPai();
 				int atleastGuiPai1 = zu1.getAtleastGuiPai();
-				int[] gouXingArray1 = zu1.getGouXingArray();
+				int[] gouXingArray1 = zu1.generateGouXingCodeArray();
 				for (int j = 0; j < duLiPaiZuList.size(); j++) {
 					DuLiPaiZu duLiPaiZu = duLiPaiZuList.get(j);
 					int totalPai = totalPai1 + duLiPaiZu.getTotalPai();
@@ -766,7 +768,7 @@ public class Design {
 	private static void calculateLianXuPaiZuZuHeGouXing(List<LianXuPaiZu> lianXuPaiZuList, int maxShouPai,
 			int maxGuiPai, int maxShouPaiLianXuPaiZu) {
 		if (maxShouPaiLianXuPaiZu >= 1) {
-			yiLianXuPaiZuGouXingsArray = new int[lianXuPaiZuList.size()][];
+			yiLianXuPaiZuGouXingsArray = new LianXuPaiZuGouXing[lianXuPaiZuList.size()][];
 			for (int i = 0; i < lianXuPaiZuList.size(); i++) {
 				LianXuPaiZu lianXuPaiZu = lianXuPaiZuList.get(i);
 				yiLianXuPaiZuGouXingsArray[i] = lianXuPaiZu.getGouXingArray();
@@ -808,14 +810,14 @@ public class Design {
 				LianXuPaiZu zu1 = lianXuPaiZuList.get(i);
 				int totalPai1 = zu1.getTotalPai();
 				int atleastGuiPai1 = zu1.getAtleastGuiPai();
-				int[] gouXingArray1 = zu1.getGouXingArray();
+				int[] gouXingArray1 = zu1.generateGouXingCodeArray();
 				for (int j = i; j < lianXuPaiZuList.size(); j++) {
 					LianXuPaiZu zu2 = lianXuPaiZuList.get(j);
 					int totalPai = totalPai1 + zu2.getTotalPai();
 					if (totalPai <= maxShouPai) {
 						int atleastGuiPai = atleastGuiPai1 + zu2.getAtleastGuiPai();
 						if (atleastGuiPai <= maxGuiPai) {
-							int[] joindGouXingArray = joinGouXingArray(gouXingArray1, zu2.getGouXingArray());
+							int[] joindGouXingArray = joinGouXingArray(gouXingArray1, zu2.generateGouXingCodeArray());
 							erLianXuPaiZuGouXingsArray[i * erLianXuPaiZuGouXingsArrayIdx1Mod + j] = joindGouXingArray;
 						}
 					} else {
@@ -885,7 +887,7 @@ public class Design {
 									if (atleastGuiPai3 <= maxGuiPai) {
 										sanLianXuPaiZuGouXingsArray[i * sanLianXuPaiZuGouXingsArrayIdx1Mod
 												+ j * sanLianXuPaiZuGouXingsArrayIdx2Mod + k] = joinGouXingArray(
-														joindGouXingArray, zu3.getGouXingArray());
+														joindGouXingArray, zu3.generateGouXingCodeArray());
 									}
 								} else {
 									break;
@@ -983,7 +985,7 @@ public class Design {
 															+ j * siLianXuPaiZuGouXingsArrayIdx2Mod
 															+ k * siLianXuPaiZuGouXingsArrayIdx3Mod
 															+ l] = joinGouXingArray(joindGouXingArray,
-																	zu4.getGouXingArray());
+																	zu4.generateGouXingCodeArray());
 												}
 											} else {
 												break;
@@ -1110,7 +1112,7 @@ public class Design {
 																		+ k * wuLianXuPaiZuGouXingsArrayIdx3Mod
 																		+ l * wuLianXuPaiZuGouXingsArrayIdx4Mod
 																		+ m] = joinGouXingArray(joindGouXingArray,
-																				zu5.getGouXingArray());
+																				zu5.generateGouXingCodeArray());
 															}
 														} else {
 															break;

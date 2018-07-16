@@ -1,8 +1,10 @@
 package com.dml.majiang;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -27,7 +29,7 @@ public class LianXuPaiZu implements Comparable<LianXuPaiZu> {
 
 	private boolean bigCodeMode;
 
-	private int[] gouXingArray;
+	private LianXuPaiZuGouXing[] gouXingArray;
 
 	public LianXuPaiZu(int[] paiQuantityArray, int totalPai, int atleastGuiPai, boolean bigCodeMode) {
 		this.lian = paiQuantityArray.length;
@@ -38,21 +40,46 @@ public class LianXuPaiZu implements Comparable<LianXuPaiZu> {
 		this.bigCodeMode = bigCodeMode;
 	}
 
-	/**
-	 * 构形编码用一个int来表示:低到高--5位单牌个数，4位对子个数，3位刻子个数，3位杠子个数，3位顺子个数
-	 */
+	public int[] generateGouXingCodeArray() {
+		int[] array = new int[gouXingArray.length];
+		for (int i = 0; i < gouXingArray.length; i++) {
+			array[i] = gouXingArray[i].getGouXingCode();
+		}
+		return array;
+	}
+
 	public void calculateGouXing() {
-		Set<Integer> gouXingSet = new HashSet<>();
-		doCalculateGouXing(0, 0, 0, 0, gouXingSet);
-		gouXingArray = new int[gouXingSet.size()];
+		Map<Integer, Set<LianXuPaiZuPaiXing>> gouXingCodeToPaiXingSetMap = new HashMap<>();
+		List<Integer> yiquShunziXuhaoList = new ArrayList<>();
+		List<Integer> yiquGangziXuhaoList = new ArrayList<>();
+		List<Integer> yiquKeziXuhaoList = new ArrayList<>();
+		List<Integer> yiquDuiziXuhaoList = new ArrayList<>();
+		doCalculateGouXing(yiquShunziXuhaoList, yiquGangziXuhaoList, yiquKeziXuhaoList, yiquDuiziXuhaoList,
+				gouXingCodeToPaiXingSetMap);
+		gouXingArray = new LianXuPaiZuGouXing[gouXingCodeToPaiXingSetMap.size()];
 		int i = 0;
-		for (int gouXing : gouXingSet) {
+		for (int gouXingCode : gouXingCodeToPaiXingSetMap.keySet()) {
+			Set<LianXuPaiZuPaiXing> paiXingSet = gouXingCodeToPaiXingSetMap.get(gouXingCode);
+			LianXuPaiZuGouXing gouXing = new LianXuPaiZuGouXing();
+			gouXing.setGouXingCode(gouXingCode);
+			LianXuPaiZuPaiXing[] paiXingArrayForGouXing = new LianXuPaiZuPaiXing[paiXingSet.size()];
+			int j = 0;
+			for (LianXuPaiZuPaiXing paiXing : paiXingSet) {
+				paiXingArrayForGouXing[j++] = paiXing;
+			}
+			gouXing.setPaiXingArrayForGouXing(paiXingArrayForGouXing);
 			gouXingArray[i++] = gouXing;
 		}
 	}
 
-	private void doCalculateGouXing(int yiquShunziGeshu, int yiquGangziGeshu, int yiquKeziGeshu, int yiquDuiziGeshu,
-			Set<Integer> gouXingSet) {
+	private void doCalculateGouXing(List<Integer> yiquShunziXuhaoList, List<Integer> yiquGangziXuhaoList,
+			List<Integer> yiquKeziXuhaoList, List<Integer> yiquDuiziXuhaoList,
+			Map<Integer, Set<LianXuPaiZuPaiXing>> gouXingCodeToPaiXingSetMap) {
+
+		int yiquShunziGeshu = yiquShunziXuhaoList.size();
+		int yiquGangziGeshu = yiquGangziXuhaoList.size();
+		int yiquKeziGeshu = yiquKeziXuhaoList.size();
+		int yiquDuiziGeshu = yiquDuiziXuhaoList.size();
 
 		// 计算所有顺子取法
 		List<Integer> shunziStartIdxList = new ArrayList(lian - 2);
@@ -100,16 +127,28 @@ public class LianXuPaiZu implements Comparable<LianXuPaiZu> {
 		// 如果什么都不能取，说明可以记录一个结果
 		if (shunziStartIdxList.isEmpty() && gangziIdx == -1 && keziIdx == -1 && duiziIdx == -1) {
 			// 构形用一个int来编码:低到高--5位单牌个数，4位对子个数，3位刻子个数，3位杠子个数，3位顺子个数
+			List<Integer> danpaiXuhaoList = new ArrayList<>();
 			int danpaiGeshu = 0;
 			for (int i = 0; i < paiQuantityArray.length; i++) {
-				danpaiGeshu += paiQuantityArray[i];
+				int paiQuantity = paiQuantityArray[i];
+				if (paiQuantity == 1) {
+					danpaiGeshu++;
+					danpaiXuhaoList.add(i);
+				}
 			}
 			int couXingCode = danpaiGeshu;
 			couXingCode = couXingCode | (yiquDuiziGeshu << 5);
 			couXingCode = couXingCode | (yiquKeziGeshu << 9);
 			couXingCode = couXingCode | (yiquGangziGeshu << 12);
 			couXingCode = couXingCode | (yiquShunziGeshu << 15);
-			gouXingSet.add(couXingCode);
+
+			Set<LianXuPaiZuPaiXing> paiXingSet = gouXingCodeToPaiXingSetMap.get(couXingCode);
+			if (paiXingSet == null) {
+				paiXingSet = new HashSet<>();
+				gouXingCodeToPaiXingSetMap.put(couXingCode, paiXingSet);
+			}
+			paiXingSet.add(new LianXuPaiZuPaiXing(danpaiXuhaoList, yiquDuiziXuhaoList, yiquKeziXuhaoList,
+					yiquGangziXuhaoList, yiquShunziXuhaoList));
 			return;
 		}
 
@@ -117,26 +156,38 @@ public class LianXuPaiZu implements Comparable<LianXuPaiZu> {
 			paiQuantityArray[shunziStartIdx]--;
 			paiQuantityArray[shunziStartIdx + 1]--;
 			paiQuantityArray[shunziStartIdx + 2]--;
-			doCalculateGouXing(yiquShunziGeshu + 1, yiquGangziGeshu, yiquKeziGeshu, yiquDuiziGeshu, gouXingSet);
+			yiquShunziXuhaoList.add(shunziStartIdx);
+			doCalculateGouXing(yiquShunziXuhaoList, yiquGangziXuhaoList, yiquKeziXuhaoList, yiquDuiziXuhaoList,
+					gouXingCodeToPaiXingSetMap);
+			yiquShunziXuhaoList.remove(yiquShunziXuhaoList.size() - 1);
 			paiQuantityArray[shunziStartIdx]++;
 			paiQuantityArray[shunziStartIdx + 1]++;
 			paiQuantityArray[shunziStartIdx + 2]++;
 		});
 		if (gangziIdx != -1) {
 			paiQuantityArray[gangziIdx] -= 4;
-			doCalculateGouXing(yiquShunziGeshu, yiquGangziGeshu + 1, yiquKeziGeshu, yiquDuiziGeshu, gouXingSet);
+			yiquGangziXuhaoList.add(gangziIdx);
+			doCalculateGouXing(yiquShunziXuhaoList, yiquGangziXuhaoList, yiquKeziXuhaoList, yiquDuiziXuhaoList,
+					gouXingCodeToPaiXingSetMap);
+			yiquGangziXuhaoList.remove(yiquGangziXuhaoList.size() - 1);
 			paiQuantityArray[gangziIdx] += 4;
 		}
 
 		if (keziIdx != -1) {
 			paiQuantityArray[keziIdx] -= 3;
-			doCalculateGouXing(yiquShunziGeshu, yiquGangziGeshu, yiquKeziGeshu + 1, yiquDuiziGeshu, gouXingSet);
+			yiquKeziXuhaoList.add(keziIdx);
+			doCalculateGouXing(yiquShunziXuhaoList, yiquGangziXuhaoList, yiquKeziXuhaoList, yiquDuiziXuhaoList,
+					gouXingCodeToPaiXingSetMap);
+			yiquKeziXuhaoList.remove(yiquKeziXuhaoList.size() - 1);
 			paiQuantityArray[keziIdx] += 3;
 		}
 
 		if (duiziIdx != -1) {
 			paiQuantityArray[duiziIdx] -= 2;
-			doCalculateGouXing(yiquShunziGeshu, yiquGangziGeshu, yiquKeziGeshu, yiquDuiziGeshu + 1, gouXingSet);
+			yiquDuiziXuhaoList.add(duiziIdx);
+			doCalculateGouXing(yiquShunziXuhaoList, yiquGangziXuhaoList, yiquKeziXuhaoList, yiquDuiziXuhaoList,
+					gouXingCodeToPaiXingSetMap);
+			yiquDuiziXuhaoList.remove(yiquDuiziXuhaoList.size() - 1);
 			paiQuantityArray[duiziIdx] += 2;
 		}
 
@@ -194,7 +245,7 @@ public class LianXuPaiZu implements Comparable<LianXuPaiZu> {
 		return bigCodeMode;
 	}
 
-	public int[] getGouXingArray() {
+	public LianXuPaiZuGouXing[] getGouXingArray() {
 		return gouXingArray;
 	}
 
