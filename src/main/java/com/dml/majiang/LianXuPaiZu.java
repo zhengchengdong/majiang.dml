@@ -39,7 +39,7 @@ public class LianXuPaiZu implements Comparable<LianXuPaiZu> {
 	}
 
 	/**
-	 * 构形用一个int来编码:低到高--5位单牌个数，4位对子个数，3位刻子个数，3位杠子个数，3位顺子个数
+	 * 构形编码用一个int来表示:低到高--5位单牌个数，4位对子个数，3位刻子个数，3位杠子个数，3位顺子个数
 	 */
 	public void calculateGouXing() {
 		Set<Integer> gouXingSet = new HashSet<>();
