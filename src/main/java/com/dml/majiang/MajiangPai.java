@@ -12,4 +12,17 @@ public enum MajiangPai {
 		int ordinal = pai.ordinal();
 		return (ordinal >= 0 && ordinal <= 26);
 	}
+
+	public static MajiangPai[] xushupaiAndZipaiArray() {
+		MajiangPai[] xushupaiAndZipaiArray = new MajiangPai[34];
+		System.arraycopy(array, 0, xushupaiAndZipaiArray, 0, 34);
+		return xushupaiAndZipaiArray;
+	}
+
+	public static MajiangPai[] xushupaiArray() {
+		MajiangPai[] xushupaiArray = new MajiangPai[27];
+		System.arraycopy(array, 0, xushupaiArray, 0, 27);
+		return xushupaiArray;
+	}
+
 }

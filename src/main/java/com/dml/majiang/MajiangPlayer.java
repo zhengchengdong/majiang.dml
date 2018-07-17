@@ -286,6 +286,16 @@ public class MajiangPlayer {
 		}
 	}
 
+	public List<MajiangPai> findGuipaiList() {
+		List<MajiangPai> guipaiShoupaiList = new ArrayList<>();
+		fangruShoupaiList.forEach((shouPai) -> {
+			if (guipaiTypeSet.contains(shouPai)) {
+				guipaiShoupaiList.add(shouPai);
+			}
+		});
+		return guipaiShoupaiList;
+	}
+
 	public String getId() {
 		return id;
 	}

@@ -224,6 +224,15 @@ public class Pan {
 		return majiangPlayerIdMajiangPlayerMap.get(xiajiaPlayerId);
 	}
 
+	public boolean allPlayerHasNoActionCandidates() {
+		for (MajiangPlayer player : majiangPlayerIdMajiangPlayerMap.values()) {
+			if (!player.getActionCandidates().isEmpty()) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	public Map<String, MajiangPlayer> getMajiangPlayerIdMajiangPlayerMap() {
 		return majiangPlayerIdMajiangPlayerMap;
 	}

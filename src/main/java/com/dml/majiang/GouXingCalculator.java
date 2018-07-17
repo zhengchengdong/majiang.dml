@@ -27,25 +27,25 @@ public class GouXingCalculator {
 	/**
 	 * 一个连续牌组组成手牌的构型
 	 */
-	private static int[][] yiLianXuPaiZuGouXingsArray;
+	private static LianXuPaiZuGouXing[][] yiLianXuPaiZuGouXingsArray;
 
 	/**
 	 * 二个连续牌组组成手牌的构型
 	 */
-	private static int[][] erLianXuPaiZuGouXingsArray;
+	private static LianXuPaiZuZuHeGouXing[][] erLianXuPaiZuGouXingsArray;
 	private static int erLianXuPaiZuGouXingsArrayIdx1Mod;
 
 	/**
 	 * 三个连续牌组组成手牌的构型
 	 */
-	private static int[][] sanLianXuPaiZuGouXingsArray;
+	private static LianXuPaiZuZuHeGouXing[][] sanLianXuPaiZuGouXingsArray;
 	private static int sanLianXuPaiZuGouXingsArrayIdx1Mod;
 	private static int sanLianXuPaiZuGouXingsArrayIdx2Mod;
 
 	/**
 	 * 四个连续牌组组成手牌的构型
 	 */
-	private static int[][] siLianXuPaiZuGouXingsArray;
+	private static LianXuPaiZuZuHeGouXing[][] siLianXuPaiZuGouXingsArray;
 	private static int siLianXuPaiZuGouXingsArrayIdx1Mod;
 	private static int siLianXuPaiZuGouXingsArrayIdx2Mod;
 	private static int siLianXuPaiZuGouXingsArrayIdx3Mod;
@@ -53,7 +53,7 @@ public class GouXingCalculator {
 	/**
 	 * 五个连续牌组组成手牌的构型
 	 */
-	private static int[][] wuLianXuPaiZuGouXingsArray;
+	private static LianXuPaiZuZuHeGouXing[][] wuLianXuPaiZuGouXingsArray;
 	private static int wuLianXuPaiZuGouXingsArrayIdx1Mod;
 	private static int wuLianXuPaiZuGouXingsArrayIdx2Mod;
 	private static int wuLianXuPaiZuGouXingsArrayIdx3Mod;
@@ -72,20 +72,20 @@ public class GouXingCalculator {
 	/**
 	 * 一个连续牌组和独立牌组组成手牌的构型
 	 */
-	private static int[][] yiLianXuPaiZuAndDuLiPaiZuGouXingsArray;
+	private static LianXuPaiZuDuLiPaiZuZuHeGouXing[][] yiLianXuPaiZuAndDuLiPaiZuGouXingsArray;
 	private static int yiLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod;
 
 	/**
 	 * 二个连续牌组和独立牌组组成手牌的构型
 	 */
-	private static int[][] erLianXuPaiZuAndDuLiPaiZuGouXingsArray;
+	private static LianXuPaiZuDuLiPaiZuZuHeGouXing[][] erLianXuPaiZuAndDuLiPaiZuGouXingsArray;
 	private static int erLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod;
 	private static int erLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx2Mod;
 
 	/**
 	 * 三个连续牌组和独立牌组组成手牌的构型
 	 */
-	private static int[][] sanLianXuPaiZuAndDuLiPaiZuGouXingsArray;
+	private static LianXuPaiZuDuLiPaiZuZuHeGouXing[][] sanLianXuPaiZuAndDuLiPaiZuGouXingsArray;
 	private static int sanLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod;
 	private static int sanLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx2Mod;
 	private static int sanLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx3Mod;
@@ -93,7 +93,7 @@ public class GouXingCalculator {
 	/**
 	 * 四个连续牌组和独立牌组组成手牌的构型
 	 */
-	private static int[][] siLianXuPaiZuAndDuLiPaiZuGouXingsArray;
+	private static LianXuPaiZuDuLiPaiZuZuHeGouXing[][] siLianXuPaiZuAndDuLiPaiZuGouXingsArray;
 	private static int siLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod;
 	private static int siLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx2Mod;
 	private static int siLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx3Mod;
@@ -102,7 +102,7 @@ public class GouXingCalculator {
 	/**
 	 * 五个连续牌组和独立牌组组成手牌的构型
 	 */
-	private static int[][] wuLianXuPaiZuAndDuLiPaiZuGouXingsArray;
+	private static LianXuPaiZuDuLiPaiZuZuHeGouXing[][] wuLianXuPaiZuAndDuLiPaiZuGouXingsArray;
 	private static int wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod;
 	private static int wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx2Mod;
 	private static int wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx3Mod;
@@ -113,15 +113,25 @@ public class GouXingCalculator {
 		long startTime = System.currentTimeMillis();
 
 		// 花色: 什么牌，一万，三条，发财等
-		// 牌型: 完全描述了指定的牌的集合，什么花色的牌有几张
+		// 牌型: 通过杠子、刻子、顺子、对子、单牌来完全描述一个牌的集合
 		// 构型: 面向和牌关心的几个点，单牌个数，对子个数，刻子个数，杠子个数，顺子个数
 		// 构型编码: 构形用一个int来编码:低到高--5位单牌个数，4位对子个数，3位刻子个数，3位杠子个数，3位顺子个数
 		// 同构: 具有不同牌型的两个牌的集合，他们具有相同的构型集合（可能可以看成多种构型，所以是构型集合），那么他们同构
 		// 连续牌组: 完全连的一组牌,至少3连,每种牌张数不限（抽象概念，不关心花色，不关心起点）
 		// 连续牌组编码: 从小序号到大序号,从低位到高位,每n位的值代表该序号牌的数量
+		// 连续牌组牌型: 把连续牌左移到顶之后计算出来的牌型。比如三万、四万、四万、五万，左移到顶之后就是一万、二万、二万、三万，再计算牌型
+		// 连续牌组构型对象: 包含有构型编码，和达到这个构型的所有"连续牌组牌型"对象
+		// 连续牌组牌型对象数据结构:
+		// 一个short表示单牌: 0-9位的0/1值表示该位置有没有一个单牌
+		// 一个int表示对子: 每3位表示该位置对子个数，9次
+		// 一个int表示刻子: 每2位表示该位置刻子个数，9次
+		// 一个int表示杠子: 每2位表示该位置杠子个数，9次
+		// 一个short表示顺子: 每2位表示该位置对顺子个数，7次
+		// 连续牌组组合构型对象: 包含有构型编码，和组合出这个构型的连续牌组构型对象
 		// 独立牌组:
 		// 没有顺子，只关心有几个单牌，几个对子，几个刻子，几个杠子，几个5同牌，几个6同牌，几个7同牌，几个8同牌，几个9同牌，几个10同牌的一组牌（抽象概念，不关心花色）
 		// 独立牌组编码:低到高--5位单牌个数，4位对子个数，3位刻子个数，3位杠子个数，2位5同牌个数，2位6同牌个数，2位7同牌个数，1位8同牌个数，1位9同牌个数，1位10同牌个数
+		// 连续牌组独立牌组组合构型对象: 包含有构型编码，和组合出这个构型的连续牌组构型对象和独立牌组构型编码
 
 		int maxShouPai = 17;
 		int maxGuiPai = 3;
@@ -150,7 +160,7 @@ public class GouXingCalculator {
 		// 考虑2个连续牌组，取第一个连续牌组的时候考虑到还要取第二个连续牌组，所以牌不能取满，至少要给第二个组留3张牌，这样一来，必然在lianXuPaiZuList中取到前面的某一段。
 		// 所以2个连续牌组的查询空间必然不会是lianXuPaiZuList.size()*lianXuPaiZuList.size()，而是要小一些。
 
-		// 计算连续牌组组合构型
+		// 计算连续牌组组合构型。算法减少了计算规模，所以查询的时候索引顺序应该是从牌少的组到牌多的组
 		calculateLianXuPaiZuZuHeGouXing(lianXuPaiZuList, maxShouPai, maxGuiPai, maxShouPaiLianXuPaiZu);
 
 		// 如果手牌中没有任何的顺子，那就是一些独立牌形成一个独立牌组。
@@ -170,6 +180,7 @@ public class GouXingCalculator {
 		long finishTime = System.currentTimeMillis();
 
 		System.out.println("耗时(毫秒):" + (finishTime - startTime));
+
 		System.gc();
 
 	}
@@ -201,20 +212,21 @@ public class GouXingCalculator {
 			yiLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod = (maxj + 1);
 
 			// 再计算组合
-			yiLianXuPaiZuAndDuLiPaiZuGouXingsArray = new int[(maxi + 1)
+			yiLianXuPaiZuAndDuLiPaiZuGouXingsArray = new LianXuPaiZuDuLiPaiZuZuHeGouXing[(maxi + 1)
 					* yiLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod][];
 			for (int i = 0; i < lianXuPaiZuList.size(); i++) {
 				LianXuPaiZu zu1 = lianXuPaiZuList.get(i);
 				int totalPai1 = zu1.getTotalPai();
 				int atleastGuiPai1 = zu1.getAtleastGuiPai();
-				int[] gouXingArray1 = zu1.getGouXingArray();
+				LianXuPaiZuGouXing[] gouXingArray1 = zu1.getGouXingArray();
 				for (int j = 0; j < duLiPaiZuList.size(); j++) {
 					DuLiPaiZu duLiPaiZu = duLiPaiZuList.get(j);
 					int totalPai = totalPai1 + duLiPaiZu.getTotalPai();
 					int atleastGuiPai = atleastGuiPai1 + duLiPaiZu.getAtleastGuiPai();
 					if (totalPai <= maxShouPai) {
 						if (atleastGuiPai <= maxGuiPai) {
-							int[] joindGouXingArray = joinGouXingArray(gouXingArray1, duLiPaiZu.getGouXingArray());
+							LianXuPaiZuDuLiPaiZuZuHeGouXing[] joindGouXingArray = joinLianXuPaiZuDuLiPaiZuGouXingArray(
+									gouXingArray1, duLiPaiZu.getGouXingArray());
 							yiLianXuPaiZuAndDuLiPaiZuGouXingsArray[i * yiLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod
 									+ j] = joindGouXingArray;
 						}
@@ -264,7 +276,7 @@ public class GouXingCalculator {
 			erLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod = (maxj + 1) * erLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx2Mod;
 
 			// 再计算组合
-			erLianXuPaiZuAndDuLiPaiZuGouXingsArray = new int[(maxi + 1)
+			erLianXuPaiZuAndDuLiPaiZuGouXingsArray = new LianXuPaiZuDuLiPaiZuZuHeGouXing[(maxi + 1)
 					* erLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod][];
 			for (int i = 0; i < lianXuPaiZuList.size(); i++) {
 				LianXuPaiZu zu1 = lianXuPaiZuList.get(i);
@@ -276,8 +288,8 @@ public class GouXingCalculator {
 					int atleastGuiPai2 = atleastGuiPai1 + zu2.getAtleastGuiPai();
 					if (totalPai2 <= maxShouPai) {
 						if (atleastGuiPai2 <= maxGuiPai) {
-							int[] joindGouXingArray = erLianXuPaiZuGouXingsArray[i * erLianXuPaiZuGouXingsArrayIdx1Mod
-									+ j];
+							LianXuPaiZuZuHeGouXing[] joindGouXingArray = erLianXuPaiZuGouXingsArray[i
+									* erLianXuPaiZuGouXingsArrayIdx1Mod + j];
 							for (int k = 0; k < duLiPaiZuList.size(); k++) {
 								DuLiPaiZu duLiPaiZu = duLiPaiZuList.get(k);
 								int totalPai = totalPai2 + duLiPaiZu.getTotalPai();
@@ -287,7 +299,8 @@ public class GouXingCalculator {
 										erLianXuPaiZuAndDuLiPaiZuGouXingsArray[i
 												* erLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod
 												+ j * erLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx2Mod
-												+ k] = joinGouXingArray(joindGouXingArray, duLiPaiZu.getGouXingArray());
+												+ k] = joinLianXuPaiZuDuLiPaiZuGouXingArray(joindGouXingArray,
+														duLiPaiZu.getGouXingArray());
 									}
 								} else {
 									break;
@@ -359,7 +372,7 @@ public class GouXingCalculator {
 					* sanLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx2Mod;
 
 			// 再计算组合
-			sanLianXuPaiZuAndDuLiPaiZuGouXingsArray = new int[(maxi + 1)
+			sanLianXuPaiZuAndDuLiPaiZuGouXingsArray = new LianXuPaiZuDuLiPaiZuZuHeGouXing[(maxi + 1)
 					* sanLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod][];
 			for (int i = 0; i < lianXuPaiZuList.size(); i++) {
 				LianXuPaiZu zu1 = lianXuPaiZuList.get(i);
@@ -378,7 +391,7 @@ public class GouXingCalculator {
 								int atleastGuiPai3 = atleastGuiPai2 + zu3.getAtleastGuiPai();
 								if (totalPai3 <= maxShouPai) {
 									if (atleastGuiPai3 <= maxGuiPai) {
-										int[] joindGouXingArray = sanLianXuPaiZuGouXingsArray[i
+										LianXuPaiZuZuHeGouXing[] joindGouXingArray = sanLianXuPaiZuGouXingsArray[i
 												* sanLianXuPaiZuGouXingsArrayIdx1Mod
 												+ j * sanLianXuPaiZuGouXingsArrayIdx2Mod + k];
 										for (int l = 0; l < duLiPaiZuList.size(); l++) {
@@ -391,8 +404,8 @@ public class GouXingCalculator {
 															* sanLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod
 															+ j * sanLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx2Mod
 															+ k * sanLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx3Mod
-															+ l] = joinGouXingArray(joindGouXingArray,
-																	duLiPaiZu.getGouXingArray());
+															+ l] = joinLianXuPaiZuDuLiPaiZuGouXingArray(
+																	joindGouXingArray, duLiPaiZu.getGouXingArray());
 												}
 											} else {
 												break;
@@ -483,7 +496,7 @@ public class GouXingCalculator {
 			siLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod = (maxj + 1) * siLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx2Mod;
 
 			// 再计算组合
-			siLianXuPaiZuAndDuLiPaiZuGouXingsArray = new int[(maxi + 1)
+			siLianXuPaiZuAndDuLiPaiZuGouXingsArray = new LianXuPaiZuDuLiPaiZuZuHeGouXing[(maxi + 1)
 					* siLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod][];
 			for (int i = 0; i < lianXuPaiZuList.size(); i++) {
 				LianXuPaiZu zu1 = lianXuPaiZuList.get(i);
@@ -507,7 +520,7 @@ public class GouXingCalculator {
 											int atleastGuiPai4 = atleastGuiPai3 + zu4.getAtleastGuiPai();
 											if (totalPai4 <= maxShouPai) {
 												if (atleastGuiPai4 <= maxGuiPai) {
-													int[] joindGouXingArray = siLianXuPaiZuGouXingsArray[i
+													LianXuPaiZuZuHeGouXing[] joindGouXingArray = siLianXuPaiZuGouXingsArray[i
 															* siLianXuPaiZuGouXingsArrayIdx1Mod
 															+ j * siLianXuPaiZuGouXingsArrayIdx2Mod
 															+ k * siLianXuPaiZuGouXingsArrayIdx3Mod + l];
@@ -523,7 +536,8 @@ public class GouXingCalculator {
 																		+ j * siLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx2Mod
 																		+ k * siLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx3Mod
 																		+ l * siLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx4Mod
-																		+ m] = joinGouXingArray(joindGouXingArray,
+																		+ m] = joinLianXuPaiZuDuLiPaiZuGouXingArray(
+																				joindGouXingArray,
 																				duLiPaiZu.getGouXingArray());
 															}
 														} else {
@@ -636,7 +650,7 @@ public class GouXingCalculator {
 			wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod = (maxj + 1) * wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx2Mod;
 
 			// 再计算组合
-			wuLianXuPaiZuAndDuLiPaiZuGouXingsArray = new int[(maxi + 1)
+			wuLianXuPaiZuAndDuLiPaiZuGouXingsArray = new LianXuPaiZuDuLiPaiZuZuHeGouXing[(maxi + 1)
 					* wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod][];
 			for (int i = 0; i < lianXuPaiZuList.size(); i++) {
 				LianXuPaiZu zu1 = lianXuPaiZuList.get(i);
@@ -666,7 +680,7 @@ public class GouXingCalculator {
 														int atleastGuiPai5 = atleastGuiPai4 + zu5.getAtleastGuiPai();
 														if (totalPai5 <= maxShouPai) {
 															if (atleastGuiPai5 <= maxGuiPai) {
-																int[] joindGouXingArray = wuLianXuPaiZuGouXingsArray[i
+																LianXuPaiZuZuHeGouXing[] joindGouXingArray = wuLianXuPaiZuGouXingsArray[i
 																		* wuLianXuPaiZuGouXingsArrayIdx1Mod
 																		+ j * wuLianXuPaiZuGouXingsArrayIdx2Mod
 																		+ k * wuLianXuPaiZuGouXingsArrayIdx3Mod
@@ -684,7 +698,7 @@ public class GouXingCalculator {
 																					+ k * wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx3Mod
 																					+ l * wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx4Mod
 																					+ m * wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx5Mod
-																					+ n] = joinGouXingArray(
+																					+ n] = joinLianXuPaiZuDuLiPaiZuGouXingArray(
 																							joindGouXingArray, duLiPaiZu
 																									.getGouXingArray());
 																		}
@@ -762,7 +776,7 @@ public class GouXingCalculator {
 	private static void calculateLianXuPaiZuZuHeGouXing(List<LianXuPaiZu> lianXuPaiZuList, int maxShouPai,
 			int maxGuiPai, int maxShouPaiLianXuPaiZu) {
 		if (maxShouPaiLianXuPaiZu >= 1) {
-			yiLianXuPaiZuGouXingsArray = new int[lianXuPaiZuList.size()][];
+			yiLianXuPaiZuGouXingsArray = new LianXuPaiZuGouXing[lianXuPaiZuList.size()][];
 			for (int i = 0; i < lianXuPaiZuList.size(); i++) {
 				LianXuPaiZu lianXuPaiZu = lianXuPaiZuList.get(i);
 				yiLianXuPaiZuGouXingsArray[i] = lianXuPaiZu.getGouXingArray();
@@ -799,19 +813,20 @@ public class GouXingCalculator {
 			erLianXuPaiZuGouXingsArrayIdx1Mod = (maxj + 1);
 
 			// 再计算组合
-			erLianXuPaiZuGouXingsArray = new int[(maxi + 1) * erLianXuPaiZuGouXingsArrayIdx1Mod][];
+			erLianXuPaiZuGouXingsArray = new LianXuPaiZuZuHeGouXing[(maxi + 1) * erLianXuPaiZuGouXingsArrayIdx1Mod][];
 			for (int i = 0; i < lianXuPaiZuList.size(); i++) {
 				LianXuPaiZu zu1 = lianXuPaiZuList.get(i);
 				int totalPai1 = zu1.getTotalPai();
 				int atleastGuiPai1 = zu1.getAtleastGuiPai();
-				int[] gouXingArray1 = zu1.getGouXingArray();
+				LianXuPaiZuGouXing[] gouXingArray1 = zu1.getGouXingArray();
 				for (int j = i; j < lianXuPaiZuList.size(); j++) {
 					LianXuPaiZu zu2 = lianXuPaiZuList.get(j);
 					int totalPai = totalPai1 + zu2.getTotalPai();
 					if (totalPai <= maxShouPai) {
 						int atleastGuiPai = atleastGuiPai1 + zu2.getAtleastGuiPai();
 						if (atleastGuiPai <= maxGuiPai) {
-							int[] joindGouXingArray = joinGouXingArray(gouXingArray1, zu2.getGouXingArray());
+							LianXuPaiZuZuHeGouXing[] joindGouXingArray = joinLianXuPaiZuGouXingArray(gouXingArray1,
+									zu2.getGouXingArray());
 							erLianXuPaiZuGouXingsArray[i * erLianXuPaiZuGouXingsArrayIdx1Mod + j] = joindGouXingArray;
 						}
 					} else {
@@ -860,7 +875,7 @@ public class GouXingCalculator {
 			sanLianXuPaiZuGouXingsArrayIdx1Mod = (maxj + 1) * sanLianXuPaiZuGouXingsArrayIdx2Mod;
 
 			// 再计算组合
-			sanLianXuPaiZuGouXingsArray = new int[(maxi + 1) * sanLianXuPaiZuGouXingsArrayIdx1Mod][];
+			sanLianXuPaiZuGouXingsArray = new LianXuPaiZuZuHeGouXing[(maxi + 1) * sanLianXuPaiZuGouXingsArrayIdx1Mod][];
 			for (int i = 0; i < lianXuPaiZuList.size(); i++) {
 				LianXuPaiZu zu1 = lianXuPaiZuList.get(i);
 				int totalPai1 = zu1.getTotalPai();
@@ -871,8 +886,8 @@ public class GouXingCalculator {
 					int atleastGuiPai2 = atleastGuiPai1 + zu2.getAtleastGuiPai();
 					if (totalPai2 <= maxShouPai) {
 						if (atleastGuiPai2 <= maxGuiPai) {
-							int[] joindGouXingArray = erLianXuPaiZuGouXingsArray[i * erLianXuPaiZuGouXingsArrayIdx1Mod
-									+ j];
+							LianXuPaiZuZuHeGouXing[] joindGouXingArray = erLianXuPaiZuGouXingsArray[i
+									* erLianXuPaiZuGouXingsArrayIdx1Mod + j];
 							for (int k = j; k < lianXuPaiZuList.size(); k++) {
 								LianXuPaiZu zu3 = lianXuPaiZuList.get(k);
 								int totalPai3 = totalPai2 + zu3.getTotalPai();
@@ -880,8 +895,9 @@ public class GouXingCalculator {
 								if (totalPai3 <= maxShouPai) {
 									if (atleastGuiPai3 <= maxGuiPai) {
 										sanLianXuPaiZuGouXingsArray[i * sanLianXuPaiZuGouXingsArrayIdx1Mod
-												+ j * sanLianXuPaiZuGouXingsArrayIdx2Mod + k] = joinGouXingArray(
-														joindGouXingArray, zu3.getGouXingArray());
+												+ j * sanLianXuPaiZuGouXingsArrayIdx2Mod
+												+ k] = joinLianXuPaiZuGouXingArray(joindGouXingArray,
+														zu3.getGouXingArray());
 									}
 								} else {
 									break;
@@ -949,7 +965,7 @@ public class GouXingCalculator {
 			siLianXuPaiZuGouXingsArrayIdx1Mod = (maxj + 1) * siLianXuPaiZuGouXingsArrayIdx2Mod;
 
 			// 再计算组合
-			siLianXuPaiZuGouXingsArray = new int[(maxi + 1) * siLianXuPaiZuGouXingsArrayIdx1Mod][];
+			siLianXuPaiZuGouXingsArray = new LianXuPaiZuZuHeGouXing[(maxi + 1) * siLianXuPaiZuGouXingsArrayIdx1Mod][];
 			for (int i = 0; i < lianXuPaiZuList.size(); i++) {
 				LianXuPaiZu zu1 = lianXuPaiZuList.get(i);
 				int totalPai1 = zu1.getTotalPai();
@@ -966,7 +982,7 @@ public class GouXingCalculator {
 								int atleastGuiPai3 = atleastGuiPai2 + zu3.getAtleastGuiPai();
 								if (totalPai3 <= maxShouPai) {
 									if (atleastGuiPai3 <= maxGuiPai) {
-										int[] joindGouXingArray = sanLianXuPaiZuGouXingsArray[i
+										LianXuPaiZuZuHeGouXing[] joindGouXingArray = sanLianXuPaiZuGouXingsArray[i
 												* sanLianXuPaiZuGouXingsArrayIdx1Mod
 												+ j * sanLianXuPaiZuGouXingsArrayIdx2Mod + k];
 										for (int l = k; l < lianXuPaiZuList.size(); l++) {
@@ -978,7 +994,7 @@ public class GouXingCalculator {
 													siLianXuPaiZuGouXingsArray[i * siLianXuPaiZuGouXingsArrayIdx1Mod
 															+ j * siLianXuPaiZuGouXingsArrayIdx2Mod
 															+ k * siLianXuPaiZuGouXingsArrayIdx3Mod
-															+ l] = joinGouXingArray(joindGouXingArray,
+															+ l] = joinLianXuPaiZuGouXingArray(joindGouXingArray,
 																	zu4.getGouXingArray());
 												}
 											} else {
@@ -1066,7 +1082,7 @@ public class GouXingCalculator {
 			wuLianXuPaiZuGouXingsArrayIdx1Mod = (maxj + 1) * wuLianXuPaiZuGouXingsArrayIdx2Mod;
 
 			// 再计算组合
-			wuLianXuPaiZuGouXingsArray = new int[(maxi + 1) * wuLianXuPaiZuGouXingsArrayIdx1Mod][];
+			wuLianXuPaiZuGouXingsArray = new LianXuPaiZuZuHeGouXing[(maxi + 1) * wuLianXuPaiZuGouXingsArrayIdx1Mod][];
 			for (int i = 0; i < lianXuPaiZuList.size(); i++) {
 				LianXuPaiZu zu1 = lianXuPaiZuList.get(i);
 				int totalPai1 = zu1.getTotalPai();
@@ -1089,7 +1105,7 @@ public class GouXingCalculator {
 											int atleastGuiPai4 = atleastGuiPai3 + zu4.getAtleastGuiPai();
 											if (totalPai4 <= maxShouPai) {
 												if (atleastGuiPai4 <= maxGuiPai) {
-													int[] joindGouXingArray = siLianXuPaiZuGouXingsArray[i
+													LianXuPaiZuZuHeGouXing[] joindGouXingArray = siLianXuPaiZuGouXingsArray[i
 															* siLianXuPaiZuGouXingsArrayIdx1Mod
 															+ j * siLianXuPaiZuGouXingsArrayIdx2Mod
 															+ k * siLianXuPaiZuGouXingsArrayIdx3Mod + l];
@@ -1105,7 +1121,8 @@ public class GouXingCalculator {
 																		+ j * wuLianXuPaiZuGouXingsArrayIdx2Mod
 																		+ k * wuLianXuPaiZuGouXingsArrayIdx3Mod
 																		+ l * wuLianXuPaiZuGouXingsArrayIdx4Mod
-																		+ m] = joinGouXingArray(joindGouXingArray,
+																		+ m] = joinLianXuPaiZuGouXingArray(
+																				joindGouXingArray,
 																				zu5.getGouXingArray());
 															}
 														} else {
@@ -1132,13 +1149,80 @@ public class GouXingCalculator {
 
 	}
 
-	private static int[] joinGouXingArray(int[] gouXingArray1, int[] gouXingArray2) {
-		int[] result = new int[gouXingArray1.length * gouXingArray2.length];
+	private static LianXuPaiZuZuHeGouXing[] joinLianXuPaiZuGouXingArray(LianXuPaiZuZuHeGouXing[] zuHeGouXingArray,
+			LianXuPaiZuGouXing[] gouXingArray) {
+		LianXuPaiZuZuHeGouXing[] result = new LianXuPaiZuZuHeGouXing[zuHeGouXingArray.length * gouXingArray.length];
+		int ri = 0;
+		for (int i = 0; i < zuHeGouXingArray.length; i++) {
+			LianXuPaiZuZuHeGouXing zuHeGouXing = zuHeGouXingArray[i];
+			LianXuPaiZuGouXing[] gouXingArrayFromZuHeGouXing = zuHeGouXing.getZuHePaiZuGouXingArray();
+			for (int j = 0; j < gouXingArray.length; j++) {
+				LianXuPaiZuGouXing gouXing = gouXingArray[j];
+				LianXuPaiZuZuHeGouXing lianXuPaiZuZuHeGouXing = new LianXuPaiZuZuHeGouXing();
+				lianXuPaiZuZuHeGouXing.setGouXingCode(zuHeGouXing.getGouXingCode() + gouXing.getGouXingCode());
+				LianXuPaiZuGouXing[] zuHePaiZuGouXingArray = new LianXuPaiZuGouXing[gouXingArrayFromZuHeGouXing.length
+						+ 1];
+				System.arraycopy(gouXingArrayFromZuHeGouXing, 0, zuHePaiZuGouXingArray, 0,
+						gouXingArrayFromZuHeGouXing.length);
+				zuHePaiZuGouXingArray[zuHePaiZuGouXingArray.length - 1] = gouXing;
+				lianXuPaiZuZuHeGouXing.setZuHePaiZuGouXingArray(zuHePaiZuGouXingArray);
+				result[ri++] = lianXuPaiZuZuHeGouXing;
+			}
+		}
+		return result;
+	}
+
+	private static LianXuPaiZuZuHeGouXing[] joinLianXuPaiZuGouXingArray(LianXuPaiZuGouXing[] gouXingArray1,
+			LianXuPaiZuGouXing[] gouXingArray2) {
+		LianXuPaiZuZuHeGouXing[] result = new LianXuPaiZuZuHeGouXing[gouXingArray1.length * gouXingArray2.length];
 		int ri = 0;
 		for (int i = 0; i < gouXingArray1.length; i++) {
-			int gouXing1 = gouXingArray1[i];
+			LianXuPaiZuGouXing gouXing1 = gouXingArray1[i];
 			for (int j = 0; j < gouXingArray2.length; j++) {
-				result[ri++] = gouXing1 + gouXingArray2[j];
+				LianXuPaiZuGouXing gouXing2 = gouXingArray2[j];
+				LianXuPaiZuZuHeGouXing lianXuPaiZuZuHeGouXing = new LianXuPaiZuZuHeGouXing();
+				lianXuPaiZuZuHeGouXing.setGouXingCode(gouXing1.getGouXingCode() + gouXing2.getGouXingCode());
+				LianXuPaiZuGouXing[] zuHePaiZuGouXingArray = new LianXuPaiZuGouXing[] { gouXing1, gouXing2 };
+				lianXuPaiZuZuHeGouXing.setZuHePaiZuGouXingArray(zuHePaiZuGouXingArray);
+				result[ri++] = lianXuPaiZuZuHeGouXing;
+			}
+		}
+		return result;
+	}
+
+	private static LianXuPaiZuDuLiPaiZuZuHeGouXing[] joinLianXuPaiZuDuLiPaiZuGouXingArray(
+			LianXuPaiZuGouXing[] lianXuPaiZuGouXingArray, int[] duLiPaiZuGouXingArray) {
+		LianXuPaiZuDuLiPaiZuZuHeGouXing[] result = new LianXuPaiZuDuLiPaiZuZuHeGouXing[lianXuPaiZuGouXingArray.length
+				* duLiPaiZuGouXingArray.length];
+		int ri = 0;
+		for (int i = 0; i < lianXuPaiZuGouXingArray.length; i++) {
+			LianXuPaiZuGouXing lianXuPaiZuGouXing = lianXuPaiZuGouXingArray[i];
+			for (int j = 0; j < duLiPaiZuGouXingArray.length; j++) {
+				int duLiPaiZuGouXing = duLiPaiZuGouXingArray[j];
+				LianXuPaiZuDuLiPaiZuZuHeGouXing zuHeGouXing = new LianXuPaiZuDuLiPaiZuZuHeGouXing();
+				zuHeGouXing.setGouXingCode(lianXuPaiZuGouXing.getGouXingCode() + duLiPaiZuGouXing);
+				zuHeGouXing.setLianXuPaiZuGouXingArray(new LianXuPaiZuGouXing[] { lianXuPaiZuGouXing });
+				zuHeGouXing.setDuLiPaiZuGouXingCode(duLiPaiZuGouXing);
+				result[ri++] = zuHeGouXing;
+			}
+		}
+		return result;
+	}
+
+	private static LianXuPaiZuDuLiPaiZuZuHeGouXing[] joinLianXuPaiZuDuLiPaiZuGouXingArray(
+			LianXuPaiZuZuHeGouXing[] lianXuPaiZuZuHeGouXingArray, int[] duLiPaiZuGouXingArray) {
+		LianXuPaiZuDuLiPaiZuZuHeGouXing[] result = new LianXuPaiZuDuLiPaiZuZuHeGouXing[lianXuPaiZuZuHeGouXingArray.length
+				* duLiPaiZuGouXingArray.length];
+		int ri = 0;
+		for (int i = 0; i < lianXuPaiZuZuHeGouXingArray.length; i++) {
+			LianXuPaiZuZuHeGouXing lianXuPaiZuZuHeGouXing = lianXuPaiZuZuHeGouXingArray[i];
+			for (int j = 0; j < duLiPaiZuGouXingArray.length; j++) {
+				int duLiPaiZuGouXing = duLiPaiZuGouXingArray[j];
+				LianXuPaiZuDuLiPaiZuZuHeGouXing zuHeGouXing = new LianXuPaiZuDuLiPaiZuZuHeGouXing();
+				zuHeGouXing.setGouXingCode(lianXuPaiZuZuHeGouXing.getGouXingCode() + duLiPaiZuGouXing);
+				zuHeGouXing.setLianXuPaiZuGouXingArray(lianXuPaiZuZuHeGouXing.getZuHePaiZuGouXingArray());
+				zuHeGouXing.setDuLiPaiZuGouXingCode(duLiPaiZuGouXing);
+				result[ri++] = zuHeGouXing;
 			}
 		}
 		return result;

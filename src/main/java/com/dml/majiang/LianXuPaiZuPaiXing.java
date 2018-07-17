@@ -23,7 +23,7 @@ public class LianXuPaiZuPaiXing {
 			tempQuantityArray[xuhao]++;
 		}
 		for (int i = 0; i < tempQuantityArray.length; i++) {
-			duiziCode = (duiziCode & (tempQuantityArray[i] << (i * 3)));
+			duiziCode = (duiziCode | (tempQuantityArray[i] << (i * 3)));
 		}
 
 		Arrays.fill(tempQuantityArray, 0);
@@ -31,7 +31,7 @@ public class LianXuPaiZuPaiXing {
 			tempQuantityArray[xuhao]++;
 		}
 		for (int i = 0; i < tempQuantityArray.length; i++) {
-			keziCode = (keziCode & (tempQuantityArray[i] << (i * 2)));
+			keziCode = (keziCode | (tempQuantityArray[i] << (i * 2)));
 		}
 
 		Arrays.fill(tempQuantityArray, 0);
@@ -39,7 +39,7 @@ public class LianXuPaiZuPaiXing {
 			tempQuantityArray[xuhao]++;
 		}
 		for (int i = 0; i < tempQuantityArray.length; i++) {
-			gangziCode = (gangziCode & (tempQuantityArray[i] << (i * 2)));
+			gangziCode = (gangziCode | (tempQuantityArray[i] << (i * 2)));
 		}
 
 		Arrays.fill(tempQuantityArray, 0);
@@ -47,7 +47,7 @@ public class LianXuPaiZuPaiXing {
 			tempQuantityArray[xuhao]++;
 		}
 		for (int i = 0; i < 7; i++) {
-			shunziCode = (short) (shunziCode & (tempQuantityArray[i] << (i * 2)));
+			shunziCode = (short) (shunziCode | (tempQuantityArray[i] << (i * 2)));
 		}
 
 	}
@@ -74,7 +74,7 @@ public class LianXuPaiZuPaiXing {
 	// 一个int表示杠子: 每2位表示该位置杠子个数，9次
 	private int gangziCode;
 
-	// 一个short表示顺子: 每2位表示该位置对顺子个数，7次
+	// 一个short表示顺子: 每2位表示该位置顺子个数，7次
 	private short shunziCode;
 
 	public short getDanpaiCode() {
