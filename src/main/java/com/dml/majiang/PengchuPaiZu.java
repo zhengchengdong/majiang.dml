@@ -2,16 +2,16 @@ package com.dml.majiang;
 
 import java.nio.ByteBuffer;
 
-public class PengchuPai implements ByteBufferAble {
+public class PengchuPaiZu implements ByteBufferAble {
 
 	private Kezi kezi;
 	private String dachuPlayerId;
 	private String pengPlayerId;
 
-	public PengchuPai() {
+	public PengchuPaiZu() {
 	}
 
-	public PengchuPai(Kezi kezi, String dachuPlayerId, String pengPlayerId) {
+	public PengchuPaiZu(Kezi kezi, String dachuPlayerId, String pengPlayerId) {
 		this.kezi = kezi;
 		this.dachuPlayerId = dachuPlayerId;
 		this.pengPlayerId = pengPlayerId;

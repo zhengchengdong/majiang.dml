@@ -50,9 +50,9 @@ public class MajiangPlayer {
 	 */
 	private List<MajiangPai> dachupaiList = new ArrayList<>();
 
-	private List<ChichuPai> chichupaiList = new ArrayList<>();
-	private List<PengchuPai> pengchupaiList = new ArrayList<>();
-	private List<GangchuPai> gangchupaiList = new ArrayList<>();
+	private List<ChichuPaiZu> chichupaiZuList = new ArrayList<>();
+	private List<PengchuPaiZu> pengchupaiZuList = new ArrayList<>();
+	private List<GangchuPaiZu> gangchupaiZuList = new ArrayList<>();
 
 	public void addGuipaiType(MajiangPai guipaiType) {
 		guipaiTypeSet.add(guipaiType);
@@ -153,8 +153,8 @@ public class MajiangPlayer {
 			fangruShoupaiList.remove(pai3);
 			shoupaiCalculator.removePai(pai3);
 		}
-		ChichuPai chichuPai = new ChichuPai(chifaShunzi, dachupaiPlayer.getId(), id);
-		chichupaiList.add(chichuPai);
+		ChichuPaiZu chichuPaiZu = new ChichuPaiZu(chifaShunzi, dachupaiPlayer.getId(), id);
+		chichupaiZuList.add(chichuPaiZu);
 	}
 
 	public void pengPai(MajiangPlayer dachupaiPlayer, MajiangPai pai) {
@@ -162,8 +162,8 @@ public class MajiangPlayer {
 		fangruShoupaiList.remove(pai);
 		fangruShoupaiList.remove(pai);
 		shoupaiCalculator.removePai(pai, 2);
-		PengchuPai pengchuPai = new PengchuPai(new Kezi(pai), dachupaiPlayer.getId(), id);
-		pengchupaiList.add(pengchuPai);
+		PengchuPaiZu pengchuPaiZu = new PengchuPaiZu(new Kezi(pai), dachupaiPlayer.getId(), id);
+		pengchupaiZuList.add(pengchuPaiZu);
 	}
 
 	public void gangDachupai(MajiangPlayer dachupaiPlayer, MajiangPai pai) {
@@ -172,8 +172,8 @@ public class MajiangPlayer {
 		fangruShoupaiList.remove(pai);
 		fangruShoupaiList.remove(pai);
 		shoupaiCalculator.removePai(pai, 3);
-		GangchuPai gangchuPai = new GangchuPai(new Gangzi(pai), dachupaiPlayer.getId(), id, GangType.gangdachu);
-		gangchupaiList.add(gangchuPai);
+		GangchuPaiZu gangchuPaiZu = new GangchuPaiZu(new Gangzi(pai), dachupaiPlayer.getId(), id, GangType.gangdachu);
+		gangchupaiZuList.add(gangchuPaiZu);
 	}
 
 	public void gangMopai(MajiangPai pai) {
@@ -181,22 +181,22 @@ public class MajiangPlayer {
 		fangruShoupaiList.remove(pai);
 		fangruShoupaiList.remove(pai);
 		shoupaiCalculator.removePai(pai, 3);
-		GangchuPai gangchuPai = new GangchuPai(new Gangzi(pai), null, id, GangType.shoupaigangmo);
-		gangchupaiList.add(gangchuPai);
+		GangchuPaiZu gangchuPaiZu = new GangchuPaiZu(new Gangzi(pai), null, id, GangType.shoupaigangmo);
+		gangchupaiZuList.add(gangchuPaiZu);
 		gangmoShoupai = null;
 	}
 
 	public void keziGangMopai(MajiangPai pai) {
-		Iterator<PengchuPai> i = pengchupaiList.iterator();
+		Iterator<PengchuPaiZu> i = pengchupaiZuList.iterator();
 		while (i.hasNext()) {
-			PengchuPai pengchuPai = i.next();
+			PengchuPaiZu pengchuPai = i.next();
 			if (pengchuPai.getKezi().getPaiType().equals(pai)) {
 				i.remove();
 				break;
 			}
 		}
-		GangchuPai gangchuPai = new GangchuPai(new Gangzi(pai), null, id, GangType.kezigangmo);
-		gangchupaiList.add(gangchuPai);
+		GangchuPaiZu gangchuPaiZu = new GangchuPaiZu(new Gangzi(pai), null, id, GangType.kezigangmo);
+		gangchupaiZuList.add(gangchuPaiZu);
 		gangmoShoupai = null;
 	}
 
@@ -252,8 +252,8 @@ public class MajiangPlayer {
 	}
 
 	public void tryKezigangmoAndGenerateCandidateAction() {
-		for (PengchuPai pengchuPai : pengchupaiList) {
-			if (pengchuPai.getKezi().getPaiType().equals(gangmoShoupai)) {
+		for (PengchuPaiZu pengchuPaiZu : pengchupaiZuList) {
+			if (pengchuPaiZu.getKezi().getPaiType().equals(gangmoShoupai)) {
 				addActionCandidate(new MajiangGangAction(id, null, gangmoShoupai, GangType.kezigangmo));
 				return;
 			}
@@ -294,6 +294,18 @@ public class MajiangPlayer {
 			}
 		});
 		return guipaiShoupaiList;
+	}
+
+	public int countChichupaiZu() {
+		return chichupaiZuList.size();
+	}
+
+	public int countPengchupaiZu() {
+		return pengchupaiZuList.size();
+	}
+
+	public int countGangchupaiZu() {
+		return gangchupaiZuList.size();
 	}
 
 	public String getId() {
@@ -368,28 +380,28 @@ public class MajiangPlayer {
 		this.dachupaiList = dachupaiList;
 	}
 
-	public List<ChichuPai> getChichupaiList() {
-		return chichupaiList;
+	public List<ChichuPaiZu> getChichupaiZuList() {
+		return chichupaiZuList;
 	}
 
-	public void setChichupaiList(List<ChichuPai> chichupaiList) {
-		this.chichupaiList = chichupaiList;
+	public void setChichupaiZuList(List<ChichuPaiZu> chichupaiZuList) {
+		this.chichupaiZuList = chichupaiZuList;
 	}
 
-	public List<PengchuPai> getPengchupaiList() {
-		return pengchupaiList;
+	public List<PengchuPaiZu> getPengchupaiZuList() {
+		return pengchupaiZuList;
 	}
 
-	public void setPengchupaiList(List<PengchuPai> pengchupaiList) {
-		this.pengchupaiList = pengchupaiList;
+	public void setPengchupaiZuList(List<PengchuPaiZu> pengchupaiZuList) {
+		this.pengchupaiZuList = pengchupaiZuList;
 	}
 
-	public List<GangchuPai> getGangchupaiList() {
-		return gangchupaiList;
+	public List<GangchuPaiZu> getGangchupaiZuList() {
+		return gangchupaiZuList;
 	}
 
-	public void setGangchupaiList(List<GangchuPai> gangchupaiList) {
-		this.gangchupaiList = gangchupaiList;
+	public void setGangchupaiZuList(List<GangchuPaiZu> gangchupaiZuList) {
+		this.gangchupaiZuList = gangchupaiZuList;
 	}
 
 }

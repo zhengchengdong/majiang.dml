@@ -2,15 +2,15 @@ package com.dml.majiang;
 
 import java.nio.ByteBuffer;
 
-public class ChichuPai implements ByteBufferAble {
+public class ChichuPaiZu implements ByteBufferAble {
 	private Shunzi shunzi;
 	private String dachuPlayerId;
 	private String chiPlayerId;
 
-	public ChichuPai() {
+	public ChichuPaiZu() {
 	}
 
-	public ChichuPai(Shunzi shunzi, String dachuPlayerId, String chiPlayerId) {
+	public ChichuPaiZu(Shunzi shunzi, String dachuPlayerId, String chiPlayerId) {
 		this.shunzi = shunzi;
 		this.dachuPlayerId = dachuPlayerId;
 		this.chiPlayerId = chiPlayerId;

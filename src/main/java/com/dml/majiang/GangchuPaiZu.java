@@ -2,17 +2,17 @@ package com.dml.majiang;
 
 import java.nio.ByteBuffer;
 
-public class GangchuPai implements ByteBufferAble {
+public class GangchuPaiZu implements ByteBufferAble {
 
 	private Gangzi gangzi;
 	private String dachuPlayerId;
 	private String gangPlayerId;
 	private GangType gangType;
 
-	public GangchuPai() {
+	public GangchuPaiZu() {
 	}
 
-	public GangchuPai(Gangzi gangzi, String dachuPlayerId, String gangPlayerId, GangType gangType) {
+	public GangchuPaiZu(Gangzi gangzi, String dachuPlayerId, String gangPlayerId, GangType gangType) {
 		this.gangzi = gangzi;
 		this.dachuPlayerId = dachuPlayerId;
 		this.gangPlayerId = gangPlayerId;

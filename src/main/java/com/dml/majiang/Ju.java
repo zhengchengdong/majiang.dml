@@ -21,6 +21,7 @@ public class Ju {
 	private AvaliablePaiFiller avaliablePaiFiller;
 	private GuipaiDeterminer guipaiDeterminer;
 	private FaPaiStrategy faPaiStrategy;
+	private GouXingPanHu GouXingPanHu;
 	private MajiangPlayerInitialActionUpdater initialActionUpdater;
 	private MajiangPlayerMoActionProcessor moActionProcessor;
 	private MajiangPlayerMoActionUpdater moActionUpdater;
@@ -158,6 +159,14 @@ public class Ju {
 
 	public void setFaPaiStrategy(FaPaiStrategy faPaiStrategy) {
 		this.faPaiStrategy = faPaiStrategy;
+	}
+
+	public GouXingPanHu getGouXingPanHu() {
+		return GouXingPanHu;
+	}
+
+	public void setGouXingPanHu(GouXingPanHu gouXingPanHu) {
+		GouXingPanHu = gouXingPanHu;
 	}
 
 	public MajiangPlayerInitialActionUpdater getInitialActionUpdater() {

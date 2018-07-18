@@ -3,13 +3,16 @@ package com.dml.majiang;
 import java.util.List;
 
 /**
- * 有鬼牌当牌的情况下的手牌计算出来的构型组
+ * 鬼牌按照一定的当牌安排下的手牌计算出来的构型组
  * 
  * @author Neo
  *
  */
 public class ShoupaiWithGuipaiDangGouXingZu {
 
+	/**
+	 * 鬼牌当牌的安排
+	 */
 	private GuipaiDangPai[] guipaiDangPaiArray;
 
 	private List<GouXing> gouXingList;

@@ -34,9 +34,9 @@ public class MajiangPlayerValueObject implements ByteBufferAble {
 	 */
 	private List<MajiangPai> dachupaiList;
 
-	private List<ChichuPai> chichupaiList;
-	private List<PengchuPai> pengchupaiList;
-	private List<GangchuPai> gangchupaiList;
+	private List<ChichuPaiZu> chichupaiZuList;
+	private List<PengchuPaiZu> pengchupaiZuList;
+	private List<GangchuPaiZu> gangchupaiZuList;
 
 	public MajiangPlayerValueObject() {
 	}
@@ -52,9 +52,9 @@ public class MajiangPlayerValueObject implements ByteBufferAble {
 			gangmoShoupai = new MajiangPaiValueObject(player.getGangmoShoupai());
 		}
 		dachupaiList = new ArrayList<>(player.getDachupaiList());
-		chichupaiList = new ArrayList<>(player.getChichupaiList());
-		pengchupaiList = new ArrayList<>(player.getPengchupaiList());
-		gangchupaiList = new ArrayList<>(player.getGangchupaiList());
+		chichupaiZuList = new ArrayList<>(player.getChichupaiZuList());
+		pengchupaiZuList = new ArrayList<>(player.getPengchupaiZuList());
+		gangchupaiZuList = new ArrayList<>(player.getGangchupaiZuList());
 	}
 
 	public String getId() {
@@ -121,28 +121,28 @@ public class MajiangPlayerValueObject implements ByteBufferAble {
 		this.dachupaiList = dachupaiList;
 	}
 
-	public List<ChichuPai> getChichupaiList() {
-		return chichupaiList;
+	public List<ChichuPaiZu> getChichupaiZuList() {
+		return chichupaiZuList;
 	}
 
-	public void setChichupaiList(List<ChichuPai> chichupaiList) {
-		this.chichupaiList = chichupaiList;
+	public void setChichupaiZuList(List<ChichuPaiZu> chichupaiZuList) {
+		this.chichupaiZuList = chichupaiZuList;
 	}
 
-	public List<PengchuPai> getPengchupaiList() {
-		return pengchupaiList;
+	public List<PengchuPaiZu> getPengchupaiZuList() {
+		return pengchupaiZuList;
 	}
 
-	public void setPengchupaiList(List<PengchuPai> pengchupaiList) {
-		this.pengchupaiList = pengchupaiList;
+	public void setPengchupaiZuList(List<PengchuPaiZu> pengchupaiZuList) {
+		this.pengchupaiZuList = pengchupaiZuList;
 	}
 
-	public List<GangchuPai> getGangchupaiList() {
-		return gangchupaiList;
+	public List<GangchuPaiZu> getGangchupaiZuList() {
+		return gangchupaiZuList;
 	}
 
-	public void setGangchupaiList(List<GangchuPai> gangchupaiList) {
-		this.gangchupaiList = gangchupaiList;
+	public void setGangchupaiZuList(List<GangchuPaiZu> gangchupaiZuList) {
+		this.gangchupaiZuList = gangchupaiZuList;
 	}
 
 	@Override
@@ -155,9 +155,9 @@ public class MajiangPlayerValueObject implements ByteBufferAble {
 		ByteBufferSerializer.listToByteBuffer(new ArrayList<>(actionCandidates), bb);
 		ByteBufferSerializer.objToByteBuffer(gangmoShoupai, bb);
 		majiangPaiListToByteBuffer(dachupaiList, bb);
-		ByteBufferSerializer.listToByteBuffer(new ArrayList<>(chichupaiList), bb);
-		ByteBufferSerializer.listToByteBuffer(new ArrayList<>(pengchupaiList), bb);
-		ByteBufferSerializer.listToByteBuffer(new ArrayList<>(gangchupaiList), bb);
+		ByteBufferSerializer.listToByteBuffer(new ArrayList<>(chichupaiZuList), bb);
+		ByteBufferSerializer.listToByteBuffer(new ArrayList<>(pengchupaiZuList), bb);
+		ByteBufferSerializer.listToByteBuffer(new ArrayList<>(gangchupaiZuList), bb);
 	}
 
 	@Override
@@ -171,12 +171,12 @@ public class MajiangPlayerValueObject implements ByteBufferAble {
 		ByteBufferSerializer.byteBufferToList(bb).forEach((o) -> actionCandidates.add((MajiangPlayerAction) o));
 		gangmoShoupai = ByteBufferSerializer.byteBufferToObj(bb);
 		dachupaiList = fillMajiangPaiList(bb);
-		chichupaiList = new ArrayList<>();
-		ByteBufferSerializer.byteBufferToList(bb).forEach((o) -> chichupaiList.add((ChichuPai) o));
-		pengchupaiList = new ArrayList<>();
-		ByteBufferSerializer.byteBufferToList(bb).forEach((o) -> pengchupaiList.add((PengchuPai) o));
-		gangchupaiList = new ArrayList<>();
-		ByteBufferSerializer.byteBufferToList(bb).forEach((o) -> gangchupaiList.add((GangchuPai) o));
+		chichupaiZuList = new ArrayList<>();
+		ByteBufferSerializer.byteBufferToList(bb).forEach((o) -> chichupaiZuList.add((ChichuPaiZu) o));
+		pengchupaiZuList = new ArrayList<>();
+		ByteBufferSerializer.byteBufferToList(bb).forEach((o) -> pengchupaiZuList.add((PengchuPaiZu) o));
+		gangchupaiZuList = new ArrayList<>();
+		ByteBufferSerializer.byteBufferToList(bb).forEach((o) -> gangchupaiZuList.add((GangchuPaiZu) o));
 	}
 
 	private void majiangPaiListToByteBuffer(List<MajiangPai> majiangPaiList, ByteBuffer bb) {

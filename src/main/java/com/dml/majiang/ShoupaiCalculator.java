@@ -1,6 +1,7 @@
 package com.dml.majiang;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -16,235 +17,204 @@ public class ShoupaiCalculator {
 	 */
 	private int[] paiQuantityArray = new int[34];
 
-	// public List<GouXing> calculateAllGouXing() {
-	// List<GouXing> result = new ArrayList<>();
-	// List<LianXuPaiZu> lianXuPaiZuList = new ArrayList<>();
-	// List<Integer> duLiPaiIdxList = new ArrayList<>();
-	// parseXuShuPai(0, 8, lianXuPaiZuList, duLiPaiIdxList);
-	// parseXuShuPai(9, 17, lianXuPaiZuList, duLiPaiIdxList);
-	// parseXuShuPai(18, 26, lianXuPaiZuList, duLiPaiIdxList);
-	// parseZiPai(duLiPaiIdxList);
-	// lianXuPaiZuList.forEach((lianXuPaiZu) -> lianXuPaiZu.calculateCode());
-	// Collections.sort(lianXuPaiZuList);
-	//
-	// // 开始分情况查询构型
-	// boolean hasLianXuPaiZu = !lianXuPaiZuList.isEmpty();
-	// boolean hasDuLiPaiZu = !duLiPaiIdxList.isEmpty();
-	// if (hasLianXuPaiZu && !hasDuLiPaiZu) {// 手牌全由连续牌组组成
-	// if (lianXuPaiZuList.size() == 1) {// 只有一个连续牌组
-	// LianXuPaiZu lianXuPaiZu = lianXuPaiZuList.get(0);
-	// int idx;
-	// if (!lianXuPaiZu.isBigCodeMode()) {
-	// idx =
-	// GouXingCalculator.lianXuPaiZuGouXingsIdxArray[lianXuPaiZu.getSmallCode()];
-	// } else {
-	// idx =
-	// GouXingCalculator.lianXuPaiZuGouXingsIdxMap.get(lianXuPaiZu.getBigCode());
-	// }
-	// LianXuPaiZuGouXing[] lianXuPaiZuGouXingArray =
-	// GouXingCalculator.yiLianXuPaiZuGouXingsArray[idx];
-	// for (int i = 0; i < lianXuPaiZuGouXingArray.length; i++) {
-	// result.add(lianXuPaiZuGouXingArray[i]);
-	// }
-	// } else if (lianXuPaiZuList.size() == 2) {// 由两个连续牌组组成
-	// LianXuPaiZu lianXuPaiZu1 = lianXuPaiZuList.get(0);
-	// int idx1;
-	// if (!lianXuPaiZu1.isBigCodeMode()) {
-	// idx1 =
-	// GouXingCalculator.lianXuPaiZuGouXingsIdxArray[lianXuPaiZu1.getSmallCode()];
-	// } else {
-	// idx1 =
-	// GouXingCalculator.lianXuPaiZuGouXingsIdxMap.get(lianXuPaiZu1.getBigCode());
-	// }
-	//
-	// LianXuPaiZu lianXuPaiZu2 = lianXuPaiZuList.get(1);
-	// int idx2;
-	// if (!lianXuPaiZu2.isBigCodeMode()) {
-	// idx2 =
-	// GouXingCalculator.lianXuPaiZuGouXingsIdxArray[lianXuPaiZu2.getSmallCode()];
-	// } else {
-	// idx2 =
-	// GouXingCalculator.lianXuPaiZuGouXingsIdxMap.get(lianXuPaiZu2.getBigCode());
-	// }
-	//
-	// LianXuPaiZuZuHeGouXing[] lianXuPaiZuZuHeGouXingArray =
-	// GouXingCalculator.erLianXuPaiZuGouXingsArray[idx1
-	// * GouXingCalculator.erLianXuPaiZuGouXingsArrayIdx1Mod + idx2];
-	//
-	// for (int i = 0; i < lianXuPaiZuZuHeGouXingArray.length; i++) {
-	// result.add(lianXuPaiZuZuHeGouXingArray[i]);
-	// }
-	// } else if (lianXuPaiZuList.size() == 3) {// 由三个连续牌组组成
-	// LianXuPaiZu lianXuPaiZu1 = lianXuPaiZuList.get(0);
-	// int idx1;
-	// if (!lianXuPaiZu1.isBigCodeMode()) {
-	// idx1 =
-	// GouXingCalculator.lianXuPaiZuGouXingsIdxArray[lianXuPaiZu1.getSmallCode()];
-	// } else {
-	// idx1 =
-	// GouXingCalculator.lianXuPaiZuGouXingsIdxMap.get(lianXuPaiZu1.getBigCode());
-	// }
-	//
-	// LianXuPaiZu lianXuPaiZu2 = lianXuPaiZuList.get(1);
-	// int idx2;
-	// if (!lianXuPaiZu2.isBigCodeMode()) {
-	// idx2 =
-	// GouXingCalculator.lianXuPaiZuGouXingsIdxArray[lianXuPaiZu2.getSmallCode()];
-	// } else {
-	// idx2 =
-	// GouXingCalculator.lianXuPaiZuGouXingsIdxMap.get(lianXuPaiZu2.getBigCode());
-	// }
-	//
-	// LianXuPaiZu lianXuPaiZu3 = lianXuPaiZuList.get(2);
-	// int idx3;
-	// if (!lianXuPaiZu3.isBigCodeMode()) {
-	// idx3 =
-	// GouXingCalculator.lianXuPaiZuGouXingsIdxArray[lianXuPaiZu3.getSmallCode()];
-	// } else {
-	// idx3 =
-	// GouXingCalculator.lianXuPaiZuGouXingsIdxMap.get(lianXuPaiZu3.getBigCode());
-	// }
-	//
-	// LianXuPaiZuZuHeGouXing[] lianXuPaiZuZuHeGouXingArray =
-	// GouXingCalculator.sanLianXuPaiZuGouXingsArray[idx1
-	// * GouXingCalculator.sanLianXuPaiZuGouXingsArrayIdx1Mod
-	// + idx2 * GouXingCalculator.sanLianXuPaiZuGouXingsArrayIdx2Mod + idx3];
-	//
-	// for (int i = 0; i < lianXuPaiZuZuHeGouXingArray.length; i++) {
-	// result.add(lianXuPaiZuZuHeGouXingArray[i]);
-	// }
-	// } else if (lianXuPaiZuList.size() == 4) {// 由四个连续牌组组成
-	// LianXuPaiZu lianXuPaiZu1 = lianXuPaiZuList.get(0);
-	// int idx1;
-	// if (!lianXuPaiZu1.isBigCodeMode()) {
-	// idx1 =
-	// GouXingCalculator.lianXuPaiZuGouXingsIdxArray[lianXuPaiZu1.getSmallCode()];
-	// } else {
-	// idx1 =
-	// GouXingCalculator.lianXuPaiZuGouXingsIdxMap.get(lianXuPaiZu1.getBigCode());
-	// }
-	//
-	// LianXuPaiZu lianXuPaiZu2 = lianXuPaiZuList.get(1);
-	// int idx2;
-	// if (!lianXuPaiZu2.isBigCodeMode()) {
-	// idx2 =
-	// GouXingCalculator.lianXuPaiZuGouXingsIdxArray[lianXuPaiZu2.getSmallCode()];
-	// } else {
-	// idx2 =
-	// GouXingCalculator.lianXuPaiZuGouXingsIdxMap.get(lianXuPaiZu2.getBigCode());
-	// }
-	//
-	// LianXuPaiZu lianXuPaiZu3 = lianXuPaiZuList.get(2);
-	// int idx3;
-	// if (!lianXuPaiZu3.isBigCodeMode()) {
-	// idx3 =
-	// GouXingCalculator.lianXuPaiZuGouXingsIdxArray[lianXuPaiZu3.getSmallCode()];
-	// } else {
-	// idx3 =
-	// GouXingCalculator.lianXuPaiZuGouXingsIdxMap.get(lianXuPaiZu3.getBigCode());
-	// }
-	//
-	// LianXuPaiZu lianXuPaiZu4 = lianXuPaiZuList.get(3);
-	// int idx4;
-	// if (!lianXuPaiZu4.isBigCodeMode()) {
-	// idx4 =
-	// GouXingCalculator.lianXuPaiZuGouXingsIdxArray[lianXuPaiZu4.getSmallCode()];
-	// } else {
-	// idx4 =
-	// GouXingCalculator.lianXuPaiZuGouXingsIdxMap.get(lianXuPaiZu4.getBigCode());
-	// }
-	//
-	// LianXuPaiZuZuHeGouXing[] lianXuPaiZuZuHeGouXingArray =
-	// GouXingCalculator.siLianXuPaiZuGouXingsArray[idx1
-	// * GouXingCalculator.siLianXuPaiZuGouXingsArrayIdx1Mod
-	// + idx2 * GouXingCalculator.siLianXuPaiZuGouXingsArrayIdx2Mod
-	// + idx3 * GouXingCalculator.siLianXuPaiZuGouXingsArrayIdx3Mod + idx4];
-	//
-	// for (int i = 0; i < lianXuPaiZuZuHeGouXingArray.length; i++) {
-	// result.add(lianXuPaiZuZuHeGouXingArray[i]);
-	// }
-	// } else if (lianXuPaiZuList.size() == 5) {// 由五个连续牌组组成
-	// LianXuPaiZu lianXuPaiZu1 = lianXuPaiZuList.get(0);
-	// int idx1;
-	// if (!lianXuPaiZu1.isBigCodeMode()) {
-	// idx1 =
-	// GouXingCalculator.lianXuPaiZuGouXingsIdxArray[lianXuPaiZu1.getSmallCode()];
-	// } else {
-	// idx1 =
-	// GouXingCalculator.lianXuPaiZuGouXingsIdxMap.get(lianXuPaiZu1.getBigCode());
-	// }
-	//
-	// LianXuPaiZu lianXuPaiZu2 = lianXuPaiZuList.get(1);
-	// int idx2;
-	// if (!lianXuPaiZu2.isBigCodeMode()) {
-	// idx2 =
-	// GouXingCalculator.lianXuPaiZuGouXingsIdxArray[lianXuPaiZu2.getSmallCode()];
-	// } else {
-	// idx2 =
-	// GouXingCalculator.lianXuPaiZuGouXingsIdxMap.get(lianXuPaiZu2.getBigCode());
-	// }
-	//
-	// LianXuPaiZu lianXuPaiZu3 = lianXuPaiZuList.get(2);
-	// int idx3;
-	// if (!lianXuPaiZu3.isBigCodeMode()) {
-	// idx3 =
-	// GouXingCalculator.lianXuPaiZuGouXingsIdxArray[lianXuPaiZu3.getSmallCode()];
-	// } else {
-	// idx3 =
-	// GouXingCalculator.lianXuPaiZuGouXingsIdxMap.get(lianXuPaiZu3.getBigCode());
-	// }
-	//
-	// LianXuPaiZu lianXuPaiZu4 = lianXuPaiZuList.get(3);
-	// int idx4;
-	// if (!lianXuPaiZu4.isBigCodeMode()) {
-	// idx4 =
-	// GouXingCalculator.lianXuPaiZuGouXingsIdxArray[lianXuPaiZu4.getSmallCode()];
-	// } else {
-	// idx4 =
-	// GouXingCalculator.lianXuPaiZuGouXingsIdxMap.get(lianXuPaiZu4.getBigCode());
-	// }
-	//
-	// LianXuPaiZu lianXuPaiZu5 = lianXuPaiZuList.get(4);
-	// int idx5;
-	// if (!lianXuPaiZu5.isBigCodeMode()) {
-	// idx5 =
-	// GouXingCalculator.lianXuPaiZuGouXingsIdxArray[lianXuPaiZu5.getSmallCode()];
-	// } else {
-	// idx5 =
-	// GouXingCalculator.lianXuPaiZuGouXingsIdxMap.get(lianXuPaiZu5.getBigCode());
-	// }
-	//
-	// LianXuPaiZuZuHeGouXing[] lianXuPaiZuZuHeGouXingArray =
-	// GouXingCalculator.wuLianXuPaiZuGouXingsArray[idx1
-	// * GouXingCalculator.wuLianXuPaiZuGouXingsArrayIdx1Mod
-	// + idx2 * GouXingCalculator.wuLianXuPaiZuGouXingsArrayIdx2Mod
-	// + idx3 * GouXingCalculator.wuLianXuPaiZuGouXingsArrayIdx3Mod
-	// + idx4 * GouXingCalculator.wuLianXuPaiZuGouXingsArrayIdx4Mod + idx5];
-	//
-	// for (int i = 0; i < lianXuPaiZuZuHeGouXingArray.length; i++) {
-	// result.add(lianXuPaiZuZuHeGouXingArray[i]);
-	// }
-	// }
-	// } else if (!hasLianXuPaiZu && hasDuLiPaiZu) {// 手牌全由独立牌组成
-	// int[] duLiPaiCountArray = new int[10];
-	// int totalPai = 0;
-	// for (int duLiPaiIdx : duLiPaiIdxList) {
-	// int duLiPaiQuantity = paiQuantityArray[duLiPaiIdx];
-	// totalPai += duLiPaiQuantity;
-	// duLiPaiCountArray[duLiPaiQuantity - 1]++;
-	// }
-	// DuLiPaiZu duLiPaiZu = new DuLiPaiZu(0, duLiPaiCountArray, totalPai, 0);
-	// duLiPaiZu.calculateCode();
-	// int idx = GouXingCalculator.duLiPaiZuGouXingsIdxArray[duLiPaiZu.getCode()];
-	// DuLiPaiZuGouXing[] duLiPaiZuGouXingArray =
-	// GouXingCalculator.duLiPaiZuGouXingsArray[idx];
-	// for (int i = 0; i < duLiPaiZuGouXingArray.length; i++) {
-	// result.add(duLiPaiZuGouXingArray[i]);
-	// }
-	// } else {// 手牌由连续牌组和独立牌组组成
-	// // TODO
-	// }
-	// }
+	public List<GouXing> calculateAllGouXing() {
+		List<GouXing> result = new ArrayList<>();
+		List<LianXuPaiZu> lianXuPaiZuList = new ArrayList<>();
+		List<Integer> duLiPaiIdxList = new ArrayList<>();
+		parseXuShuPai(0, 8, lianXuPaiZuList, duLiPaiIdxList);
+		parseXuShuPai(9, 17, lianXuPaiZuList, duLiPaiIdxList);
+		parseXuShuPai(18, 26, lianXuPaiZuList, duLiPaiIdxList);
+		parseZiPai(duLiPaiIdxList);
+		lianXuPaiZuList.forEach((lianXuPaiZu) -> lianXuPaiZu.calculateCode());
+		Collections.sort(lianXuPaiZuList);
+
+		// 开始分情况查询构型
+		boolean hasLianXuPaiZu = !lianXuPaiZuList.isEmpty();
+		boolean hasDuLiPaiZu = !duLiPaiIdxList.isEmpty();
+		if (hasLianXuPaiZu && !hasDuLiPaiZu) {// 手牌全由连续牌组组成
+			if (lianXuPaiZuList.size() == 1) {// 只有一个连续牌组
+				int idx = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(0));
+				LianXuPaiZuGouXing[] lianXuPaiZuGouXingArray = GouXingCalculator.yiLianXuPaiZuGouXingsArray[idx];
+				for (int i = 0; i < lianXuPaiZuGouXingArray.length; i++) {
+					result.add(lianXuPaiZuGouXingArray[i]);
+				}
+			} else if (lianXuPaiZuList.size() == 2) {// 由两个连续牌组组成
+				int idx1 = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(0));
+
+				int idx2 = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(1));
+
+				LianXuPaiZuZuHeGouXing[] lianXuPaiZuZuHeGouXingArray = GouXingCalculator.erLianXuPaiZuGouXingsArray[idx1
+						* GouXingCalculator.erLianXuPaiZuGouXingsArrayIdx1Mod + idx2];
+
+				for (int i = 0; i < lianXuPaiZuZuHeGouXingArray.length; i++) {
+					result.add(lianXuPaiZuZuHeGouXingArray[i]);
+				}
+			} else if (lianXuPaiZuList.size() == 3) {// 由三个连续牌组组成
+				int idx1 = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(0));
+
+				int idx2 = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(1));
+
+				int idx3 = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(2));
+
+				LianXuPaiZuZuHeGouXing[] lianXuPaiZuZuHeGouXingArray = GouXingCalculator.sanLianXuPaiZuGouXingsArray[idx1
+						* GouXingCalculator.sanLianXuPaiZuGouXingsArrayIdx1Mod
+						+ idx2 * GouXingCalculator.sanLianXuPaiZuGouXingsArrayIdx2Mod + idx3];
+
+				for (int i = 0; i < lianXuPaiZuZuHeGouXingArray.length; i++) {
+					result.add(lianXuPaiZuZuHeGouXingArray[i]);
+				}
+			} else if (lianXuPaiZuList.size() == 4) {// 由四个连续牌组组成
+				int idx1 = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(0));
+
+				int idx2 = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(1));
+
+				int idx3 = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(2));
+
+				int idx4 = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(3));
+
+				LianXuPaiZuZuHeGouXing[] lianXuPaiZuZuHeGouXingArray = GouXingCalculator.siLianXuPaiZuGouXingsArray[idx1
+						* GouXingCalculator.siLianXuPaiZuGouXingsArrayIdx1Mod
+						+ idx2 * GouXingCalculator.siLianXuPaiZuGouXingsArrayIdx2Mod
+						+ idx3 * GouXingCalculator.siLianXuPaiZuGouXingsArrayIdx3Mod + idx4];
+
+				for (int i = 0; i < lianXuPaiZuZuHeGouXingArray.length; i++) {
+					result.add(lianXuPaiZuZuHeGouXingArray[i]);
+				}
+			} else if (lianXuPaiZuList.size() == 5) {// 由五个连续牌组组成
+
+				int idx1 = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(0));
+
+				int idx2 = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(1));
+
+				int idx3 = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(2));
+
+				int idx4 = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(3));
+
+				int idx5 = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(4));
+
+				LianXuPaiZuZuHeGouXing[] lianXuPaiZuZuHeGouXingArray = GouXingCalculator.wuLianXuPaiZuGouXingsArray[idx1
+						* GouXingCalculator.wuLianXuPaiZuGouXingsArrayIdx1Mod
+						+ idx2 * GouXingCalculator.wuLianXuPaiZuGouXingsArrayIdx2Mod
+						+ idx3 * GouXingCalculator.wuLianXuPaiZuGouXingsArrayIdx3Mod
+						+ idx4 * GouXingCalculator.wuLianXuPaiZuGouXingsArrayIdx4Mod + idx5];
+
+				for (int i = 0; i < lianXuPaiZuZuHeGouXingArray.length; i++) {
+					result.add(lianXuPaiZuZuHeGouXingArray[i]);
+				}
+			}
+		} else if (!hasLianXuPaiZu && hasDuLiPaiZu) {// 手牌全由独立牌组成
+			int idx = calculateDuLiPaiZuGouXingIdx(duLiPaiIdxList);
+			DuLiPaiZuGouXing[] duLiPaiZuGouXingArray = GouXingCalculator.duLiPaiZuGouXingsArray[idx];
+			for (int i = 0; i < duLiPaiZuGouXingArray.length; i++) {
+				result.add(duLiPaiZuGouXingArray[i]);
+			}
+		} else {// 手牌由连续牌组和独立牌组组成
+			if (lianXuPaiZuList.size() == 1) {// 有一个连续牌组
+				int lianXuIdx = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(0));
+
+				int duLiIdx = calculateDuLiPaiZuGouXingIdx(duLiPaiIdxList);
+
+				LianXuPaiZuDuLiPaiZuZuHeGouXing[] lianXuPaiZuDuLiPaiZuZuHeGouXingArray = GouXingCalculator.yiLianXuPaiZuAndDuLiPaiZuGouXingsArray[lianXuIdx
+						* GouXingCalculator.yiLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod + duLiIdx];
+				for (int i = 0; i < lianXuPaiZuDuLiPaiZuZuHeGouXingArray.length; i++) {
+					result.add(lianXuPaiZuDuLiPaiZuZuHeGouXingArray[i]);
+				}
+			} else if (lianXuPaiZuList.size() == 2) {// 有两个连续牌组
+				int lianXuIdx1 = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(0));
+
+				int lianXuIdx2 = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(1));
+
+				int duLiIdx = calculateDuLiPaiZuGouXingIdx(duLiPaiIdxList);
+
+				LianXuPaiZuDuLiPaiZuZuHeGouXing[] lianXuPaiZuDuLiPaiZuZuHeGouXingArray = GouXingCalculator.erLianXuPaiZuAndDuLiPaiZuGouXingsArray[lianXuIdx1
+						* GouXingCalculator.erLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod
+						+ lianXuIdx2 * GouXingCalculator.erLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx2Mod + duLiIdx];
+				for (int i = 0; i < lianXuPaiZuDuLiPaiZuZuHeGouXingArray.length; i++) {
+					result.add(lianXuPaiZuDuLiPaiZuZuHeGouXingArray[i]);
+				}
+			} else if (lianXuPaiZuList.size() == 3) {// 有三个连续牌组
+				int lianXuIdx1 = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(0));
+
+				int lianXuIdx2 = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(1));
+
+				int lianXuIdx3 = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(2));
+
+				int duLiIdx = calculateDuLiPaiZuGouXingIdx(duLiPaiIdxList);
+
+				LianXuPaiZuDuLiPaiZuZuHeGouXing[] lianXuPaiZuDuLiPaiZuZuHeGouXingArray = GouXingCalculator.sanLianXuPaiZuAndDuLiPaiZuGouXingsArray[lianXuIdx1
+						* GouXingCalculator.sanLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod
+						+ lianXuIdx2 * GouXingCalculator.sanLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx2Mod
+						+ lianXuIdx3 * GouXingCalculator.sanLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx3Mod + duLiIdx];
+				for (int i = 0; i < lianXuPaiZuDuLiPaiZuZuHeGouXingArray.length; i++) {
+					result.add(lianXuPaiZuDuLiPaiZuZuHeGouXingArray[i]);
+				}
+			} else if (lianXuPaiZuList.size() == 4) {// 有四个连续牌组
+				int lianXuIdx1 = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(0));
+
+				int lianXuIdx2 = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(1));
+
+				int lianXuIdx3 = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(2));
+
+				int lianXuIdx4 = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(3));
+
+				int duLiIdx = calculateDuLiPaiZuGouXingIdx(duLiPaiIdxList);
+
+				LianXuPaiZuDuLiPaiZuZuHeGouXing[] lianXuPaiZuDuLiPaiZuZuHeGouXingArray = GouXingCalculator.siLianXuPaiZuAndDuLiPaiZuGouXingsArray[lianXuIdx1
+						* GouXingCalculator.siLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod
+						+ lianXuIdx2 * GouXingCalculator.siLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx2Mod
+						+ lianXuIdx3 * GouXingCalculator.siLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx3Mod
+						+ lianXuIdx4 * GouXingCalculator.siLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx4Mod + duLiIdx];
+				for (int i = 0; i < lianXuPaiZuDuLiPaiZuZuHeGouXingArray.length; i++) {
+					result.add(lianXuPaiZuDuLiPaiZuZuHeGouXingArray[i]);
+				}
+			} else if (lianXuPaiZuList.size() == 5) {// 有五个连续牌组
+				int lianXuIdx1 = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(0));
+
+				int lianXuIdx2 = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(1));
+
+				int lianXuIdx3 = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(2));
+
+				int lianXuIdx4 = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(3));
+
+				int lianXuIdx5 = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(4));
+
+				int duLiIdx = calculateDuLiPaiZuGouXingIdx(duLiPaiIdxList);
+
+				LianXuPaiZuDuLiPaiZuZuHeGouXing[] lianXuPaiZuDuLiPaiZuZuHeGouXingArray = GouXingCalculator.wuLianXuPaiZuAndDuLiPaiZuGouXingsArray[lianXuIdx1
+						* GouXingCalculator.wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod
+						+ lianXuIdx2 * GouXingCalculator.wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx2Mod
+						+ lianXuIdx3 * GouXingCalculator.wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx3Mod
+						+ lianXuIdx4 * GouXingCalculator.wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx4Mod
+						+ lianXuIdx5 * GouXingCalculator.wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx5Mod + duLiIdx];
+				for (int i = 0; i < lianXuPaiZuDuLiPaiZuZuHeGouXingArray.length; i++) {
+					result.add(lianXuPaiZuDuLiPaiZuZuHeGouXingArray[i]);
+				}
+			}
+		}
+		return result;
+	}
+
+	private int calculateLianXuPaiZuGouXingIdx(LianXuPaiZu lianXuPaiZu) {
+		if (!lianXuPaiZu.isBigCodeMode()) {
+			return GouXingCalculator.lianXuPaiZuGouXingsIdxArray[lianXuPaiZu.getSmallCode()];
+		} else {
+			return GouXingCalculator.lianXuPaiZuGouXingsIdxMap.get(lianXuPaiZu.getBigCode());
+		}
+	}
+
+	private int calculateDuLiPaiZuGouXingIdx(List<Integer> duLiPaiIdxList) {
+		int[] duLiPaiCountArray = new int[10];
+		int totalPai = 0;
+		for (int duLiPaiIdx : duLiPaiIdxList) {
+			int duLiPaiQuantity = paiQuantityArray[duLiPaiIdx];
+			totalPai += duLiPaiQuantity;
+			duLiPaiCountArray[duLiPaiQuantity - 1]++;
+		}
+		DuLiPaiZu duLiPaiZu = new DuLiPaiZu(0, duLiPaiCountArray, totalPai, 0);
+		duLiPaiZu.calculateCode();
+		int idx = GouXingCalculator.duLiPaiZuGouXingsIdxArray[duLiPaiZu.getCode()];
+		return idx;
+	}
 
 	private void parseZiPai(List<Integer> duLiPaiIdxList) {
 		for (int i = 27; i <= 33; i++) {
