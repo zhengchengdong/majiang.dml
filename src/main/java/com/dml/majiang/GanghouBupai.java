@@ -16,6 +16,14 @@ public class GanghouBupai implements MopaiReason {
 
 	private GangType gangType;
 
+	public GanghouBupai() {
+	}
+
+	public GanghouBupai(MajiangPai gangPai, GangType gangType) {
+		this.gangPai = gangPai;
+		this.gangType = gangType;
+	}
+
 	@Override
 	public void toByteBuffer(ByteBuffer bb) throws Throwable {
 		bb.put((byte) gangPai.ordinal());

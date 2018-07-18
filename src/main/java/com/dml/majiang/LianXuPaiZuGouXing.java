@@ -6,22 +6,9 @@ package com.dml.majiang;
  * @author Neo
  *
  */
-public class LianXuPaiZuGouXing implements GouXing {
-
-	/**
-	 * 用一个int来编码:低到高--5位单牌个数，4位对子个数，3位刻子个数，3位杠子个数，3位顺子个数
-	 */
-	private int gouXingCode;
+public class LianXuPaiZuGouXing extends GouXing {
 
 	private LianXuPaiZuPaiXing[] paiXingArrayForGouXing;
-
-	public int getGouXingCode() {
-		return gouXingCode;
-	}
-
-	public void setGouXingCode(int gouXingCode) {
-		this.gouXingCode = gouXingCode;
-	}
 
 	public LianXuPaiZuPaiXing[] getPaiXingArrayForGouXing() {
 		return paiXingArrayForGouXing;

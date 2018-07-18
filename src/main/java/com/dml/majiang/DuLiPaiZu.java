@@ -88,15 +88,25 @@ public class DuLiPaiZu implements Comparable<DuLiPaiZu> {
 
 	private int atleastGuiPai;
 
-	/**
-	 * 低到高--5位单牌个数，4位对子个数，3位刻子个数，3位杠子个数，3位顺子个数
-	 */
-	private int[] gouXingArray;
+	private DuLiPaiZuGouXing[] gouXingArray;
 
 	/**
 	 * 低到高--5位单牌个数，4位对子个数，3位刻子个数，3位杠子个数，2位5同牌个数，2位6同牌个数，2位7同牌个数，1位8同牌个数，1位9同牌个数，1位10同牌个数
 	 */
 	private int code;
+
+	public void calculateCode() {
+		code = paiCountArray[0];
+		code = code | (paiCountArray[1] << 5);
+		code = code | (paiCountArray[2] << 9);
+		code = code | (paiCountArray[3] << 12);
+		code = code | (paiCountArray[4] << 15);
+		code = code | (paiCountArray[5] << 17);
+		code = code | (paiCountArray[6] << 19);
+		code = code | (paiCountArray[7] << 21);
+		code = code | (paiCountArray[8] << 22);
+		code = code | (paiCountArray[9] << 23);
+	}
 
 	@Override
 	public int compareTo(DuLiPaiZu another) {
@@ -132,18 +142,21 @@ public class DuLiPaiZu implements Comparable<DuLiPaiZu> {
 		for (int i = 0; i < tempGouXingArray.length; i++) {
 			gouXingSet.add(tempGouXingArray[i]);
 		}
-		gouXingArray = new int[gouXingSet.size()];
+		gouXingArray = new DuLiPaiZuGouXing[gouXingSet.size()];
 		int i = 0;
 		for (int gouXing : gouXingSet) {
-			gouXingArray[i++] = gouXing;
+			DuLiPaiZuGouXing duLiPaiZuGouXing = new DuLiPaiZuGouXing();
+			duLiPaiZuGouXing.setGouXingCode(gouXing);
+			gouXingArray[i++] = duLiPaiZuGouXing;
 		}
+
 	}
 
 	public int getCode() {
 		return code;
 	}
 
-	public int[] getGouXingArray() {
+	public DuLiPaiZuGouXing[] getGouXingArray() {
 		return gouXingArray;
 	}
 

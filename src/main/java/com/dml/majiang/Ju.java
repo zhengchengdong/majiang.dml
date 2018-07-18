@@ -80,9 +80,9 @@ public class Ju {
 			actionStatisticsListenerManager.updateDaActionListener((MajiangDaAction) action, this);
 			daActionUpdater.updateActions((MajiangDaAction) action, this);
 		} else if (actionType.equals(MajiangPlayerActionType.chi)) {
-			daActionProcessor.process((MajiangDaAction) action, this);
+			chiActionProcessor.process((MajiangChiAction) action, this);
 			// TODO listener
-			daActionUpdater.updateActions((MajiangDaAction) action, this);
+			chiActionUpdater.updateActions((MajiangChiAction) action, this);
 		} else if (actionType.equals(MajiangPlayerActionType.peng)) {
 			pengActionProcessor.process((MajiangPengAction) action, this);
 			// TODO listener

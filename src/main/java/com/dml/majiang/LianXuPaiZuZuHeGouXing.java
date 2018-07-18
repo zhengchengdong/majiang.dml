@@ -6,19 +6,9 @@ package com.dml.majiang;
  * @author Neo
  *
  */
-public class LianXuPaiZuZuHeGouXing implements GouXing {
-
-	private int gouXingCode;
+public class LianXuPaiZuZuHeGouXing extends GouXing {
 
 	private LianXuPaiZuGouXing[] zuHePaiZuGouXingArray;
-
-	public int getGouXingCode() {
-		return gouXingCode;
-	}
-
-	public void setGouXingCode(int gouXingCode) {
-		this.gouXingCode = gouXingCode;
-	}
 
 	public LianXuPaiZuGouXing[] getZuHePaiZuGouXingArray() {
 		return zuHePaiZuGouXingArray;

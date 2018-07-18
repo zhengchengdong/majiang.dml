@@ -6,21 +6,11 @@ package com.dml.majiang;
  * @author Neo
  *
  */
-public class LianXuPaiZuDuLiPaiZuZuHeGouXing implements GouXing {
-
-	private int gouXingCode;
+public class LianXuPaiZuDuLiPaiZuZuHeGouXing extends GouXing {
 
 	private LianXuPaiZuGouXing[] lianXuPaiZuGouXingArray;
 
-	private int duLiPaiZuGouXingCode;
-
-	public int getGouXingCode() {
-		return gouXingCode;
-	}
-
-	public void setGouXingCode(int gouXingCode) {
-		this.gouXingCode = gouXingCode;
-	}
+	private DuLiPaiZuGouXing duLiPaiZuGouXing;
 
 	public LianXuPaiZuGouXing[] getLianXuPaiZuGouXingArray() {
 		return lianXuPaiZuGouXingArray;
@@ -30,12 +20,12 @@ public class LianXuPaiZuDuLiPaiZuZuHeGouXing implements GouXing {
 		this.lianXuPaiZuGouXingArray = lianXuPaiZuGouXingArray;
 	}
 
-	public int getDuLiPaiZuGouXingCode() {
-		return duLiPaiZuGouXingCode;
+	public DuLiPaiZuGouXing getDuLiPaiZuGouXing() {
+		return duLiPaiZuGouXing;
 	}
 
-	public void setDuLiPaiZuGouXingCode(int duLiPaiZuGouXingCode) {
-		this.duLiPaiZuGouXingCode = duLiPaiZuGouXingCode;
+	public void setDuLiPaiZuGouXing(DuLiPaiZuGouXing duLiPaiZuGouXing) {
+		this.duLiPaiZuGouXing = duLiPaiZuGouXing;
 	}
 
 }
