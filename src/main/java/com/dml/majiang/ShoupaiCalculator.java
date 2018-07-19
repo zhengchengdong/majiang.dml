@@ -17,15 +17,34 @@ public class ShoupaiCalculator {
 	 */
 	private int[] paiQuantityArray = new int[34];
 
+	public List<PaiXing> calculateAllPaiXingFromGouXing(GouXing gouXing) {
+		List<JutihuaLianXuPaiZu> jutihuaLianXuPaiZuList = new ArrayList<>();
+		List<Integer> duLiPaiIdxList = new ArrayList<>();
+		parseXuShuPai(0, 8, jutihuaLianXuPaiZuList, duLiPaiIdxList);
+		parseXuShuPai(9, 17, jutihuaLianXuPaiZuList, duLiPaiIdxList);
+		parseXuShuPai(18, 26, jutihuaLianXuPaiZuList, duLiPaiIdxList);
+		parseZiPai(duLiPaiIdxList);
+		Collections.sort(jutihuaLianXuPaiZuList);
+		List<MajiangPai[]> jutiLianXuPaiTypesArrayList = new ArrayList<>();
+		jutihuaLianXuPaiZuList.forEach((jutihuaLianXuPaiZu) -> jutiLianXuPaiTypesArrayList
+				.add(jutihuaLianXuPaiZu.getJutiLianXuPaiTypesArray()));
+		return gouXing.calculateAllPaiXing(paiQuantityArray, jutiLianXuPaiTypesArrayList, duLiPaiIdxList);
+	}
+
 	public List<GouXing> calculateAllGouXing() {
 		List<GouXing> result = new ArrayList<>();
-		List<LianXuPaiZu> lianXuPaiZuList = new ArrayList<>();
+		List<JutihuaLianXuPaiZu> jutihuaLianXuPaiZuList = new ArrayList<>();
 		List<Integer> duLiPaiIdxList = new ArrayList<>();
-		parseXuShuPai(0, 8, lianXuPaiZuList, duLiPaiIdxList);
-		parseXuShuPai(9, 17, lianXuPaiZuList, duLiPaiIdxList);
-		parseXuShuPai(18, 26, lianXuPaiZuList, duLiPaiIdxList);
+		parseXuShuPai(0, 8, jutihuaLianXuPaiZuList, duLiPaiIdxList);
+		parseXuShuPai(9, 17, jutihuaLianXuPaiZuList, duLiPaiIdxList);
+		parseXuShuPai(18, 26, jutihuaLianXuPaiZuList, duLiPaiIdxList);
 		parseZiPai(duLiPaiIdxList);
-		lianXuPaiZuList.forEach((lianXuPaiZu) -> lianXuPaiZu.calculateCode());
+		List<LianXuPaiZu> lianXuPaiZuList = new ArrayList<>();
+		jutihuaLianXuPaiZuList.forEach((hutihuaLianXuPaiZu) -> {
+			LianXuPaiZu lianXuPaiZu = hutihuaLianXuPaiZu.getLianXuPaiZu();
+			lianXuPaiZu.calculateCode();
+			lianXuPaiZuList.add(lianXuPaiZu);
+		});
 		Collections.sort(lianXuPaiZuList);
 
 		// 开始分情况查询构型
@@ -224,8 +243,9 @@ public class ShoupaiCalculator {
 		}
 	}
 
-	private void parseXuShuPai(int startIdx, int endIdx, List<LianXuPaiZu> lianXuPaiZuList,
+	private void parseXuShuPai(int startIdx, int endIdx, List<JutihuaLianXuPaiZu> jutihuaLianXuPaiZuList,
 			List<Integer> duLiPaiIdxList) {
+		MajiangPai[] allPaiTypeArray = MajiangPai.values();
 		int lian = 0;
 		int totalPai = 0;
 		boolean bigCodeMode = false;
@@ -241,7 +261,13 @@ public class ShoupaiCalculator {
 				if (lian >= 3) {
 					int[] lianXuPaiZuPaiQuantityArray = new int[lian];
 					System.arraycopy(paiQuantityArray, i - lian, lianXuPaiZuPaiQuantityArray, 0, lian);
-					lianXuPaiZuList.add(new LianXuPaiZu(lianXuPaiZuPaiQuantityArray, totalPai, 0, bigCodeMode));
+
+					MajiangPai[] jutiLianXuPaiTypesArray = new MajiangPai[lian];
+					System.arraycopy(allPaiTypeArray, i - lian, jutiLianXuPaiTypesArray, 0, lian);
+
+					jutihuaLianXuPaiZuList.add(new JutihuaLianXuPaiZu(
+							new LianXuPaiZu(lianXuPaiZuPaiQuantityArray, totalPai, 0, bigCodeMode),
+							jutiLianXuPaiTypesArray));
 				} else {
 					for (int j = lian; j > 0; j--) {
 						duLiPaiIdxList.add(i - j);
@@ -254,10 +280,15 @@ public class ShoupaiCalculator {
 		if (lian >= 3) {
 			int[] lianXuPaiZuPaiQuantityArray = new int[lian];
 			System.arraycopy(paiQuantityArray, endIdx - lian, lianXuPaiZuPaiQuantityArray, 0, lian);
-			lianXuPaiZuList.add(new LianXuPaiZu(lianXuPaiZuPaiQuantityArray, totalPai, 0, bigCodeMode));
+
+			MajiangPai[] jutiLianXuPaiTypesArray = new MajiangPai[lian];
+			System.arraycopy(allPaiTypeArray, endIdx - lian, jutiLianXuPaiTypesArray, 0, lian);
+
+			jutihuaLianXuPaiZuList.add(new JutihuaLianXuPaiZu(
+					new LianXuPaiZu(lianXuPaiZuPaiQuantityArray, totalPai, 0, bigCodeMode), jutiLianXuPaiTypesArray));
 		} else {
 			for (int j = lian; j > 0; j--) {
-				duLiPaiIdxList.add(endIdx - j);
+				duLiPaiIdxList.add((endIdx + 1) - j);
 			}
 		}
 	}
@@ -335,7 +366,7 @@ public class ShoupaiCalculator {
 				return null;
 			}
 		} else if (paiOrdinal >= 9 && paiOrdinal <= 17) {// 筒
-			if (paiOrdinal >= 8 && paiOrdinal <= 16) {
+			if (paiOrdinal >= 10 && paiOrdinal <= 16) {
 				if (paiQuantityArray[paiOrdinal - 1] > 0 && paiQuantityArray[paiOrdinal + 1] > 0) {
 					Shunzi shunzi = new Shunzi(MajiangPai.valueOf(paiOrdinal - 1), pai2,
 							MajiangPai.valueOf(paiOrdinal + 1));
@@ -347,7 +378,7 @@ public class ShoupaiCalculator {
 				return null;
 			}
 		} else if (paiOrdinal >= 18 && paiOrdinal <= 26) {// 条
-			if (paiOrdinal >= 17 && paiOrdinal <= 25) {
+			if (paiOrdinal >= 19 && paiOrdinal <= 25) {
 				if (paiQuantityArray[paiOrdinal - 1] > 0 && paiQuantityArray[paiOrdinal + 1] > 0) {
 					Shunzi shunzi = new Shunzi(MajiangPai.valueOf(paiOrdinal - 1), pai2,
 							MajiangPai.valueOf(paiOrdinal + 1));

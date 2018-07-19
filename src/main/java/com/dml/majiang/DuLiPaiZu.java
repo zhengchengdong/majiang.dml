@@ -13,7 +13,7 @@ import java.util.Set;
  */
 public class DuLiPaiZu implements Comparable<DuLiPaiZu> {
 
-	private static int[][] tongpaiGouXingArray;
+	public static int[][] tongpaiGouXingArray;
 
 	static {
 		tongpaiGouXingArray = new int[10][];

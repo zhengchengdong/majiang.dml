@@ -1,5 +1,6 @@
 package com.dml.majiang;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -52,16 +53,6 @@ public class LianXuPaiZuPaiXing {
 
 	}
 
-	public boolean equals(Object o) {
-		LianXuPaiZuPaiXing px = (LianXuPaiZuPaiXing) o;
-		return (danpaiCode == px.danpaiCode && duiziCode == px.duiziCode && keziCode == px.keziCode
-				&& gangziCode == px.gangziCode && shunziCode == px.shunziCode);
-	}
-
-	public int hashCode() {
-		return danpaiCode + duiziCode * 10 + keziCode * 100 + gangziCode * 1000 + shunziCode * 10000;
-	}
-
 	// 一个short表示单牌: 0-9位的0/1值表示该位置有没有一个单牌
 	private short danpaiCode;
 
@@ -76,6 +67,61 @@ public class LianXuPaiZuPaiXing {
 
 	// 一个short表示顺子: 每2位表示该位置顺子个数，7次
 	private short shunziCode;
+
+	public PaiXing calculateJutiPaiXing(MajiangPai[] jutiLianXuPaiTypesArray) {
+		List<MajiangPai> danpaiList = new ArrayList<>();
+		List<Duizi> duiziList = new ArrayList<>();
+		List<Kezi> keziList = new ArrayList<>();
+		List<Gangzi> gangziList = new ArrayList<>();
+		List<Shunzi> shunziList = new ArrayList<>();
+		PaiXing paiXing = new PaiXing();
+		paiXing.setDanpaiList(danpaiList);
+		paiXing.setDuiziList(duiziList);
+		paiXing.setGangziList(gangziList);
+		paiXing.setKeziList(keziList);
+		paiXing.setShunziList(shunziList);
+
+		for (int i = 0; i < 9; i++) {
+
+			if (((danpaiCode >>> i) & 1) == 1) {
+				danpaiList.add(jutiLianXuPaiTypesArray[i]);
+			}
+
+			int duiziCount = ((duiziCode >>> (i * 3)) & 7);
+			for (int j = 0; j < duiziCount; j++) {
+				duiziList.add(new Duizi(jutiLianXuPaiTypesArray[i]));
+			}
+
+			int keziCount = ((keziCode >>> (i * 2)) & 3);
+			for (int j = 0; j < keziCount; j++) {
+				keziList.add(new Kezi(jutiLianXuPaiTypesArray[i]));
+			}
+
+			int gangziCount = ((gangziCode >>> (i * 2)) & 3);
+			for (int j = 0; j < gangziCount; j++) {
+				gangziList.add(new Gangzi(jutiLianXuPaiTypesArray[i]));
+			}
+
+			int shunziCount = ((shunziCode >>> (i * 2)) & 3);
+			for (int j = 0; j < shunziCount; j++) {
+				shunziList.add(new Shunzi(jutiLianXuPaiTypesArray[i], jutiLianXuPaiTypesArray[i + 1],
+						jutiLianXuPaiTypesArray[i + 2]));
+			}
+
+		}
+		return paiXing;
+
+	}
+
+	public boolean equals(Object o) {
+		LianXuPaiZuPaiXing px = (LianXuPaiZuPaiXing) o;
+		return (danpaiCode == px.danpaiCode && duiziCode == px.duiziCode && keziCode == px.keziCode
+				&& gangziCode == px.gangziCode && shunziCode == px.shunziCode);
+	}
+
+	public int hashCode() {
+		return danpaiCode + duiziCode * 10 + keziCode * 100 + gangziCode * 1000 + shunziCode * 10000;
+	}
 
 	public short getDanpaiCode() {
 		return danpaiCode;

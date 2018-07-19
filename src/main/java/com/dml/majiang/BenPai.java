@@ -12,6 +12,13 @@ public class BenPai implements ShoupaiDangPai {
 
 	private MajiangPai pai;
 
+	public BenPai() {
+	}
+
+	public BenPai(MajiangPai pai) {
+		this.pai = pai;
+	}
+
 	@Override
 	public String getDangType() {
 		return dangType;
