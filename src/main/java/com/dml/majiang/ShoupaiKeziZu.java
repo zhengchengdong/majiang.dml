@@ -7,6 +7,16 @@ public class ShoupaiKeziZu implements ShoupaiMajiangPaiFenZu {
 	private ShoupaiJiesuanPai pai3;
 
 	@Override
+	public ShoupaiKeziZu copy() {
+		ShoupaiKeziZu newShoupaiKeziZu = new ShoupaiKeziZu();
+		newShoupaiKeziZu.setKezi(kezi);
+		newShoupaiKeziZu.setPai1(pai1.copy());
+		newShoupaiKeziZu.setPai2(pai2.copy());
+		newShoupaiKeziZu.setPai3(pai3.copy());
+		return newShoupaiKeziZu;
+	}
+
+	@Override
 	public void fillAllBlankPaiWithBenPai() {
 		if (pai1 == null) {
 			pai1 = new BenPai(kezi.getPaiType());

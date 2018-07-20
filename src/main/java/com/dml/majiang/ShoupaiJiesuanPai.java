@@ -12,7 +12,11 @@ public abstract class ShoupaiJiesuanPai {
 
 	public abstract String getDangType();
 
+	public abstract MajiangPai getYuanPaiType();
+
 	public abstract MajiangPai getZuoyongPaiType();
+
+	public abstract ShoupaiJiesuanPai copy();
 
 	public boolean isLastActionPai() {
 		return lastActionPai;

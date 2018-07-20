@@ -293,6 +293,9 @@ public class MajiangPlayer {
 				guipaiShoupaiList.add(shouPai);
 			}
 		});
+		if (gangmoShoupai != null && guipaiTypeSet.contains(gangmoShoupai)) {
+			guipaiShoupaiList.add(gangmoShoupai);
+		}
 		return guipaiShoupaiList;
 	}
 

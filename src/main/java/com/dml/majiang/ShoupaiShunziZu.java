@@ -7,6 +7,16 @@ public class ShoupaiShunziZu implements ShoupaiMajiangPaiFenZu {
 	private ShoupaiJiesuanPai pai3;
 
 	@Override
+	public ShoupaiShunziZu copy() {
+		ShoupaiShunziZu newShoupaiShunziZu = new ShoupaiShunziZu();
+		newShoupaiShunziZu.setShunzi(shunzi);
+		newShoupaiShunziZu.setPai1(pai1.copy());
+		newShoupaiShunziZu.setPai2(pai2.copy());
+		newShoupaiShunziZu.setPai3(pai3.copy());
+		return newShoupaiShunziZu;
+	}
+
+	@Override
 	public void fillAllBlankPaiWithBenPai() {
 		if (pai1 == null) {
 			pai1 = new BenPai(shunzi.getPai1());

@@ -15,6 +15,15 @@ public class ShoupaiDuiziZu implements ShoupaiMajiangPaiFenZu {
 	private ShoupaiJiesuanPai pai2;
 
 	@Override
+	public ShoupaiDuiziZu copy() {
+		ShoupaiDuiziZu newShoupaiDuiziZu = new ShoupaiDuiziZu();
+		newShoupaiDuiziZu.setDuiziType(duiziType);
+		newShoupaiDuiziZu.setPai1(pai1.copy());
+		newShoupaiDuiziZu.setPai2(pai2.copy());
+		return newShoupaiDuiziZu;
+	}
+
+	@Override
 	public void fillAllBlankPaiWithBenPai() {
 		if (pai1 == null) {
 			pai1 = new BenPai(duiziType);

@@ -24,6 +24,14 @@ public class ShoupaiDanpai implements ShoupaiMajiangPaiFenZu {
 		}
 	}
 
+	@Override
+	public ShoupaiDanpai copy() {
+		ShoupaiDanpai newShoupaiDanpai = new ShoupaiDanpai();
+		newShoupaiDanpai.setDanpaiType(danpaiType);
+		newShoupaiDanpai.setPai(pai.copy());
+		return newShoupaiDanpai;
+	}
+
 	public MajiangPai getDanpaiType() {
 		return danpaiType;
 	}

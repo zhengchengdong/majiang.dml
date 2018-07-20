@@ -13,7 +13,7 @@ public class Gangzi implements MajiangPaiFenZu, ByteBufferAble {
 	}
 
 	@Override
-	public ShoupaiMajiangPaiFenZu generateShoupaiMajiangPaiFenZuSkeleton() {
+	public ShoupaiGangziZu generateShoupaiMajiangPaiFenZuSkeleton() {
 		ShoupaiGangziZu shoupaiGangziZu = new ShoupaiGangziZu();
 		shoupaiGangziZu.setGangzi(this);
 		return shoupaiGangziZu;

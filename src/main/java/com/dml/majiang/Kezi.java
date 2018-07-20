@@ -14,7 +14,7 @@ public class Kezi implements MajiangPaiFenZu, ByteBufferAble {
 	}
 
 	@Override
-	public ShoupaiMajiangPaiFenZu generateShoupaiMajiangPaiFenZuSkeleton() {
+	public ShoupaiKeziZu generateShoupaiMajiangPaiFenZuSkeleton() {
 		ShoupaiKeziZu shoupaiKeziZu = new ShoupaiKeziZu();
 		shoupaiKeziZu.setKezi(this);
 		return shoupaiKeziZu;

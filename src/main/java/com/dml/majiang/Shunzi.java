@@ -18,7 +18,7 @@ public class Shunzi implements MajiangPaiFenZu, ByteBufferAble {
 	}
 
 	@Override
-	public ShoupaiMajiangPaiFenZu generateShoupaiMajiangPaiFenZuSkeleton() {
+	public ShoupaiShunziZu generateShoupaiMajiangPaiFenZuSkeleton() {
 		ShoupaiShunziZu shoupaiShunziZu = new ShoupaiShunziZu();
 		shoupaiShunziZu.setShunzi(this);
 		return shoupaiShunziZu;

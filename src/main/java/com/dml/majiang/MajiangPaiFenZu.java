@@ -9,5 +9,5 @@ package com.dml.majiang;
 public interface MajiangPaiFenZu {
 	public int countPai(MajiangPai paiType);
 
-	public ShoupaiMajiangPaiFenZu generateShoupaiMajiangPaiFenZuSkeleton();
+	public <T extends ShoupaiMajiangPaiFenZu> T generateShoupaiMajiangPaiFenZuSkeleton();
 }

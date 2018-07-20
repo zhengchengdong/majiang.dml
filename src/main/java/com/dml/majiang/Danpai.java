@@ -21,7 +21,7 @@ public class Danpai implements MajiangPaiFenZu {
 	}
 
 	@Override
-	public ShoupaiMajiangPaiFenZu generateShoupaiMajiangPaiFenZuSkeleton() {
+	public ShoupaiDanpai generateShoupaiMajiangPaiFenZuSkeleton() {
 		ShoupaiDanpai shoupaiDanpai = new ShoupaiDanpai();
 		shoupaiDanpai.setDanpaiType(pai);
 		return shoupaiDanpai;

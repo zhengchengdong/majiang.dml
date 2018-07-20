@@ -23,6 +23,20 @@ public class GuipaiDangPai extends ShoupaiJiesuanPai {
 	}
 
 	@Override
+	public ShoupaiJiesuanPai copy() {
+		GuipaiDangPai newGuipaiDangPai = new GuipaiDangPai();
+		newGuipaiDangPai.setGuipai(guipai);
+		newGuipaiDangPai.setDangpai(dangpai);
+		newGuipaiDangPai.setLastActionPai(isLastActionPai());
+		return newGuipaiDangPai;
+	}
+
+	@Override
+	public MajiangPai getYuanPaiType() {
+		return guipai;
+	}
+
+	@Override
 	public MajiangPai getZuoyongPaiType() {
 		return dangpai;
 	}

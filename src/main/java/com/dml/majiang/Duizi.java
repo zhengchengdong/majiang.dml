@@ -14,7 +14,7 @@ public class Duizi implements MajiangPaiFenZu, ByteBufferAble {
 	}
 
 	@Override
-	public ShoupaiMajiangPaiFenZu generateShoupaiMajiangPaiFenZuSkeleton() {
+	public ShoupaiDuiziZu generateShoupaiMajiangPaiFenZuSkeleton() {
 		ShoupaiDuiziZu shoupaiDuiziZu = new ShoupaiDuiziZu();
 		shoupaiDuiziZu.setDuiziType(paiType);
 		return shoupaiDuiziZu;

@@ -37,6 +37,47 @@ public class PaiXing {
 		return newPaiXing;
 	}
 
+	public ShoupaiPaiXing generateAllBenPaiShoupaiPaiXing() {
+		ShoupaiPaiXing shoupaiPaiXing = new ShoupaiPaiXing();
+		List<ShoupaiDanpai> danpaiList = new ArrayList<>();
+		List<ShoupaiDuiziZu> duiziList = new ArrayList<>();
+		List<ShoupaiKeziZu> keziList = new ArrayList<>();
+		List<ShoupaiGangziZu> gangziList = new ArrayList<>();
+		List<ShoupaiShunziZu> shunziList = new ArrayList<>();
+		shoupaiPaiXing.setDanpaiList(danpaiList);
+		shoupaiPaiXing.setDuiziList(duiziList);
+		shoupaiPaiXing.setGangziList(gangziList);
+		shoupaiPaiXing.setKeziList(keziList);
+		shoupaiPaiXing.setShunziList(shunziList);
+
+		for (Danpai danpai : this.danpaiList) {
+			ShoupaiDanpai shoupaiDanpai = danpai.generateShoupaiMajiangPaiFenZuSkeleton();
+			shoupaiDanpai.fillAllBlankPaiWithBenPai();
+			danpaiList.add(shoupaiDanpai);
+		}
+		for (Duizi duizi : this.duiziList) {
+			ShoupaiDuiziZu shoupaiDuiziZu = duizi.generateShoupaiMajiangPaiFenZuSkeleton();
+			shoupaiDuiziZu.fillAllBlankPaiWithBenPai();
+			duiziList.add(shoupaiDuiziZu);
+		}
+		for (Kezi kezi : this.keziList) {
+			ShoupaiKeziZu shoupaiKeziZu = kezi.generateShoupaiMajiangPaiFenZuSkeleton();
+			shoupaiKeziZu.fillAllBlankPaiWithBenPai();
+			keziList.add(shoupaiKeziZu);
+		}
+		for (Gangzi gangzi : this.gangziList) {
+			ShoupaiGangziZu shoupaiGangziZu = gangzi.generateShoupaiMajiangPaiFenZuSkeleton();
+			shoupaiGangziZu.fillAllBlankPaiWithBenPai();
+			gangziList.add(shoupaiGangziZu);
+		}
+		for (Shunzi shunzi : this.shunziList) {
+			ShoupaiShunziZu shoupaiShunziZu = shunzi.generateShoupaiMajiangPaiFenZuSkeleton();
+			shoupaiShunziZu.fillAllBlankPaiWithBenPai();
+			shunziList.add(shoupaiShunziZu);
+		}
+		return shoupaiPaiXing;
+	}
+
 	/**
 	 * 返回list是因为在确定鬼牌当牌方案的情况下,对于某个鬼牌当的花色有多张牌,又分属不同组的情况（比如两个一万，一个属于一万对子，一个属于一二三万顺子）,产生多个ShoupaiPaiXing
 	 * 

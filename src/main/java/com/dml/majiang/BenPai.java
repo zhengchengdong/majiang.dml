@@ -20,6 +20,19 @@ public class BenPai extends ShoupaiJiesuanPai {
 	}
 
 	@Override
+	public ShoupaiJiesuanPai copy() {
+		BenPai newBenPai = new BenPai();
+		newBenPai.setPai(pai);
+		newBenPai.setLastActionPai(isLastActionPai());
+		return newBenPai;
+	}
+
+	@Override
+	public MajiangPai getYuanPaiType() {
+		return pai;
+	}
+
+	@Override
 	public MajiangPai getZuoyongPaiType() {
 		return pai;
 	}
