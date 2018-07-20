@@ -69,7 +69,7 @@ public class LianXuPaiZuPaiXing {
 	private short shunziCode;
 
 	public PaiXing calculateJutiPaiXing(MajiangPai[] jutiLianXuPaiTypesArray) {
-		List<MajiangPai> danpaiList = new ArrayList<>();
+		List<Danpai> danpaiList = new ArrayList<>();
 		List<Duizi> duiziList = new ArrayList<>();
 		List<Kezi> keziList = new ArrayList<>();
 		List<Gangzi> gangziList = new ArrayList<>();
@@ -84,7 +84,7 @@ public class LianXuPaiZuPaiXing {
 		for (int i = 0; i < 9; i++) {
 
 			if (((danpaiCode >>> i) & 1) == 1) {
-				danpaiList.add(jutiLianXuPaiTypesArray[i]);
+				danpaiList.add(new Danpai(jutiLianXuPaiTypesArray[i]));
 			}
 
 			int duiziCount = ((duiziCode >>> (i * 3)) & 7);

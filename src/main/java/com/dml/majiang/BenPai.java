@@ -6,7 +6,7 @@ package com.dml.majiang;
  * @author Neo
  *
  */
-public class BenPai implements ShoupaiDangPai {
+public class BenPai extends ShoupaiJiesuanPai {
 
 	public static final String dangType = "benpai";
 
@@ -17,6 +17,11 @@ public class BenPai implements ShoupaiDangPai {
 
 	public BenPai(MajiangPai pai) {
 		this.pai = pai;
+	}
+
+	@Override
+	public MajiangPai getZuoyongPaiType() {
+		return pai;
 	}
 
 	@Override

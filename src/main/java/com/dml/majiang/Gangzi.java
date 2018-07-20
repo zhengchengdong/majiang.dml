@@ -2,7 +2,7 @@ package com.dml.majiang;
 
 import java.nio.ByteBuffer;
 
-public class Gangzi implements ByteBufferAble {
+public class Gangzi implements MajiangPaiFenZu, ByteBufferAble {
 	private MajiangPai paiType;
 
 	public Gangzi() {
@@ -10,6 +10,22 @@ public class Gangzi implements ByteBufferAble {
 
 	public Gangzi(MajiangPai paiType) {
 		this.paiType = paiType;
+	}
+
+	@Override
+	public ShoupaiMajiangPaiFenZu generateShoupaiMajiangPaiFenZuSkeleton() {
+		ShoupaiGangziZu shoupaiGangziZu = new ShoupaiGangziZu();
+		shoupaiGangziZu.setGangzi(this);
+		return shoupaiGangziZu;
+	}
+
+	@Override
+	public int countPai(MajiangPai paiType) {
+		if (paiType.equals(this.paiType)) {
+			return 4;
+		} else {
+			return 0;
+		}
 	}
 
 	public MajiangPai getPaiType() {

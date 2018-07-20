@@ -6,15 +6,37 @@ package com.dml.majiang;
  * @author Neo
  *
  */
-public class ShoupaiDanpai {
+public class ShoupaiDanpai implements ShoupaiMajiangPaiFenZu {
+	private MajiangPai danpaiType;
+	private ShoupaiJiesuanPai pai;
 
-	private ShoupaiDangPai pai;
+	@Override
+	public void fillAllBlankPaiWithBenPai() {
+		if (pai == null) {
+			pai = new BenPai(danpaiType);
+		}
+	}
 
-	public ShoupaiDangPai getPai() {
+	@Override
+	public void addShoupaiJiesuanPai(ShoupaiJiesuanPai shoupaiJiesuanPai) {
+		if (pai == null) {
+			pai = shoupaiJiesuanPai;
+		}
+	}
+
+	public MajiangPai getDanpaiType() {
+		return danpaiType;
+	}
+
+	public void setDanpaiType(MajiangPai danpaiType) {
+		this.danpaiType = danpaiType;
+	}
+
+	public ShoupaiJiesuanPai getPai() {
 		return pai;
 	}
 
-	public void setPai(ShoupaiDangPai pai) {
+	public void setPai(ShoupaiJiesuanPai pai) {
 		this.pai = pai;
 	}
 

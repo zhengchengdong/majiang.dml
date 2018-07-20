@@ -274,6 +274,7 @@ public class ShoupaiCalculator {
 					}
 				}
 				lian = 0;
+				totalPai = 0;
 			}
 		}
 		// 收尾

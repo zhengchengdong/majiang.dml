@@ -9,8 +9,8 @@ public class CalculateGouXingTest {
 			e.printStackTrace();
 		}
 		ShoupaiCalculator c = new ShoupaiCalculator();
-		int[] paiQuantityArray = new int[] { 2, 0, 1, 1, 0, 0, 0, 0, 2, 0, 2, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1,
-				0, 0, 0, 1, 1, 0, 0, 1, 0 };
+		int[] paiQuantityArray = new int[] { 0, 1, 0, 0, 1, 0, 0, 0, 0, 2, 2, 1, 0, 0, 2, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0,
+				0, 1, 0, 0, 2, 1, 0, 0, 0 };
 		c.setPaiQuantityArray(paiQuantityArray);
 		c.calculateAllGouXing();
 	}

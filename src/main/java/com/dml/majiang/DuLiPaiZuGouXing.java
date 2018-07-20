@@ -54,7 +54,7 @@ public class DuLiPaiZuGouXing extends GouXing {
 			if (combinedGouXing == gouXingCode) {// 该种构型组合匹配
 				// 生成一个牌型
 				PaiXing paiXing = new PaiXing();
-				List<MajiangPai> danpaiList = new ArrayList<>();
+				List<Danpai> danpaiList = new ArrayList<>();
 				List<Duizi> duiziList = new ArrayList<>();
 				List<Kezi> keziList = new ArrayList<>();
 				List<Gangzi> gangziList = new ArrayList<>();
@@ -76,7 +76,7 @@ public class DuLiPaiZuGouXing extends GouXing {
 					MajiangPai paiType = MajiangPai.valueOf(duLiPaiIdxList.get(i));
 
 					for (int j = 0; j < danpaiCount; j++) {
-						danpaiList.add(paiType);
+						danpaiList.add(new Danpai(paiType));
 					}
 					for (int j = 0; j < duiziCount; j++) {
 						duiziList.add(new Duizi(paiType));

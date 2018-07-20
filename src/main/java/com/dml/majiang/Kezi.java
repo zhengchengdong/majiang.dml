@@ -2,7 +2,7 @@ package com.dml.majiang;
 
 import java.nio.ByteBuffer;
 
-public class Kezi implements ByteBufferAble {
+public class Kezi implements MajiangPaiFenZu, ByteBufferAble {
 
 	private MajiangPai paiType;
 
@@ -11,6 +11,22 @@ public class Kezi implements ByteBufferAble {
 
 	public Kezi(MajiangPai paiType) {
 		this.paiType = paiType;
+	}
+
+	@Override
+	public ShoupaiMajiangPaiFenZu generateShoupaiMajiangPaiFenZuSkeleton() {
+		ShoupaiKeziZu shoupaiKeziZu = new ShoupaiKeziZu();
+		shoupaiKeziZu.setKezi(this);
+		return shoupaiKeziZu;
+	}
+
+	@Override
+	public int countPai(MajiangPai paiType) {
+		if (paiType.equals(this.paiType)) {
+			return 3;
+		} else {
+			return 0;
+		}
 	}
 
 	public MajiangPai getPaiType() {

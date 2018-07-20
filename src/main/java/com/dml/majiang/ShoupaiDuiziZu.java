@@ -6,13 +6,35 @@ package com.dml.majiang;
  * @author Neo
  *
  */
-public class ShoupaiDuiziZu {
+public class ShoupaiDuiziZu implements ShoupaiMajiangPaiFenZu {
 
 	private MajiangPai duiziType;
 
-	private ShoupaiDangPai pai1;
+	private ShoupaiJiesuanPai pai1;
 
-	private ShoupaiDangPai pai2;
+	private ShoupaiJiesuanPai pai2;
+
+	@Override
+	public void fillAllBlankPaiWithBenPai() {
+		if (pai1 == null) {
+			pai1 = new BenPai(duiziType);
+		}
+		if (pai2 == null) {
+			pai2 = new BenPai(duiziType);
+		}
+	}
+
+	@Override
+	public void addShoupaiJiesuanPai(ShoupaiJiesuanPai shoupaiJiesuanPai) {
+		if (pai1 == null) {
+			pai1 = shoupaiJiesuanPai;
+			return;
+		}
+		if (pai2 == null) {
+			pai2 = shoupaiJiesuanPai;
+			return;
+		}
+	}
 
 	public MajiangPai getDuiziType() {
 		return duiziType;
@@ -22,19 +44,19 @@ public class ShoupaiDuiziZu {
 		this.duiziType = duiziType;
 	}
 
-	public ShoupaiDangPai getPai1() {
+	public ShoupaiJiesuanPai getPai1() {
 		return pai1;
 	}
 
-	public void setPai1(ShoupaiDangPai pai1) {
+	public void setPai1(ShoupaiJiesuanPai pai1) {
 		this.pai1 = pai1;
 	}
 
-	public ShoupaiDangPai getPai2() {
+	public ShoupaiJiesuanPai getPai2() {
 		return pai2;
 	}
 
-	public void setPai2(ShoupaiDangPai pai2) {
+	public void setPai2(ShoupaiJiesuanPai pai2) {
 		this.pai2 = pai2;
 	}
 

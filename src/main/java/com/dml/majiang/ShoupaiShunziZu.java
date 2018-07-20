@@ -1,10 +1,39 @@
 package com.dml.majiang;
 
-public class ShoupaiShunziZu {
+public class ShoupaiShunziZu implements ShoupaiMajiangPaiFenZu {
 	private Shunzi shunzi;
-	private ShoupaiDangPai pai1;
-	private ShoupaiDangPai pai2;
-	private ShoupaiDangPai pai3;
+	private ShoupaiJiesuanPai pai1;
+	private ShoupaiJiesuanPai pai2;
+	private ShoupaiJiesuanPai pai3;
+
+	@Override
+	public void fillAllBlankPaiWithBenPai() {
+		if (pai1 == null) {
+			pai1 = new BenPai(shunzi.getPai1());
+		}
+		if (pai2 == null) {
+			pai2 = new BenPai(shunzi.getPai2());
+		}
+		if (pai3 == null) {
+			pai3 = new BenPai(shunzi.getPai3());
+		}
+	}
+
+	@Override
+	public void addShoupaiJiesuanPai(ShoupaiJiesuanPai shoupaiJiesuanPai) {
+		if (shoupaiJiesuanPai.getZuoyongPaiType().equals(shunzi.getPai1())) {
+			pai1 = shoupaiJiesuanPai;
+			return;
+		}
+		if (shoupaiJiesuanPai.getZuoyongPaiType().equals(shunzi.getPai2())) {
+			pai2 = shoupaiJiesuanPai;
+			return;
+		}
+		if (shoupaiJiesuanPai.getZuoyongPaiType().equals(shunzi.getPai3())) {
+			pai3 = shoupaiJiesuanPai;
+			return;
+		}
+	}
 
 	public Shunzi getShunzi() {
 		return shunzi;
@@ -14,27 +43,27 @@ public class ShoupaiShunziZu {
 		this.shunzi = shunzi;
 	}
 
-	public ShoupaiDangPai getPai1() {
+	public ShoupaiJiesuanPai getPai1() {
 		return pai1;
 	}
 
-	public void setPai1(ShoupaiDangPai pai1) {
+	public void setPai1(ShoupaiJiesuanPai pai1) {
 		this.pai1 = pai1;
 	}
 
-	public ShoupaiDangPai getPai2() {
+	public ShoupaiJiesuanPai getPai2() {
 		return pai2;
 	}
 
-	public void setPai2(ShoupaiDangPai pai2) {
+	public void setPai2(ShoupaiJiesuanPai pai2) {
 		this.pai2 = pai2;
 	}
 
-	public ShoupaiDangPai getPai3() {
+	public ShoupaiJiesuanPai getPai3() {
 		return pai3;
 	}
 
-	public void setPai3(ShoupaiDangPai pai3) {
+	public void setPai3(ShoupaiJiesuanPai pai3) {
 		this.pai3 = pai3;
 	}
 

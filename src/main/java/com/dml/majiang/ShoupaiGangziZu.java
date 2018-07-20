@@ -1,11 +1,47 @@
 package com.dml.majiang;
 
-public class ShoupaiGangziZu {
+public class ShoupaiGangziZu implements ShoupaiMajiangPaiFenZu {
 	private Gangzi gangzi;
-	private ShoupaiDangPai pai1;
-	private ShoupaiDangPai pai2;
-	private ShoupaiDangPai pai3;
-	private ShoupaiDangPai pai4;
+	private ShoupaiJiesuanPai pai1;
+	private ShoupaiJiesuanPai pai2;
+	private ShoupaiJiesuanPai pai3;
+	private ShoupaiJiesuanPai pai4;
+
+	@Override
+	public void fillAllBlankPaiWithBenPai() {
+		if (pai1 == null) {
+			pai1 = new BenPai(gangzi.getPaiType());
+		}
+		if (pai2 == null) {
+			pai2 = new BenPai(gangzi.getPaiType());
+		}
+		if (pai3 == null) {
+			pai3 = new BenPai(gangzi.getPaiType());
+		}
+		if (pai4 == null) {
+			pai4 = new BenPai(gangzi.getPaiType());
+		}
+	}
+
+	@Override
+	public void addShoupaiJiesuanPai(ShoupaiJiesuanPai shoupaiJiesuanPai) {
+		if (pai1 == null) {
+			pai1 = shoupaiJiesuanPai;
+			return;
+		}
+		if (pai2 == null) {
+			pai2 = shoupaiJiesuanPai;
+			return;
+		}
+		if (pai3 == null) {
+			pai3 = shoupaiJiesuanPai;
+			return;
+		}
+		if (pai4 == null) {
+			pai4 = shoupaiJiesuanPai;
+			return;
+		}
+	}
 
 	public Gangzi getGangzi() {
 		return gangzi;
@@ -15,35 +51,35 @@ public class ShoupaiGangziZu {
 		this.gangzi = gangzi;
 	}
 
-	public ShoupaiDangPai getPai1() {
+	public ShoupaiJiesuanPai getPai1() {
 		return pai1;
 	}
 
-	public void setPai1(ShoupaiDangPai pai1) {
+	public void setPai1(ShoupaiJiesuanPai pai1) {
 		this.pai1 = pai1;
 	}
 
-	public ShoupaiDangPai getPai2() {
+	public ShoupaiJiesuanPai getPai2() {
 		return pai2;
 	}
 
-	public void setPai2(ShoupaiDangPai pai2) {
+	public void setPai2(ShoupaiJiesuanPai pai2) {
 		this.pai2 = pai2;
 	}
 
-	public ShoupaiDangPai getPai3() {
+	public ShoupaiJiesuanPai getPai3() {
 		return pai3;
 	}
 
-	public void setPai3(ShoupaiDangPai pai3) {
+	public void setPai3(ShoupaiJiesuanPai pai3) {
 		this.pai3 = pai3;
 	}
 
-	public ShoupaiDangPai getPai4() {
+	public ShoupaiJiesuanPai getPai4() {
 		return pai4;
 	}
 
-	public void setPai4(ShoupaiDangPai pai4) {
+	public void setPai4(ShoupaiJiesuanPai pai4) {
 		this.pai4 = pai4;
 	}
 
