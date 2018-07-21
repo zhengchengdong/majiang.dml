@@ -35,7 +35,7 @@ public class LianXuPaiZuZuHeGouXing extends GouXing {
 		int mod = 1;
 		for (int i = 0; i < lianXuPaiZuPaiXingCountArray.length; i++) {
 			modArray[lianXuPaiZuPaiXingCountArray.length - 1 - i] = mod;
-			mod *= lianXuPaiZuPaiXingCountArray[i];
+			mod *= lianXuPaiZuPaiXingCountArray[lianXuPaiZuPaiXingCountArray.length - 1 - i];
 		}
 		PaiXing[] paiXingZuheArray = new PaiXing[zuHePaiZuGouXingArray.length];
 		for (int code = 0; code < maxZuheCode; code++) {

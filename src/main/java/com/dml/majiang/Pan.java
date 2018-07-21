@@ -184,6 +184,14 @@ public class Pan {
 		player.gangMopai(pai);
 	}
 
+	public void playerGangSigeshoupai(String playerId, MajiangPai pai) throws MajiangPlayerNotFoundException {
+		MajiangPlayer player = majiangPlayerIdMajiangPlayerMap.get(playerId);
+		if (player == null) {
+			throw new MajiangPlayerNotFoundException();
+		}
+		player.gangSigeshoupai(pai);
+	}
+
 	public void playerKeziGangMo(String playerId, MajiangPai pai) throws MajiangPlayerNotFoundException {
 		MajiangPlayer player = majiangPlayerIdMajiangPlayerMap.get(playerId);
 		if (player == null) {
@@ -205,20 +213,20 @@ public class Pan {
 	}
 
 	public MajiangPlayer findShangjia(MajiangPlayer player) {
-		MajiangPosition shangjiaMenFeng = MajiangPositionCircle.nextClockwise(player.getMenFeng());
+		MajiangPosition shangjiaMenFeng = MajiangPositionUtil.nextPositionClockwise(player.getMenFeng());
 		String shangjiaPlayerId = menFengMajiangPlayerIdMap.get(shangjiaMenFeng);
 		while (shangjiaPlayerId == null) {
-			shangjiaMenFeng = MajiangPositionCircle.nextClockwise(shangjiaMenFeng);
+			shangjiaMenFeng = MajiangPositionUtil.nextPositionClockwise(shangjiaMenFeng);
 			shangjiaPlayerId = menFengMajiangPlayerIdMap.get(shangjiaMenFeng);
 		}
 		return majiangPlayerIdMajiangPlayerMap.get(shangjiaPlayerId);
 	}
 
 	public MajiangPlayer findXiajia(MajiangPlayer player) {
-		MajiangPosition xiajiaMenFeng = MajiangPositionCircle.nextAntiClockwise(player.getMenFeng());
+		MajiangPosition xiajiaMenFeng = MajiangPositionUtil.nextPositionAntiClockwise(player.getMenFeng());
 		String xiajiaPlayerId = menFengMajiangPlayerIdMap.get(xiajiaMenFeng);
 		while (xiajiaPlayerId == null) {
-			xiajiaMenFeng = MajiangPositionCircle.nextAntiClockwise(xiajiaMenFeng);
+			xiajiaMenFeng = MajiangPositionUtil.nextPositionAntiClockwise(xiajiaMenFeng);
 			xiajiaPlayerId = menFengMajiangPlayerIdMap.get(xiajiaMenFeng);
 		}
 		return majiangPlayerIdMajiangPlayerMap.get(xiajiaPlayerId);

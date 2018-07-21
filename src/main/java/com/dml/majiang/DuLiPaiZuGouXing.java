@@ -37,7 +37,7 @@ public class DuLiPaiZuGouXing extends GouXing {
 		int mod = 1;
 		for (int i = 0; i < tongpaiGouXingArrayCountArray.length; i++) {
 			modArray[tongpaiGouXingArrayCountArray.length - 1 - i] = mod;
-			mod *= tongpaiGouXingArrayCountArray[i];
+			mod *= tongpaiGouXingArrayCountArray[tongpaiGouXingArrayCountArray.length - 1 - i];
 		}
 		int[] gouXingZuheArray = new int[duLiPaiIdxList.size()];
 		int combinedGouXing;

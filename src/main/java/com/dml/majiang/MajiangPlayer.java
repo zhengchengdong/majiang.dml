@@ -186,6 +186,16 @@ public class MajiangPlayer {
 		gangmoShoupai = null;
 	}
 
+	public void gangSigeshoupai(MajiangPai pai) {
+		fangruShoupaiList.remove(pai);
+		fangruShoupaiList.remove(pai);
+		fangruShoupaiList.remove(pai);
+		fangruShoupaiList.remove(pai);
+		shoupaiCalculator.removePai(pai, 4);
+		GangchuPaiZu gangchuPaiZu = new GangchuPaiZu(new Gangzi(pai), null, id, GangType.gangsigeshoupai);
+		gangchupaiZuList.add(gangchuPaiZu);
+	}
+
 	public void keziGangMopai(MajiangPai pai) {
 		Iterator<PengchuPaiZu> i = pengchupaiZuList.iterator();
 		while (i.hasNext()) {
@@ -286,6 +296,68 @@ public class MajiangPlayer {
 		}
 	}
 
+	/**
+	 * 通常鬼牌即使是字牌也不加入计算
+	 * 
+	 * @return
+	 */
+	public boolean hasZipai() {
+		for (PengchuPaiZu pengchuPaiZu : pengchupaiZuList) {
+			if (MajiangPai.isZipai(pengchuPaiZu.getKezi().getPaiType())) {
+				return true;
+			}
+		}
+		for (GangchuPaiZu gangchuPaiZu : gangchupaiZuList) {
+			if (MajiangPai.isZipai(gangchuPaiZu.getGangzi().getPaiType())) {
+				return true;
+			}
+		}
+		for (MajiangPai shoupai : fangruShoupaiList) {
+			if (!guipaiTypeSet.contains(shoupai)) {
+				if (MajiangPai.isZipai(shoupai)) {
+					return true;
+				}
+			}
+		}
+		if (gangmoShoupai != null && !guipaiTypeSet.contains(gangmoShoupai)) {
+			if (MajiangPai.isZipai(gangmoShoupai)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * 序数牌都是万牌，或者筒牌，或者条牌。通常鬼牌即使是序数牌也不加入计算
+	 * 
+	 * @return
+	 */
+	public boolean allXushupaiInSameCategory() {
+		Set<XushupaiCategory> cSet = new HashSet<>();
+		for (ChichuPaiZu chichuPaiZu : chichupaiZuList) {
+			XushupaiCategory xushupaiCategory = XushupaiCategory
+					.getCategoryforXushupai(chichuPaiZu.getShunzi().getPai1());
+			if (xushupaiCategory != null) {
+				cSet.add(xushupaiCategory);
+			}
+		}
+		for (MajiangPai shoupai : fangruShoupaiList) {
+			if (!guipaiTypeSet.contains(shoupai)) {
+				XushupaiCategory xushupaiCategory = XushupaiCategory.getCategoryforXushupai(shoupai);
+				if (xushupaiCategory != null) {
+					cSet.add(xushupaiCategory);
+				}
+			}
+		}
+		if (gangmoShoupai != null && !guipaiTypeSet.contains(gangmoShoupai)) {
+			XushupaiCategory xushupaiCategory = XushupaiCategory.getCategoryforXushupai(gangmoShoupai);
+			if (xushupaiCategory != null) {
+				cSet.add(xushupaiCategory);
+			}
+		}
+		return cSet.size() == 1;
+	}
+
 	public List<MajiangPai> findGuipaiList() {
 		List<MajiangPai> guipaiShoupaiList = new ArrayList<>();
 		fangruShoupaiList.forEach((shouPai) -> {
@@ -299,6 +371,19 @@ public class MajiangPlayer {
 		return guipaiShoupaiList;
 	}
 
+	public int countGuipai() {
+		int count = 0;
+		for (MajiangPai shouPai : fangruShoupaiList) {
+			if (guipaiTypeSet.contains(shouPai)) {
+				count++;
+			}
+		}
+		if (gangmoShoupai != null && guipaiTypeSet.contains(gangmoShoupai)) {
+			count++;
+		}
+		return count;
+	}
+
 	public int countChichupaiZu() {
 		return chichupaiZuList.size();
 	}
@@ -309,6 +394,36 @@ public class MajiangPlayer {
 
 	public int countGangchupaiZu() {
 		return gangchupaiZuList.size();
+	}
+
+	public int countPublicPai() {
+		return publicPaiList.size();
+	}
+
+	public int countFangruShoupai() {
+		return fangruShoupaiList.size();
+	}
+
+	public boolean ifPengchuForPaiType(MajiangPai paiType) {
+		for (PengchuPaiZu pengchuPaiZu : pengchupaiZuList) {
+			if (pengchuPaiZu.getKezi().getPaiType().equals(paiType)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean ifGangchuForPaiType(MajiangPai paiType) {
+		for (GangchuPaiZu gangchuPaiZu : gangchupaiZuList) {
+			if (gangchuPaiZu.getGangzi().getPaiType().equals(paiType)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public MajiangPai fengpaiForMenfeng() {
+		return MajiangPositionUtil.getFengpaiByPosition(menFeng);
 	}
 
 	public String getId() {

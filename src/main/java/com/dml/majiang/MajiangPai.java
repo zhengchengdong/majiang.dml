@@ -13,6 +13,11 @@ public enum MajiangPai {
 		return (ordinal >= 0 && ordinal <= 26);
 	}
 
+	public static boolean isZipai(MajiangPai pai) {
+		int ordinal = pai.ordinal();
+		return (ordinal >= 26 && ordinal <= 32);
+	}
+
 	public static MajiangPai[] xushupaiAndZipaiArray() {
 		MajiangPai[] xushupaiAndZipaiArray = new MajiangPai[34];
 		System.arraycopy(array, 0, xushupaiAndZipaiArray, 0, 34);

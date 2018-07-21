@@ -40,8 +40,8 @@ public class ShoupaiCalculator {
 		parseXuShuPai(18, 26, jutihuaLianXuPaiZuList, duLiPaiIdxList);
 		parseZiPai(duLiPaiIdxList);
 		List<LianXuPaiZu> lianXuPaiZuList = new ArrayList<>();
-		jutihuaLianXuPaiZuList.forEach((hutihuaLianXuPaiZu) -> {
-			LianXuPaiZu lianXuPaiZu = hutihuaLianXuPaiZu.getLianXuPaiZu();
+		jutihuaLianXuPaiZuList.forEach((jutihuaLianXuPaiZu) -> {
+			LianXuPaiZu lianXuPaiZu = jutihuaLianXuPaiZu.getLianXuPaiZu();
 			lianXuPaiZu.calculateCode();
 			lianXuPaiZuList.add(lianXuPaiZu);
 		});
@@ -280,10 +280,10 @@ public class ShoupaiCalculator {
 		// 收尾
 		if (lian >= 3) {
 			int[] lianXuPaiZuPaiQuantityArray = new int[lian];
-			System.arraycopy(paiQuantityArray, endIdx - lian, lianXuPaiZuPaiQuantityArray, 0, lian);
+			System.arraycopy(paiQuantityArray, (endIdx + 1) - lian, lianXuPaiZuPaiQuantityArray, 0, lian);
 
 			MajiangPai[] jutiLianXuPaiTypesArray = new MajiangPai[lian];
-			System.arraycopy(allPaiTypeArray, endIdx - lian, jutiLianXuPaiTypesArray, 0, lian);
+			System.arraycopy(allPaiTypeArray, (endIdx + 1) - lian, jutiLianXuPaiTypesArray, 0, lian);
 
 			jutihuaLianXuPaiZuList.add(new JutihuaLianXuPaiZu(
 					new LianXuPaiZu(lianXuPaiZuPaiQuantityArray, totalPai, 0, bigCodeMode), jutiLianXuPaiTypesArray));

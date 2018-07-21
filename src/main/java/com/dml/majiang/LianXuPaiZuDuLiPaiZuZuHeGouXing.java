@@ -40,7 +40,7 @@ public class LianXuPaiZuDuLiPaiZuZuHeGouXing extends GouXing {
 		int mod = 1;
 		for (int i = 0; i < lianXuPaiZuPaiXingCountArray.length; i++) {
 			modArray[lianXuPaiZuPaiXingCountArray.length - 1 - i] = mod;
-			mod *= lianXuPaiZuPaiXingCountArray[i];
+			mod *= lianXuPaiZuPaiXingCountArray[lianXuPaiZuPaiXingCountArray.length - 1 - i];
 		}
 		PaiXing[] paiXingZuheArray = new PaiXing[lianXuPaiZuGouXingArray.length + 1];// +1要算上独立的
 		for (int code = 0; code < maxZuheCode; code++) {

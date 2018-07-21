@@ -146,6 +146,63 @@ public class ShoupaiPaiXing {
 		return newShoupaiPaiXing;
 	}
 
+	public int countShunzi() {
+		return shunziList.size();
+	}
+
+	public int countKezi() {
+		return keziList.size();
+	}
+
+	public int countGangzi() {
+		return gangziList.size();
+	}
+
+	public boolean hasKeziForPaiType(MajiangPai paiType) {
+		for (ShoupaiKeziZu shoupaiKeziZu : keziList) {
+			if (shoupaiKeziZu.getKezi().getPaiType().equals(paiType)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean hasGangziForPaiType(MajiangPai paiType) {
+		for (ShoupaiGangziZu shoupaiGangziZu : gangziList) {
+			if (shoupaiGangziZu.getGangzi().getPaiType().equals(paiType)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public ShoupaiDuiziZu findDuiziZuHasLastActionPai() {
+		for (ShoupaiDuiziZu shoupaiDuiziZu : duiziList) {
+			if (shoupaiDuiziZu.getPai1().isLastActionPai()) {
+				return shoupaiDuiziZu;
+			}
+			if (shoupaiDuiziZu.getPai2().isLastActionPai()) {
+				return shoupaiDuiziZu;
+			}
+		}
+		return null;
+	}
+
+	public ShoupaiShunziZu findShunziZuHasLastActionPai() {
+		for (ShoupaiShunziZu shoupaiShunziZu : shunziList) {
+			if (shoupaiShunziZu.getPai1().isLastActionPai()) {
+				return shoupaiShunziZu;
+			}
+			if (shoupaiShunziZu.getPai2().isLastActionPai()) {
+				return shoupaiShunziZu;
+			}
+			if (shoupaiShunziZu.getPai3().isLastActionPai()) {
+				return shoupaiShunziZu;
+			}
+		}
+		return null;
+	}
+
 	public List<ShoupaiDanpai> getDanpaiList() {
 		return danpaiList;
 	}
