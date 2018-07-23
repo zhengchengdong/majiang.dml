@@ -22,6 +22,7 @@ public class Ju {
 	private GuipaiDeterminer guipaiDeterminer;
 	private FaPaiStrategy faPaiStrategy;
 	private GouXingPanHu GouXingPanHu;
+	private JuResultBuilder juResultBuilder;
 	private MajiangPlayerInitialActionUpdater initialActionUpdater;
 	private MajiangPlayerMoActionProcessor moActionProcessor;
 	private MajiangPlayerMoActionUpdater moActionUpdater;
@@ -167,6 +168,14 @@ public class Ju {
 
 	public void setGouXingPanHu(GouXingPanHu gouXingPanHu) {
 		GouXingPanHu = gouXingPanHu;
+	}
+
+	public JuResultBuilder getJuResultBuilder() {
+		return juResultBuilder;
+	}
+
+	public void setJuResultBuilder(JuResultBuilder juResultBuilder) {
+		this.juResultBuilder = juResultBuilder;
 	}
 
 	public MajiangPlayerInitialActionUpdater getInitialActionUpdater() {

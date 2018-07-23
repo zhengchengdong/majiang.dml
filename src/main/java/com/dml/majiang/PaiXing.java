@@ -127,11 +127,12 @@ public class PaiXing {
 			guipaiDangFenZuIdxListCountArray[j] = count;
 			maxZuheCode *= count;
 		}
+
 		int[] modArray = new int[guipaiCount];
 		int mod = 1;
 		for (int j = 0; j < guipaiDangFenZuIdxListCountArray.length; j++) {
 			modArray[guipaiCount - 1 - j] = mod;
-			mod *= guipaiDangFenZuIdxListCountArray[j];
+			mod *= guipaiDangFenZuIdxListCountArray[guipaiDangFenZuIdxListCountArray.length - 1 - j];
 		}
 
 		int[] guipaiDangFenZuIdxZuheArray = new int[guipaiCount];

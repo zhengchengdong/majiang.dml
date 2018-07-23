@@ -45,6 +45,20 @@ public class ShoupaiKeziZu implements ShoupaiMajiangPaiFenZu {
 		}
 	}
 
+	public int countGuipai() {
+		int count = 0;
+		if (pai1.getDangType().equals(GuipaiDangPai.dangType)) {
+			count++;
+		}
+		if (pai2.getDangType().equals(GuipaiDangPai.dangType)) {
+			count++;
+		}
+		if (pai3.getDangType().equals(GuipaiDangPai.dangType)) {
+			count++;
+		}
+		return count;
+	}
+
 	public Kezi getKezi() {
 		return kezi;
 	}

@@ -167,9 +167,36 @@ public class ShoupaiPaiXing {
 		return false;
 	}
 
+	public ShoupaiKeziZu findFirstKeziZuForPaiType(MajiangPai paiType) {
+		for (ShoupaiKeziZu shoupaiKeziZu : keziList) {
+			if (shoupaiKeziZu.getKezi().getPaiType().equals(paiType)) {
+				return shoupaiKeziZu;
+			}
+		}
+		return null;
+	}
+
 	public boolean hasGangziForPaiType(MajiangPai paiType) {
 		for (ShoupaiGangziZu shoupaiGangziZu : gangziList) {
 			if (shoupaiGangziZu.getGangzi().getPaiType().equals(paiType)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public ShoupaiGangziZu findFirstGangziZuForPaiType(MajiangPai paiType) {
+		for (ShoupaiGangziZu shoupaiGangziZu : gangziList) {
+			if (shoupaiGangziZu.getGangzi().getPaiType().equals(paiType)) {
+				return shoupaiGangziZu;
+			}
+		}
+		return null;
+	}
+
+	public boolean hasDuiziForPaiType(MajiangPai paiType) {
+		for (ShoupaiDuiziZu shoupaiDuiziZu : duiziList) {
+			if (shoupaiDuiziZu.getDuiziType().equals(paiType)) {
 				return true;
 			}
 		}

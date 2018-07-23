@@ -200,6 +200,14 @@ public class Pan {
 		player.keziGangMopai(pai);
 	}
 
+	public void playerKeziGangShoupai(String playerId, MajiangPai pai) throws MajiangPlayerNotFoundException {
+		MajiangPlayer player = majiangPlayerIdMajiangPlayerMap.get(playerId);
+		if (player == null) {
+			throw new MajiangPlayerNotFoundException();
+		}
+		player.keziGangShoupai(pai);
+	}
+
 	public void playerClearActionCandidates(String playerId) throws MajiangPlayerNotFoundException {
 		MajiangPlayer player = majiangPlayerIdMajiangPlayerMap.get(playerId);
 		if (player == null) {

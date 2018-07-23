@@ -194,6 +194,7 @@ public class MajiangPlayer {
 		shoupaiCalculator.removePai(pai, 4);
 		GangchuPaiZu gangchuPaiZu = new GangchuPaiZu(new Gangzi(pai), null, id, GangType.gangsigeshoupai);
 		gangchupaiZuList.add(gangchuPaiZu);
+		fangruShoupai();
 	}
 
 	public void keziGangMopai(MajiangPai pai) {
@@ -208,6 +209,22 @@ public class MajiangPlayer {
 		GangchuPaiZu gangchuPaiZu = new GangchuPaiZu(new Gangzi(pai), null, id, GangType.kezigangmo);
 		gangchupaiZuList.add(gangchuPaiZu);
 		gangmoShoupai = null;
+	}
+
+	public void keziGangShoupai(MajiangPai pai) {
+		Iterator<PengchuPaiZu> i = pengchupaiZuList.iterator();
+		while (i.hasNext()) {
+			PengchuPaiZu pengchuPai = i.next();
+			if (pengchuPai.getKezi().getPaiType().equals(pai)) {
+				i.remove();
+				break;
+			}
+		}
+		GangchuPaiZu gangchuPaiZu = new GangchuPaiZu(new Gangzi(pai), null, id, GangType.kezigangshoupai);
+		gangchupaiZuList.add(gangchuPaiZu);
+		fangruShoupaiList.remove(pai);
+		shoupaiCalculator.removePai(pai);
+		fangruShoupai();
 	}
 
 	private void removeLatestDachupai() {
@@ -259,6 +276,17 @@ public class MajiangPlayer {
 		List<MajiangPai> gangpaiList = shoupaiCalculator.findAllPaiQuantityIsFour();
 		gangpaiList.forEach(
 				(gangpai) -> addActionCandidate(new MajiangGangAction(id, null, gangpai, GangType.gangsigeshoupai)));
+	}
+
+	public void tryKezigangshoupaiAndGenerateCandidateAction() {
+		for (PengchuPaiZu pengchuPaiZu : pengchupaiZuList) {
+			for (MajiangPai fangruShoupai : fangruShoupaiList) {
+				if (pengchuPaiZu.getKezi().getPaiType().equals(fangruShoupai)) {
+					addActionCandidate(new MajiangGangAction(id, null, fangruShoupai, GangType.kezigangshoupai));
+					break;
+				}
+			}
+		}
 	}
 
 	public void tryKezigangmoAndGenerateCandidateAction() {

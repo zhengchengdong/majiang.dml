@@ -14,6 +14,8 @@ public class GangziGangActionProcessor implements MajiangPlayerGangActionProcess
 			currentPan.playerGangSigeshoupai(action.getActionPlayerId(), action.getPai());
 		} else if (gangType.equals(GangType.kezigangmo)) {
 			currentPan.playerKeziGangMo(action.getActionPlayerId(), action.getPai());
+		} else if (gangType.equals(GangType.kezigangshoupai)) {
+			currentPan.playerKeziGangShoupai(action.getActionPlayerId(), action.getPai());
 		} else {
 		}
 
