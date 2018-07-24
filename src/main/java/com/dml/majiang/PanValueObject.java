@@ -27,8 +27,6 @@ public class PanValueObject implements ByteBufferAble {
 	 */
 	private PaiCursor activePaiCursor;
 
-	private PanResult result;
-
 	public PanValueObject() {
 	}
 
@@ -41,7 +39,6 @@ public class PanValueObject implements ByteBufferAble {
 		publicGuipaiList = new ArrayList<>(pan.getPublicGuipaiSet());
 		publicWaitingPlayerId = pan.getPublicWaitingPlayerId();
 		activePaiCursor = pan.getActivePaiCursor();
-		result = pan.getResult();
 	}
 
 	public List<MajiangPlayerValueObject> getPlayerList() {
@@ -92,14 +89,6 @@ public class PanValueObject implements ByteBufferAble {
 		this.activePaiCursor = activePaiCursor;
 	}
 
-	public PanResult getResult() {
-		return result;
-	}
-
-	public void setResult(PanResult result) {
-		this.result = result;
-	}
-
 	@Override
 	public void toByteBuffer(ByteBuffer bb) throws Throwable {
 		ByteBufferSerializer.listToByteBuffer(new ArrayList<>(playerList), bb);
@@ -108,7 +97,6 @@ public class PanValueObject implements ByteBufferAble {
 		majiangPaiListToByteBuffer(publicGuipaiList, bb);
 		ByteBufferSerializer.stringToByteBuffer(publicWaitingPlayerId, bb);
 		ByteBufferSerializer.objToByteBuffer(activePaiCursor, bb);
-		ByteBufferSerializer.objToByteBuffer(result, bb);
 	}
 
 	private void majiangPaiListToByteBuffer(List<MajiangPai> majiangPaiList, ByteBuffer bb) {
@@ -129,7 +117,6 @@ public class PanValueObject implements ByteBufferAble {
 		publicGuipaiList = fillMajiangPaiList(bb);
 		publicWaitingPlayerId = ByteBufferSerializer.byteBufferToString(bb);
 		activePaiCursor = ByteBufferSerializer.byteBufferToObj(bb);
-		result = ByteBufferSerializer.byteBufferToObj(bb);
 	}
 
 	private List<MajiangPai> fillMajiangPaiList(ByteBuffer bb) {

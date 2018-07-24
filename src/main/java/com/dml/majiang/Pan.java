@@ -46,8 +46,6 @@ public class Pan {
 
 	private List<PanActionFrame> actionFrameDataList = new ArrayList<>();
 
-	private PanResult result;
-
 	public void addPlayer(String playerId) {
 		MajiangPlayer majiangPlayer = new MajiangPlayer();
 		majiangPlayer.setId(playerId);
@@ -323,14 +321,6 @@ public class Pan {
 
 	public void setActionFrameDataList(List<PanActionFrame> actionFrameDataList) {
 		this.actionFrameDataList = actionFrameDataList;
-	}
-
-	public PanResult getResult() {
-		return result;
-	}
-
-	public void setResult(PanResult result) {
-		this.result = result;
 	}
 
 }

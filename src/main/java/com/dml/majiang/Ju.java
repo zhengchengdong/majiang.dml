@@ -1,5 +1,8 @@
 package com.dml.majiang;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 一局麻将
  * 
@@ -9,6 +12,8 @@ package com.dml.majiang;
 public class Ju {
 
 	private Pan currentPan;
+
+	private List<PanResult> finishedPanResultList = new ArrayList<>();
 
 	/**
 	 * 一局打几盘
@@ -72,6 +77,10 @@ public class Ju {
 		return currentPan.recordPanActionFrame(action);
 	}
 
+	public void addFinishedPanResult(PanResult panResult) {
+		finishedPanResultList.add(panResult);
+	}
+
 	private void doAction(MajiangPlayerAction action) throws Exception {
 		MajiangPlayerActionType actionType = action.getType();
 		if (actionType.equals(MajiangPlayerActionType.mo)) {
@@ -117,6 +126,14 @@ public class Ju {
 
 	public void setCurrentPan(Pan currentPan) {
 		this.currentPan = currentPan;
+	}
+
+	public List<PanResult> getFinishedPanResultList() {
+		return finishedPanResultList;
+	}
+
+	public void setFinishedPanResultList(List<PanResult> finishedPanResultList) {
+		this.finishedPanResultList = finishedPanResultList;
 	}
 
 	public int getPanShu() {

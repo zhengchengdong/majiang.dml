@@ -1,5 +1,5 @@
 package com.dml.majiang;
 
-public interface PanResult extends ByteBufferAble {
+public interface PanResult {
 
 }
