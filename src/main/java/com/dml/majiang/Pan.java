@@ -249,6 +249,10 @@ public class Pan {
 		return true;
 	}
 
+	public int countPlayers() {
+		return majiangPlayerIdMajiangPlayerMap.size();
+	}
+
 	public Map<String, MajiangPlayer> getMajiangPlayerIdMajiangPlayerMap() {
 		return majiangPlayerIdMajiangPlayerMap;
 	}

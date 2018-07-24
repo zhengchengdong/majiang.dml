@@ -23,7 +23,7 @@ public class DuLiPaiZuGouXing extends GouXing {
 		int[][] tongpaiGouXingArrayArray = new int[duLiPaiIdxList.size()][];
 		for (int i = 0; i < duLiPaiIdxList.size(); i++) {
 			int duLiPaiIdx = duLiPaiIdxList.get(i);
-			tongpaiGouXingArrayArray[i] = DuLiPaiZu.tongpaiGouXingArray[paiQuantityArray[duLiPaiIdx]];
+			tongpaiGouXingArrayArray[i] = DuLiPaiZu.tongpaiGouXingArray[paiQuantityArray[duLiPaiIdx] - 1];
 		}
 
 		int maxZuheCode = 1;

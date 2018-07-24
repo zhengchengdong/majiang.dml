@@ -36,6 +36,7 @@ public class Ju {
 	private MajiangPlayerGangActionUpdater gangActionUpdater;
 	private MajiangPlayerGuoActionProcessor guoActionProcessor;
 	private MajiangPlayerGuoActionUpdater guoActionUpdater;
+	private MajiangPlayerHuActionProcessor huActionProcessor;
 
 	public void determinePlayersMenFengForFirstPan() throws Exception {
 		playersMenFengDeterminerForFirstPan.determinePlayersMenFeng(this);
@@ -97,6 +98,10 @@ public class Ju {
 			guoActionProcessor.process((MajiangGuoAction) action, this);
 			// TODO listener
 			guoActionUpdater.updateActions((MajiangGuoAction) action, this);
+		} else if (actionType.equals(MajiangPlayerActionType.hu)) {
+			huActionProcessor.process((MajiangHuAction) action, this);
+			// TODO listener?
+			// TODO updater?
 		} else {
 		}
 
@@ -280,6 +285,14 @@ public class Ju {
 
 	public void setGuoActionUpdater(MajiangPlayerGuoActionUpdater guoActionUpdater) {
 		this.guoActionUpdater = guoActionUpdater;
+	}
+
+	public MajiangPlayerHuActionProcessor getHuActionProcessor() {
+		return huActionProcessor;
+	}
+
+	public void setHuActionProcessor(MajiangPlayerHuActionProcessor huActionProcessor) {
+		this.huActionProcessor = huActionProcessor;
 	}
 
 	public ActionStatisticsListenerManager getActionStatisticsListenerManager() {

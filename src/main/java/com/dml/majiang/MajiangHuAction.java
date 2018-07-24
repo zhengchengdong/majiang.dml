@@ -9,7 +9,8 @@ public class MajiangHuAction extends MajiangPlayerAction {
 	public MajiangHuAction() {
 	}
 
-	public MajiangHuAction(Hu hu) {
+	public MajiangHuAction(String actionPlayerId, Hu hu) {
+		super(MajiangPlayerActionType.hu, actionPlayerId);
 		this.hu = hu;
 	}
 
