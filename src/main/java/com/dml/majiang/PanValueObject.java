@@ -6,6 +6,11 @@ import java.util.List;
 
 public class PanValueObject implements ByteBufferAble {
 
+	/**
+	 * 编号，代表一局中的第几盘
+	 */
+	int no;
+
 	private List<MajiangPlayerValueObject> playerList;
 
 	private String zhuangPlayerId;
@@ -31,6 +36,7 @@ public class PanValueObject implements ByteBufferAble {
 	}
 
 	public PanValueObject(Pan pan) {
+		no = pan.getNo();
 		playerList = new ArrayList<>();
 		pan.getMajiangPlayerIdMajiangPlayerMap().values()
 				.forEach((player) -> playerList.add(new MajiangPlayerValueObject(player)));
@@ -39,6 +45,14 @@ public class PanValueObject implements ByteBufferAble {
 		publicGuipaiList = new ArrayList<>(pan.getPublicGuipaiSet());
 		publicWaitingPlayerId = pan.getPublicWaitingPlayerId();
 		activePaiCursor = pan.getActivePaiCursor();
+	}
+
+	public int getNo() {
+		return no;
+	}
+
+	public void setNo(int no) {
+		this.no = no;
 	}
 
 	public List<MajiangPlayerValueObject> getPlayerList() {
@@ -91,6 +105,7 @@ public class PanValueObject implements ByteBufferAble {
 
 	@Override
 	public void toByteBuffer(ByteBuffer bb) throws Throwable {
+		bb.putInt(no);
 		ByteBufferSerializer.listToByteBuffer(new ArrayList<>(playerList), bb);
 		ByteBufferSerializer.stringToByteBuffer(zhuangPlayerId, bb);
 		ByteBufferSerializer.objToByteBuffer(avaliablePaiList, bb);
@@ -109,6 +124,7 @@ public class PanValueObject implements ByteBufferAble {
 
 	@Override
 	public void fillByByteBuffer(ByteBuffer bb) throws Throwable {
+		no = bb.getInt();
 		playerList = new ArrayList<>();
 		ByteBufferSerializer.byteBufferToList(bb)
 				.forEach((player) -> playerList.add((MajiangPlayerValueObject) player));

@@ -71,4 +71,13 @@ public class Shunzi implements MajiangPaiFenZu, ByteBufferAble {
 		pai3 = MajiangPai.valueOf(Byte.toUnsignedInt(bb.get()));
 	}
 
+	public boolean equals(Object o) {
+		Shunzi s = (Shunzi) o;
+		return (pai1.equals(s.pai1) && pai2.equals(s.pai2) && pai3.equals(s.pai3));
+	}
+
+	public int hashCode() {
+		return pai1.hashCode() * 100 + pai2.hashCode() * 10 + pai3.hashCode();
+	}
+
 }

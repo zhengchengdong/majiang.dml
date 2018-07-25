@@ -38,6 +38,8 @@ public class MajiangPlayerValueObject implements ByteBufferAble {
 	private List<PengchuPaiZu> pengchupaiZuList;
 	private List<GangchuPaiZu> gangchupaiZuList;
 
+	private Hu hu;
+
 	public MajiangPlayerValueObject() {
 	}
 
@@ -55,6 +57,7 @@ public class MajiangPlayerValueObject implements ByteBufferAble {
 		chichupaiZuList = new ArrayList<>(player.getChichupaiZuList());
 		pengchupaiZuList = new ArrayList<>(player.getPengchupaiZuList());
 		gangchupaiZuList = new ArrayList<>(player.getGangchupaiZuList());
+		hu = player.getHu();
 	}
 
 	public String getId() {
@@ -145,6 +148,14 @@ public class MajiangPlayerValueObject implements ByteBufferAble {
 		this.gangchupaiZuList = gangchupaiZuList;
 	}
 
+	public Hu getHu() {
+		return hu;
+	}
+
+	public void setHu(Hu hu) {
+		this.hu = hu;
+	}
+
 	@Override
 	public void toByteBuffer(ByteBuffer bb) throws Throwable {
 		ByteBufferSerializer.stringToByteBuffer(id, bb);
@@ -158,6 +169,7 @@ public class MajiangPlayerValueObject implements ByteBufferAble {
 		ByteBufferSerializer.listToByteBuffer(new ArrayList<>(chichupaiZuList), bb);
 		ByteBufferSerializer.listToByteBuffer(new ArrayList<>(pengchupaiZuList), bb);
 		ByteBufferSerializer.listToByteBuffer(new ArrayList<>(gangchupaiZuList), bb);
+		ByteBufferSerializer.objToByteBuffer(hu, bb);
 	}
 
 	@Override
@@ -177,6 +189,7 @@ public class MajiangPlayerValueObject implements ByteBufferAble {
 		ByteBufferSerializer.byteBufferToList(bb).forEach((o) -> pengchupaiZuList.add((PengchuPaiZu) o));
 		gangchupaiZuList = new ArrayList<>();
 		ByteBufferSerializer.byteBufferToList(bb).forEach((o) -> gangchupaiZuList.add((GangchuPaiZu) o));
+		hu = ByteBufferSerializer.byteBufferToObj(bb);
 	}
 
 	private void majiangPaiListToByteBuffer(List<MajiangPai> majiangPaiList, ByteBuffer bb) {

@@ -26,7 +26,9 @@ public class Ju {
 	private AvaliablePaiFiller avaliablePaiFiller;
 	private GuipaiDeterminer guipaiDeterminer;
 	private FaPaiStrategy faPaiStrategy;
+	private CurrentPanFinishiDeterminer currentPanFinishiDeterminer;
 	private GouXingPanHu GouXingPanHu;
+	private CurrentPanResultBuilder currentPanResultBuilder;
 	private JuResultBuilder juResultBuilder;
 	private MajiangPlayerInitialActionUpdater initialActionUpdater;
 	private MajiangPlayerMoActionProcessor moActionProcessor;
@@ -77,6 +79,17 @@ public class Ju {
 		return currentPan.recordPanActionFrame(action);
 	}
 
+	public boolean determineToFinishCurrentPan() {
+		return currentPanFinishiDeterminer.determineToFinishCurrentPan(this);
+	}
+
+	public PanResult finishCurrentPan() {
+		PanResult currentPanResult = currentPanResultBuilder.buildCurrentPanResult(this);
+		addFinishedPanResult(currentPanResult);
+		setCurrentPan(null);
+		return currentPanResult;
+	}
+
 	public void addFinishedPanResult(PanResult panResult) {
 		finishedPanResultList.add(panResult);
 	}
@@ -118,6 +131,14 @@ public class Ju {
 
 	public void addActionStatisticsListener(MajiangPlayerActionStatisticsListener listener) {
 		actionStatisticsListenerManager.addListener(listener);
+	}
+
+	public PanResult findLatestFinishedPanResult() {
+		if (!finishedPanResultList.isEmpty()) {
+			return finishedPanResultList.get(finishedPanResultList.size() - 1);
+		} else {
+			return null;
+		}
 	}
 
 	public Pan getCurrentPan() {
@@ -184,12 +205,28 @@ public class Ju {
 		this.faPaiStrategy = faPaiStrategy;
 	}
 
+	public CurrentPanFinishiDeterminer getCurrentPanFinishiDeterminer() {
+		return currentPanFinishiDeterminer;
+	}
+
+	public void setCurrentPanFinishiDeterminer(CurrentPanFinishiDeterminer currentPanFinishiDeterminer) {
+		this.currentPanFinishiDeterminer = currentPanFinishiDeterminer;
+	}
+
 	public GouXingPanHu getGouXingPanHu() {
 		return GouXingPanHu;
 	}
 
 	public void setGouXingPanHu(GouXingPanHu gouXingPanHu) {
 		GouXingPanHu = gouXingPanHu;
+	}
+
+	public CurrentPanResultBuilder getCurrentPanResultBuilder() {
+		return currentPanResultBuilder;
+	}
+
+	public void setCurrentPanResultBuilder(CurrentPanResultBuilder currentPanResultBuilder) {
+		this.currentPanResultBuilder = currentPanResultBuilder;
 	}
 
 	public JuResultBuilder getJuResultBuilder() {

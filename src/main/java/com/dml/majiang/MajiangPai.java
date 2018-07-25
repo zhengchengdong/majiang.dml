@@ -30,4 +30,10 @@ public enum MajiangPai {
 		return xushupaiArray;
 	}
 
+	public static MajiangPai[] fengpaiArray() {
+		MajiangPai[] fengpaiArray = new MajiangPai[4];
+		System.arraycopy(array, 27, fengpaiArray, 0, 4);
+		return fengpaiArray;
+	}
+
 }

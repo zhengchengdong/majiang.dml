@@ -16,6 +16,11 @@ import java.util.Set;
  */
 public class Pan {
 
+	/**
+	 * 编号，代表一局中的第几盘
+	 */
+	int no;
+
 	private Map<String, MajiangPlayer> majiangPlayerIdMajiangPlayerMap = new HashMap<>();
 
 	private Map<MajiangPosition, String> menFengMajiangPlayerIdMap = new HashMap<>();
@@ -249,6 +254,37 @@ public class Pan {
 
 	public int countPlayers() {
 		return majiangPlayerIdMajiangPlayerMap.size();
+	}
+
+	public boolean anyPlayerHu() {
+		for (MajiangPlayer player : majiangPlayerIdMajiangPlayerMap.values()) {
+			if (player.getHu() != null) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * 通常只有一个胡的玩家。在多胡的情况下不能调用此方法，调用后果是不确定查出的是哪一个玩家
+	 * 
+	 * @return
+	 */
+	public MajiangPlayer findHuPlayer() {
+		for (MajiangPlayer player : majiangPlayerIdMajiangPlayerMap.values()) {
+			if (player.getHu() != null) {
+				return player;
+			}
+		}
+		return null;
+	}
+
+	public int getNo() {
+		return no;
+	}
+
+	public void setNo(int no) {
+		this.no = no;
 	}
 
 	public Map<String, MajiangPlayer> getMajiangPlayerIdMajiangPlayerMap() {

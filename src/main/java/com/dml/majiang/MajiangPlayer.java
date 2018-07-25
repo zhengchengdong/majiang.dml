@@ -54,6 +54,8 @@ public class MajiangPlayer {
 	private List<PengchuPaiZu> pengchupaiZuList = new ArrayList<>();
 	private List<GangchuPaiZu> gangchupaiZuList = new ArrayList<>();
 
+	private Hu hu;
+
 	public void addGuipaiType(MajiangPai guipaiType) {
 		guipaiTypeSet.add(guipaiType);
 	}
@@ -548,6 +550,14 @@ public class MajiangPlayer {
 
 	public void setGangchupaiZuList(List<GangchuPaiZu> gangchupaiZuList) {
 		this.gangchupaiZuList = gangchupaiZuList;
+	}
+
+	public Hu getHu() {
+		return hu;
+	}
+
+	public void setHu(Hu hu) {
+		this.hu = hu;
 	}
 
 }

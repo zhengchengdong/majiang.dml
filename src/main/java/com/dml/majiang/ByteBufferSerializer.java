@@ -30,12 +30,16 @@ public class ByteBufferSerializer {
 	/**
 	 * 把布尔类型 序列化到ByteBuffer.
 	 *
-	 * @param isBoo
+	 * @param value
 	 * @param bb
 	 * @throws Throwable
 	 */
-	public static void booleanToByteBuffer(boolean isBoo, ByteBuffer bb) throws Throwable {
-		stringToByteBuffer(isBoo + "", bb);
+	public static void booleanToByteBuffer(boolean value, ByteBuffer bb) throws Throwable {
+		if (value) {
+			bb.put((byte) 1);
+		} else {
+			bb.put((byte) 0);
+		}
 	}
 
 	/**
@@ -46,7 +50,7 @@ public class ByteBufferSerializer {
 	 * @throws Throwable
 	 */
 	public static boolean byteBufferToBoolean(ByteBuffer bb) throws Throwable {
-		return new Boolean("true".equals(ByteBufferSerializer.byteBufferToString(bb)));
+		return bb.get() == 1;
 	}
 
 	/**
