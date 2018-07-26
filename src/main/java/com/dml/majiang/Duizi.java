@@ -29,6 +29,11 @@ public class Duizi implements MajiangPaiFenZu, ByteBufferAble {
 		}
 	}
 
+	@Override
+	public MajiangPai[] toPaiArray() {
+		return new MajiangPai[] { paiType, paiType };
+	}
+
 	public MajiangPai getPaiType() {
 		return paiType;
 	}

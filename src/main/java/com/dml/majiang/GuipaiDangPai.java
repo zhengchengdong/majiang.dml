@@ -42,7 +42,7 @@ public class GuipaiDangPai extends ShoupaiJiesuanPai {
 	}
 
 	@Override
-	public String getDangType() {
+	public String dangType() {
 		return dangType;
 	}
 

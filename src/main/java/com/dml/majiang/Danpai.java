@@ -27,6 +27,11 @@ public class Danpai implements MajiangPaiFenZu {
 		return shoupaiDanpai;
 	}
 
+	@Override
+	public MajiangPai[] toPaiArray() {
+		return new MajiangPai[] { pai };
+	}
+
 	public MajiangPai getPai() {
 		return pai;
 	}

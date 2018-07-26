@@ -9,5 +9,7 @@ package com.dml.majiang;
 public interface MajiangPaiFenZu {
 	public int countPai(MajiangPai paiType);
 
+	public MajiangPai[] toPaiArray();
+
 	public <T extends ShoupaiMajiangPaiFenZu> T generateShoupaiMajiangPaiFenZuSkeleton();
 }

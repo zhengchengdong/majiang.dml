@@ -10,7 +10,7 @@ public abstract class ShoupaiJiesuanPai {
 
 	private boolean lastActionPai;
 
-	public abstract String getDangType();
+	public abstract String dangType();
 
 	public abstract MajiangPai getYuanPaiType();
 

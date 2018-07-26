@@ -33,6 +33,11 @@ public class Shunzi implements MajiangPaiFenZu, ByteBufferAble {
 		}
 	}
 
+	@Override
+	public MajiangPai[] toPaiArray() {
+		return new MajiangPai[] { pai1, pai2, pai3 };
+	}
+
 	public MajiangPai getPai1() {
 		return pai1;
 	}

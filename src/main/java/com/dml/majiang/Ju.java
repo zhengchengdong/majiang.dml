@@ -28,6 +28,7 @@ public class Ju {
 	private FaPaiStrategy faPaiStrategy;
 	private CurrentPanFinishiDeterminer currentPanFinishiDeterminer;
 	private GouXingPanHu GouXingPanHu;
+	private CurrentPanPublicWaitingPlayerDeterminer currentPanPublicWaitingPlayerDeterminer;
 	private CurrentPanResultBuilder currentPanResultBuilder;
 	private JuResultBuilder juResultBuilder;
 	private MajiangPlayerInitialActionUpdater initialActionUpdater;
@@ -76,6 +77,7 @@ public class Ju {
 			throw new MajiangPlayerActionNotFoundException();
 		}
 		doAction(action);
+		currentPanPublicWaitingPlayerDeterminer.determinePublicWaitingPlayer(this);
 		return currentPan.recordPanActionFrame(action);
 	}
 
@@ -219,6 +221,15 @@ public class Ju {
 
 	public void setGouXingPanHu(GouXingPanHu gouXingPanHu) {
 		GouXingPanHu = gouXingPanHu;
+	}
+
+	public CurrentPanPublicWaitingPlayerDeterminer getCurrentPanPublicWaitingPlayerDeterminer() {
+		return currentPanPublicWaitingPlayerDeterminer;
+	}
+
+	public void setCurrentPanPublicWaitingPlayerDeterminer(
+			CurrentPanPublicWaitingPlayerDeterminer currentPanPublicWaitingPlayerDeterminer) {
+		this.currentPanPublicWaitingPlayerDeterminer = currentPanPublicWaitingPlayerDeterminer;
 	}
 
 	public CurrentPanResultBuilder getCurrentPanResultBuilder() {

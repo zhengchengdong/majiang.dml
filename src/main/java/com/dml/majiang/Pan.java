@@ -85,6 +85,17 @@ public class Pan {
 		publicWaitingPlayerId = zhuangPlayerId;
 	}
 
+	public void updatePublicWaitingPlayerIdToDaPlayer() {
+		for (MajiangPlayer player : majiangPlayerIdMajiangPlayerMap.values()) {
+			for (MajiangPlayerAction action : player.getActionCandidates().values()) {
+				if (action.getType().equals(MajiangPlayerActionType.da)) {
+					publicWaitingPlayerId = player.getId();
+					return;
+				}
+			}
+		}
+	}
+
 	public void addPlayerActionCandidate(MajiangPlayerAction action) throws MajiangPlayerNotFoundException {
 		MajiangPlayer player = majiangPlayerIdMajiangPlayerMap.get(action.getActionPlayerId());
 		if (player == null) {

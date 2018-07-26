@@ -56,16 +56,16 @@ public class ShoupaiGangziZu implements ShoupaiMajiangPaiFenZu {
 
 	public int countGuipai() {
 		int count = 0;
-		if (pai1.getDangType().equals(GuipaiDangPai.dangType)) {
+		if (pai1.dangType().equals(GuipaiDangPai.dangType)) {
 			count++;
 		}
-		if (pai2.getDangType().equals(GuipaiDangPai.dangType)) {
+		if (pai2.dangType().equals(GuipaiDangPai.dangType)) {
 			count++;
 		}
-		if (pai3.getDangType().equals(GuipaiDangPai.dangType)) {
+		if (pai3.dangType().equals(GuipaiDangPai.dangType)) {
 			count++;
 		}
-		if (pai4.getDangType().equals(GuipaiDangPai.dangType)) {
+		if (pai4.dangType().equals(GuipaiDangPai.dangType)) {
 			count++;
 		}
 		return count;

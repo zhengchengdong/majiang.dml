@@ -456,6 +456,14 @@ public class MajiangPlayer {
 		return MajiangPositionUtil.getFengpaiByPosition(menFeng);
 	}
 
+	public Set<MajiangPlayerActionType> collectActionCandidatesType() {
+		Set<MajiangPlayerActionType> typesSet = new HashSet<>();
+		for (MajiangPlayerAction xiajiaAction : actionCandidates.values()) {
+			typesSet.add(xiajiaAction.getType());
+		}
+		return typesSet;
+	}
+
 	public String getId() {
 		return id;
 	}

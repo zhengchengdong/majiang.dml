@@ -28,6 +28,11 @@ public class Gangzi implements MajiangPaiFenZu, ByteBufferAble {
 		}
 	}
 
+	@Override
+	public MajiangPai[] toPaiArray() {
+		return new MajiangPai[] { paiType, paiType, paiType, paiType };
+	}
+
 	public MajiangPai getPaiType() {
 		return paiType;
 	}
