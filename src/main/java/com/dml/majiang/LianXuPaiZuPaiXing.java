@@ -16,7 +16,7 @@ public class LianXuPaiZuPaiXing {
 			List<Integer> gangziXuhaoList, List<Integer> shunziXuhaoList) {
 
 		for (int xuhao : danpaiXuhaoList) {
-			danpaiCode = (short) (danpaiCode & (1 << xuhao));
+			danpaiCode = (short) (danpaiCode | (1 << xuhao));
 		}
 
 		int[] tempQuantityArray = new int[9];
@@ -50,7 +50,6 @@ public class LianXuPaiZuPaiXing {
 		for (int i = 0; i < 7; i++) {
 			shunziCode = (short) (shunziCode | (tempQuantityArray[i] << (i * 2)));
 		}
-
 	}
 
 	// 一个short表示单牌: 0-9位的0/1值表示该位置有没有一个单牌

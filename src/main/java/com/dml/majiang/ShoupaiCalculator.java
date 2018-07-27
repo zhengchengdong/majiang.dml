@@ -24,6 +24,7 @@ public class ShoupaiCalculator {
 		parseXuShuPai(9, 17, jutihuaLianXuPaiZuList, duLiPaiIdxList);
 		parseXuShuPai(18, 26, jutihuaLianXuPaiZuList, duLiPaiIdxList);
 		parseZiPai(duLiPaiIdxList);
+		jutihuaLianXuPaiZuList.forEach((jutiZu) -> jutiZu.getLianXuPaiZu().calculateCode());
 		Collections.sort(jutihuaLianXuPaiZuList);
 		List<MajiangPai[]> jutiLianXuPaiTypesArrayList = new ArrayList<>();
 		jutihuaLianXuPaiZuList.forEach((jutihuaLianXuPaiZu) -> jutiLianXuPaiTypesArrayList
