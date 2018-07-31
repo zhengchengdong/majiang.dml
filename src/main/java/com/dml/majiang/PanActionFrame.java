@@ -6,13 +6,15 @@ public class PanActionFrame implements ByteBufferAble {
 
 	private MajiangPlayerAction action;
 	private PanValueObject panAfterAction;
+	private long actionTime;
 
 	public PanActionFrame() {
 	}
 
-	public PanActionFrame(MajiangPlayerAction action, PanValueObject panAfterAction) {
+	public PanActionFrame(MajiangPlayerAction action, PanValueObject panAfterAction, long actionTime) {
 		this.action = action;
 		this.panAfterAction = panAfterAction;
+		this.actionTime = actionTime;
 	}
 
 	public MajiangPlayerAction getAction() {
@@ -31,16 +33,26 @@ public class PanActionFrame implements ByteBufferAble {
 		this.panAfterAction = panAfterAction;
 	}
 
+	public long getActionTime() {
+		return actionTime;
+	}
+
+	public void setActionTime(long actionTime) {
+		this.actionTime = actionTime;
+	}
+
 	@Override
 	public void toByteBuffer(ByteBuffer bb) throws Throwable {
 		ByteBufferSerializer.objToByteBuffer(action, bb);
 		ByteBufferSerializer.objToByteBuffer(panAfterAction, bb);
+		bb.putLong(actionTime);
 	}
 
 	@Override
 	public void fillByByteBuffer(ByteBuffer bb) throws Throwable {
 		action = ByteBufferSerializer.byteBufferToObj(bb);
 		panAfterAction = ByteBufferSerializer.byteBufferToObj(bb);
+		actionTime = bb.getLong();
 	}
 
 	public byte[] toByteArray(int bufferSize) throws Throwable {

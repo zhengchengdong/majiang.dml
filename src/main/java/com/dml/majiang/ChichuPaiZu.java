@@ -3,6 +3,7 @@ package com.dml.majiang;
 import java.nio.ByteBuffer;
 
 public class ChichuPaiZu implements ByteBufferAble {
+	private MajiangPai chijinpai;
 	private Shunzi shunzi;
 	private String dachuPlayerId;
 	private String chiPlayerId;
@@ -10,10 +11,19 @@ public class ChichuPaiZu implements ByteBufferAble {
 	public ChichuPaiZu() {
 	}
 
-	public ChichuPaiZu(Shunzi shunzi, String dachuPlayerId, String chiPlayerId) {
+	public ChichuPaiZu(MajiangPai chijinpai, Shunzi shunzi, String dachuPlayerId, String chiPlayerId) {
+		this.chijinpai = chijinpai;
 		this.shunzi = shunzi;
 		this.dachuPlayerId = dachuPlayerId;
 		this.chiPlayerId = chiPlayerId;
+	}
+
+	public MajiangPai getChijinpai() {
+		return chijinpai;
+	}
+
+	public void setChijinpai(MajiangPai chijinpai) {
+		this.chijinpai = chijinpai;
 	}
 
 	public Shunzi getShunzi() {
@@ -42,6 +52,7 @@ public class ChichuPaiZu implements ByteBufferAble {
 
 	@Override
 	public void toByteBuffer(ByteBuffer bb) throws Throwable {
+		bb.put((byte) chijinpai.ordinal());
 		ByteBufferSerializer.objToByteBuffer(shunzi, bb);
 		ByteBufferSerializer.stringToByteBuffer(dachuPlayerId, bb);
 		ByteBufferSerializer.stringToByteBuffer(chiPlayerId, bb);
@@ -49,6 +60,7 @@ public class ChichuPaiZu implements ByteBufferAble {
 
 	@Override
 	public void fillByByteBuffer(ByteBuffer bb) throws Throwable {
+		chijinpai = MajiangPai.valueOf(Byte.toUnsignedInt(bb.get()));
 		shunzi = ByteBufferSerializer.byteBufferToObj(bb);
 		dachuPlayerId = ByteBufferSerializer.byteBufferToString(bb);
 		chiPlayerId = ByteBufferSerializer.byteBufferToString(bb);

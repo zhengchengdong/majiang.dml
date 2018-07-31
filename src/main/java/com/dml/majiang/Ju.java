@@ -15,11 +15,6 @@ public class Ju {
 
 	private List<PanResult> finishedPanResultList = new ArrayList<>();
 
-	/**
-	 * 一局打几盘
-	 */
-	private int panShu;
-
 	private ActionStatisticsListenerManager actionStatisticsListenerManager = new ActionStatisticsListenerManager();
 	private PlayersMenFengDeterminer playersMenFengDeterminerForFirstPan;
 	private ZhuangDeterminer zhuangDeterminerForFirstPan;
@@ -30,6 +25,7 @@ public class Ju {
 	private GouXingPanHu GouXingPanHu;
 	private CurrentPanPublicWaitingPlayerDeterminer currentPanPublicWaitingPlayerDeterminer;
 	private CurrentPanResultBuilder currentPanResultBuilder;
+	private JuFinishiDeterminer juFinishiDeterminer;
 	private JuResultBuilder juResultBuilder;
 	private MajiangPlayerInitialActionUpdater initialActionUpdater;
 	private MajiangPlayerMoActionProcessor moActionProcessor;
@@ -68,17 +64,17 @@ public class Ju {
 
 	public PanActionFrame updateInitialAction() throws Exception {
 		initialActionUpdater.updateActions(this);
-		return currentPan.recordPanActionFrame(null);
+		return currentPan.recordPanActionFrame(null, 0);
 	}
 
-	public PanActionFrame action(String playerId, int actionId) throws Exception {
+	public PanActionFrame action(String playerId, int actionId, long actionTime) throws Exception {
 		MajiangPlayerAction action = currentPan.findPlayerActionCandidate(playerId, actionId);
 		if (action == null) {
 			throw new MajiangPlayerActionNotFoundException();
 		}
 		doAction(action);
 		currentPanPublicWaitingPlayerDeterminer.determinePublicWaitingPlayer(this);
-		return currentPan.recordPanActionFrame(action);
+		return currentPan.recordPanActionFrame(action, actionTime);
 	}
 
 	public boolean determineToFinishCurrentPan() {
@@ -94,6 +90,10 @@ public class Ju {
 
 	public void addFinishedPanResult(PanResult panResult) {
 		finishedPanResultList.add(panResult);
+	}
+
+	public boolean determineToFinishJu() {
+		return juFinishiDeterminer.determineToFinishJu(this);
 	}
 
 	private void doAction(MajiangPlayerAction action) throws Exception {
@@ -143,6 +143,10 @@ public class Ju {
 		}
 	}
 
+	public int countFinishedPan() {
+		return finishedPanResultList.size();
+	}
+
 	public Pan getCurrentPan() {
 		return currentPan;
 	}
@@ -157,14 +161,6 @@ public class Ju {
 
 	public void setFinishedPanResultList(List<PanResult> finishedPanResultList) {
 		this.finishedPanResultList = finishedPanResultList;
-	}
-
-	public int getPanShu() {
-		return panShu;
-	}
-
-	public void setPanShu(int panShu) {
-		this.panShu = panShu;
 	}
 
 	public PlayersMenFengDeterminer getPlayersMenFengDeterminerForFirstPan() {
@@ -238,6 +234,14 @@ public class Ju {
 
 	public void setCurrentPanResultBuilder(CurrentPanResultBuilder currentPanResultBuilder) {
 		this.currentPanResultBuilder = currentPanResultBuilder;
+	}
+
+	public JuFinishiDeterminer getJuFinishiDeterminer() {
+		return juFinishiDeterminer;
+	}
+
+	public void setJuFinishiDeterminer(JuFinishiDeterminer juFinishiDeterminer) {
+		this.juFinishiDeterminer = juFinishiDeterminer;
 	}
 
 	public JuResultBuilder getJuResultBuilder() {

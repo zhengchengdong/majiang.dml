@@ -155,7 +155,7 @@ public class MajiangPlayer {
 			fangruShoupaiList.remove(pai3);
 			shoupaiCalculator.removePai(pai3);
 		}
-		ChichuPaiZu chichuPaiZu = new ChichuPaiZu(chifaShunzi, dachupaiPlayer.getId(), id);
+		ChichuPaiZu chichuPaiZu = new ChichuPaiZu(chijinpai, chifaShunzi, dachupaiPlayer.getId(), id);
 		chichupaiZuList.add(chichuPaiZu);
 	}
 

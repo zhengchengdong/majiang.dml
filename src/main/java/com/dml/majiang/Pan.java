@@ -49,7 +49,7 @@ public class Pan {
 	 */
 	private PaiCursor activePaiCursor;
 
-	private List<PanActionFrame> actionFrameDataList = new ArrayList<>();
+	private List<PanActionFrame> actionFrameList = new ArrayList<>();
 
 	public void addPlayer(String playerId) {
 		MajiangPlayer majiangPlayer = new MajiangPlayer();
@@ -131,9 +131,9 @@ public class Pan {
 		return majiangPlayerIdMajiangPlayerMap.get(playerId);
 	}
 
-	public PanActionFrame recordPanActionFrame(MajiangPlayerAction action) {
-		PanActionFrame frame = new PanActionFrame(action, new PanValueObject(this));
-		actionFrameDataList.add(frame);
+	public PanActionFrame recordPanActionFrame(MajiangPlayerAction action, long actionTime) {
+		PanActionFrame frame = new PanActionFrame(action, new PanValueObject(this), actionTime);
+		actionFrameList.add(frame);
 		return frame;
 	}
 
@@ -290,6 +290,14 @@ public class Pan {
 		return null;
 	}
 
+	public PanActionFrame findLatestActionFrame() {
+		if (!actionFrameList.isEmpty()) {
+			return actionFrameList.get(actionFrameList.size() - 1);
+		} else {
+			return null;
+		}
+	}
+
 	public int getNo() {
 		return no;
 	}
@@ -362,12 +370,12 @@ public class Pan {
 		this.activePaiCursor = activePaiCursor;
 	}
 
-	public List<PanActionFrame> getActionFrameDataList() {
-		return actionFrameDataList;
+	public List<PanActionFrame> getActionFrameList() {
+		return actionFrameList;
 	}
 
-	public void setActionFrameDataList(List<PanActionFrame> actionFrameDataList) {
-		this.actionFrameDataList = actionFrameDataList;
+	public void setActionFrameList(List<PanActionFrame> actionFrameList) {
+		this.actionFrameList = actionFrameList;
 	}
 
 }
