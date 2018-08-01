@@ -3,7 +3,7 @@ package com.dml.majiang.player.chupaizu;
 import java.nio.ByteBuffer;
 
 import com.dml.majiang.pai.MajiangPai;
-import com.dml.majiang.pai.Shunzi;
+import com.dml.majiang.pai.fenzu.Shunzi;
 import com.dml.majiang.serializer.ByteBufferAble;
 import com.dml.majiang.serializer.ByteBufferSerializer;
 

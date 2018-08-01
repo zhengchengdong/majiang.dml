@@ -8,13 +8,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.dml.majiang.action.MajiangPlayerAction;
-import com.dml.majiang.action.MajiangPlayerActionType;
-import com.dml.majiang.custom.PlayerLatestDachupaiCursor;
 import com.dml.majiang.pai.MajiangPai;
-import com.dml.majiang.pai.Shunzi;
+import com.dml.majiang.pai.fenzu.Shunzi;
+import com.dml.majiang.pan.cursor.PaiCursor;
+import com.dml.majiang.pan.cursor.PlayerLatestDachupaiCursor;
+import com.dml.majiang.pan.frame.PanActionFrame;
+import com.dml.majiang.pan.frame.PanValueObject;
 import com.dml.majiang.player.MajiangPlayer;
 import com.dml.majiang.player.MajiangPlayerNotFoundException;
+import com.dml.majiang.player.action.MajiangPlayerAction;
+import com.dml.majiang.player.action.MajiangPlayerActionType;
 import com.dml.majiang.position.MajiangPosition;
 import com.dml.majiang.position.MajiangPositionUtil;
 

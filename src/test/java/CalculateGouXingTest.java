@@ -1,5 +1,5 @@
 
-import com.dml.majiang.pai.ShoupaiCalculator;
+import com.dml.majiang.player.shoupai.ShoupaiCalculator;
 
 public class CalculateGouXingTest {
 	public static void main(String[] args) {
