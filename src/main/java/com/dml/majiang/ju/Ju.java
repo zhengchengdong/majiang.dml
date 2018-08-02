@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.dml.majiang.ju.finish.JuFinishiDeterminer;
+import com.dml.majiang.ju.firstpan.StartFirstPanProcess;
+import com.dml.majiang.ju.nextpan.CreateNextPanDeterminer;
+import com.dml.majiang.ju.nextpan.StartNextPanProcess;
 import com.dml.majiang.ju.result.JuResultBuilder;
 import com.dml.majiang.pan.Pan;
 import com.dml.majiang.pan.avaliablepai.AvaliablePaiFiller;
@@ -56,9 +59,13 @@ public class Ju {
 
 	private List<PanResult> finishedPanResultList = new ArrayList<>();
 
+	private StartFirstPanProcess startFirstPanProcess;
+	private StartNextPanProcess startNextPanProcess;
 	private ActionStatisticsListenerManager actionStatisticsListenerManager = new ActionStatisticsListenerManager();
 	private PlayersMenFengDeterminer playersMenFengDeterminerForFirstPan;
+	private PlayersMenFengDeterminer playersMenFengDeterminerForNextPan;
 	private ZhuangDeterminer zhuangDeterminerForFirstPan;
+	private ZhuangDeterminer zhuangDeterminerForNextPan;
 	private AvaliablePaiFiller avaliablePaiFiller;
 	private GuipaiDeterminer guipaiDeterminer;
 	private FaPaiStrategy faPaiStrategy;
@@ -66,6 +73,7 @@ public class Ju {
 	private GouXingPanHu GouXingPanHu;
 	private CurrentPanPublicWaitingPlayerDeterminer currentPanPublicWaitingPlayerDeterminer;
 	private CurrentPanResultBuilder currentPanResultBuilder;
+	private CreateNextPanDeterminer createNextPanDeterminer;
 	private JuFinishiDeterminer juFinishiDeterminer;
 	private JuResultBuilder juResultBuilder;
 	private MajiangPlayerInitialActionUpdater initialActionUpdater;
@@ -83,12 +91,24 @@ public class Ju {
 	private MajiangPlayerGuoActionUpdater guoActionUpdater;
 	private MajiangPlayerHuActionProcessor huActionProcessor;
 
+	public boolean determineToCreateNextPan() {
+		return createNextPanDeterminer.determineToCreateNextPan(this);
+	}
+
 	public void determinePlayersMenFengForFirstPan() throws Exception {
 		playersMenFengDeterminerForFirstPan.determinePlayersMenFeng(this);
 	}
 
+	public void determinePlayersMenFengForNextPan() throws Exception {
+		playersMenFengDeterminerForNextPan.determinePlayersMenFeng(this);
+	}
+
 	public void determineZhuangForFirstPan() throws Exception {
 		zhuangDeterminerForFirstPan.determineZhuang(this);
+	}
+
+	public void determineZhuangForNextPan() throws Exception {
+		zhuangDeterminerForNextPan.determineZhuang(this);
 	}
 
 	public void fillAvaliablePai() throws Exception {
@@ -188,6 +208,31 @@ public class Ju {
 		return finishedPanResultList.size();
 	}
 
+	public void startFirstPan(List<String> allPlayerIds) throws Exception {
+		startFirstPanProcess.startFirstPan(this, allPlayerIds);
+	}
+
+	public void startNextPan() throws Exception {
+		startNextPanProcess.startNextPan(this);
+		createNextPanDeterminer.reset();
+	}
+
+	public StartFirstPanProcess getStartFirstPanProcess() {
+		return startFirstPanProcess;
+	}
+
+	public void setStartFirstPanProcess(StartFirstPanProcess startFirstPanProcess) {
+		this.startFirstPanProcess = startFirstPanProcess;
+	}
+
+	public StartNextPanProcess getStartNextPanProcess() {
+		return startNextPanProcess;
+	}
+
+	public void setStartNextPanProcess(StartNextPanProcess startNextPanProcess) {
+		this.startNextPanProcess = startNextPanProcess;
+	}
+
 	public Pan getCurrentPan() {
 		return currentPan;
 	}
@@ -212,12 +257,28 @@ public class Ju {
 		this.playersMenFengDeterminerForFirstPan = playersMenFengDeterminerForFirstPan;
 	}
 
+	public PlayersMenFengDeterminer getPlayersMenFengDeterminerForNextPan() {
+		return playersMenFengDeterminerForNextPan;
+	}
+
+	public void setPlayersMenFengDeterminerForNextPan(PlayersMenFengDeterminer playersMenFengDeterminerForNextPan) {
+		this.playersMenFengDeterminerForNextPan = playersMenFengDeterminerForNextPan;
+	}
+
 	public ZhuangDeterminer getZhuangDeterminerForFirstPan() {
 		return zhuangDeterminerForFirstPan;
 	}
 
 	public void setZhuangDeterminerForFirstPan(ZhuangDeterminer zhuangDeterminerForFirstPan) {
 		this.zhuangDeterminerForFirstPan = zhuangDeterminerForFirstPan;
+	}
+
+	public ZhuangDeterminer getZhuangDeterminerForNextPan() {
+		return zhuangDeterminerForNextPan;
+	}
+
+	public void setZhuangDeterminerForNextPan(ZhuangDeterminer zhuangDeterminerForNextPan) {
+		this.zhuangDeterminerForNextPan = zhuangDeterminerForNextPan;
 	}
 
 	public AvaliablePaiFiller getAvaliablePaiFiller() {
@@ -275,6 +336,14 @@ public class Ju {
 
 	public void setCurrentPanResultBuilder(CurrentPanResultBuilder currentPanResultBuilder) {
 		this.currentPanResultBuilder = currentPanResultBuilder;
+	}
+
+	public CreateNextPanDeterminer getCreateNextPanDeterminer() {
+		return createNextPanDeterminer;
+	}
+
+	public void setCreateNextPanDeterminer(CreateNextPanDeterminer createNextPanDeterminer) {
+		this.createNextPanDeterminer = createNextPanDeterminer;
 	}
 
 	public JuFinishiDeterminer getJuFinishiDeterminer() {

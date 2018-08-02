@@ -6,4 +6,6 @@ public interface CreateNextPanDeterminer {
 
 	public boolean determineToCreateNextPan(Ju ju);
 
+	public void reset();
+
 }

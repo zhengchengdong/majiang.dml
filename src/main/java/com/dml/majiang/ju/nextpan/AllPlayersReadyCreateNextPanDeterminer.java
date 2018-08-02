@@ -23,4 +23,21 @@ public class AllPlayersReadyCreateNextPanDeterminer implements CreateNextPanDete
 		}
 	}
 
+	@Override
+	public void reset() {
+		playerReadyMap.clear();
+	}
+
+	public void addPlayer(String playerId) {
+		playerReadyMap.put(playerId, false);
+	}
+
+	public void playerReady(String playerId) {
+		playerReadyMap.put(playerId, true);
+	}
+
+	public Map<String, Boolean> getPlayerReadyMap() {
+		return playerReadyMap;
+	}
+
 }
