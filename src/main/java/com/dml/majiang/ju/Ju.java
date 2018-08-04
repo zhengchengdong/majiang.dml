@@ -7,6 +7,7 @@ import com.dml.majiang.ju.finish.JuFinishiDeterminer;
 import com.dml.majiang.ju.firstpan.StartFirstPanProcess;
 import com.dml.majiang.ju.nextpan.CreateNextPanDeterminer;
 import com.dml.majiang.ju.nextpan.StartNextPanProcess;
+import com.dml.majiang.ju.result.JuResult;
 import com.dml.majiang.ju.result.JuResultBuilder;
 import com.dml.majiang.pan.Pan;
 import com.dml.majiang.pan.avaliablepai.AvaliablePaiFiller;
@@ -58,6 +59,8 @@ public class Ju {
 	private Pan currentPan;
 
 	private List<PanResult> finishedPanResultList = new ArrayList<>();
+
+	private JuResult juResult;
 
 	private StartFirstPanProcess startFirstPanProcess;
 	private StartNextPanProcess startNextPanProcess;
@@ -141,7 +144,7 @@ public class Ju {
 			finishCurrentPan(actionTime);
 			// 试探一局是否结束
 			if (juFinishiDeterminer.determineToFinishJu(this)) {
-				// TODO 局结果
+				juResult = juResultBuilder.buildJuResult(this);
 			}
 		}
 		return panActionFrame;
@@ -247,6 +250,14 @@ public class Ju {
 
 	public void setFinishedPanResultList(List<PanResult> finishedPanResultList) {
 		this.finishedPanResultList = finishedPanResultList;
+	}
+
+	public JuResult getJuResult() {
+		return juResult;
+	}
+
+	public void setJuResult(JuResult juResult) {
+		this.juResult = juResult;
 	}
 
 	public PlayersMenFengDeterminer getPlayersMenFengDeterminerForFirstPan() {

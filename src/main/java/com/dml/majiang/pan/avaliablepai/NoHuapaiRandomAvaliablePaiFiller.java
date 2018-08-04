@@ -51,7 +51,7 @@ public class NoHuapaiRandomAvaliablePaiFiller implements AvaliablePaiFiller {
 		Collections.shuffle(allPaiList, new Random(seed));
 		ju.getCurrentPan().setAvaliablePaiList(allPaiList);
 		ju.getCurrentPan().setPaiTypeList(playPaiTypeList);
-
+		seed++;
 	}
 
 	public long getSeed() {

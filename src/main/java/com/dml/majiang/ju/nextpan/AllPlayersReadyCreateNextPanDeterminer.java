@@ -25,7 +25,9 @@ public class AllPlayersReadyCreateNextPanDeterminer implements CreateNextPanDete
 
 	@Override
 	public void reset() {
-		playerReadyMap.clear();
+		for (String playerId : playerReadyMap.keySet()) {
+			playerReadyMap.put(playerId, false);
+		}
 	}
 
 	public void addPlayer(String playerId) {

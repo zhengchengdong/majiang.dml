@@ -1,5 +1,7 @@
 package com.dml.majiang.ju.result;
 
-public interface JuResultBuilder {
+import com.dml.majiang.ju.Ju;
 
+public interface JuResultBuilder {
+	public JuResult buildJuResult(Ju ju);
 }
