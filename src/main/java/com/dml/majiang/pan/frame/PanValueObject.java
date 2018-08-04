@@ -17,7 +17,7 @@ public class PanValueObject implements ByteBufferAble {
 	/**
 	 * 编号，代表一局中的第几盘
 	 */
-	int no;
+	private int no;
 
 	private List<MajiangPlayerValueObject> playerList;
 
