@@ -144,10 +144,14 @@ public class Ju {
 			finishCurrentPan(actionTime);
 			// 试探一局是否结束
 			if (juFinishiDeterminer.determineToFinishJu(this)) {
-				juResult = juResultBuilder.buildJuResult(this);
+				finish();
 			}
 		}
 		return panActionFrame;
+	}
+
+	public void finish() {
+		juResult = juResultBuilder.buildJuResult(this);
 	}
 
 	public void finishCurrentPan(long finishTime) {
