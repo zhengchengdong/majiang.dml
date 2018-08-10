@@ -454,7 +454,7 @@ public class MajiangPlayer {
 		return fangruShoupaiList.size();
 	}
 
-	public boolean ifPengchuForPaiType(MajiangPai paiType) {
+	public boolean ifPengchu(MajiangPai paiType) {
 		for (PengchuPaiZu pengchuPaiZu : pengchupaiZuList) {
 			if (pengchuPaiZu.getKezi().getPaiType().equals(paiType)) {
 				return true;
@@ -463,9 +463,18 @@ public class MajiangPlayer {
 		return false;
 	}
 
-	public boolean ifGangchuForPaiType(MajiangPai paiType) {
+	public boolean ifGangchu(MajiangPai paiType) {
 		for (GangchuPaiZu gangchuPaiZu : gangchupaiZuList) {
 			if (gangchuPaiZu.getGangzi().getPaiType().equals(paiType)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean ifGangchu(MajiangPai paiType, GangType gangType) {
+		for (GangchuPaiZu gangchuPaiZu : gangchupaiZuList) {
+			if (gangchuPaiZu.getGangzi().getPaiType().equals(paiType) && gangchuPaiZu.getGangType().equals(gangType)) {
 				return true;
 			}
 		}
