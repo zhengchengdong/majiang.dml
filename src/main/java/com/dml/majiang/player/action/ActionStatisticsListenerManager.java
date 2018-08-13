@@ -8,6 +8,8 @@ import java.util.Map;
 import com.dml.majiang.ju.Ju;
 import com.dml.majiang.player.action.da.MajiangDaAction;
 import com.dml.majiang.player.action.da.MajiangPlayerDaActionStatisticsListener;
+import com.dml.majiang.player.action.gang.MajiangGangAction;
+import com.dml.majiang.player.action.gang.MajiangPlayerGangActionStatisticsListener;
 import com.dml.majiang.player.action.peng.MajiangPengAction;
 import com.dml.majiang.player.action.peng.MajiangPlayerPengActionStatisticsListener;
 
@@ -17,6 +19,7 @@ public class ActionStatisticsListenerManager {
 
 	private List<String> daListenerTypeNameList = new ArrayList<>();
 	private List<String> pengListenerTypeNameList = new ArrayList<>();
+	private List<String> gangListenerTypeNameList = new ArrayList<>();
 
 	public void addListener(MajiangPlayerActionStatisticsListener listener) {
 		String typeName = listener.getClass().getName();
@@ -27,6 +30,9 @@ public class ActionStatisticsListenerManager {
 			}
 			if (listener instanceof MajiangPlayerPengActionStatisticsListener) {
 				pengListenerTypeNameList.add(typeName);
+			}
+			if (listener instanceof MajiangPlayerGangActionStatisticsListener) {
+				gangListenerTypeNameList.add(typeName);
 			}
 		}
 	}
@@ -44,6 +50,14 @@ public class ActionStatisticsListenerManager {
 			MajiangPlayerPengActionStatisticsListener listener = (MajiangPlayerPengActionStatisticsListener) listenerTypeNameListenerMap
 					.get(typeName);
 			listener.update(pengAction, ju);
+		}
+	}
+
+	public void updateGangActionListener(MajiangGangAction gangAction, Ju ju) throws Exception {
+		for (String typeName : gangListenerTypeNameList) {
+			MajiangPlayerGangActionStatisticsListener listener = (MajiangPlayerGangActionStatisticsListener) listenerTypeNameListenerMap
+					.get(typeName);
+			listener.update(gangAction, ju);
 		}
 	}
 

@@ -32,7 +32,7 @@ public class PlayerDaPaiOrXiajiaMoPaiGuoActionUpdater implements MajiangPlayerGu
 			player.generateDaActions();
 		} else if (action.getType().equals(MajiangPlayerActionType.da)) {// 过的是别人打出牌之后我可以吃碰杠胡
 			if (currentPan.allPlayerHasNoActionCandidates()) {// 如果所有玩家啥也干不了
-				// 打牌那家的下家摸牌
+				// 打牌那家的下家摸牌 TODO 还没处理牌摸完
 				MajiangDaAction daAction = (MajiangDaAction) action;
 				MajiangPlayer xiajiaPlayer = currentPan
 						.findXiajia(currentPan.findPlayerById(daAction.getActionPlayerId()));

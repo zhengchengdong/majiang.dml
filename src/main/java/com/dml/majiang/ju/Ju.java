@@ -184,7 +184,7 @@ public class Ju {
 			pengActionUpdater.updateActions((MajiangPengAction) action, this);
 		} else if (actionType.equals(MajiangPlayerActionType.gang)) {
 			gangActionProcessor.process((MajiangGangAction) action, this);
-			// TODO listener
+			actionStatisticsListenerManager.updateGangActionListener((MajiangGangAction) action, this);
 			gangActionUpdater.updateActions((MajiangGangAction) action, this);
 		} else if (actionType.equals(MajiangPlayerActionType.guo)) {
 			guoActionProcessor.process((MajiangGuoAction) action, this);

@@ -4,7 +4,7 @@ import com.dml.majiang.ju.Ju;
 import com.dml.majiang.pan.Pan;
 import com.dml.majiang.player.MajiangPlayer;
 
-public class RuianMajiangPengActionUpdater implements MajiangPlayerPengActionUpdater {
+public class PengPlayerDaPaiPengActionUpdater implements MajiangPlayerPengActionUpdater {
 
 	@Override
 	public void updateActions(MajiangPengAction pengAction, Ju ju) throws Exception {

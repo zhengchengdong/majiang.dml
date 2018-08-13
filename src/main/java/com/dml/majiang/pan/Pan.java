@@ -311,6 +311,10 @@ public class Pan {
 		}
 	}
 
+	public int countAvaliablePai() {
+		return avaliablePaiList.size();
+	}
+
 	public int getNo() {
 		return no;
 	}
