@@ -15,10 +15,8 @@ public class GangPlayerMoPaiGangActionUpdater implements MajiangPlayerGangAction
 		MajiangPlayer player = currentPan.findPlayerById(gangAction.getActionPlayerId());
 
 		// 杠完之后要摸牌
-		if (player.getActionCandidates().isEmpty()) {
-			player.addActionCandidate(new MajiangMoAction(player.getId(),
-					new GanghouBupai(gangAction.getPai(), gangAction.getGangType())));
-		}
+		player.addActionCandidate(
+				new MajiangMoAction(player.getId(), new GanghouBupai(gangAction.getPai(), gangAction.getGangType())));
 	}
 
 }
