@@ -3,7 +3,7 @@ package com.dml.majiang.player.shoupai;
 import com.dml.majiang.pai.MajiangPai;
 
 /**
- * 鬼牌当的牌
+ * 鬼牌当的牌。允许当鬼牌本牌。
  * 
  * @author Neo
  *

@@ -230,20 +230,6 @@ public class PaiXing {
 		return shoupaiPaiXingList;
 	}
 
-	private ShoupaiJiesuanPai makeShoupaiDangPai(Map<MajiangPai, List<MajiangPai>> dangpaiGuipaiListMap,
-			MajiangPai shijipai) {
-		if (dangpaiGuipaiListMap.containsKey(shijipai)) {
-			List<MajiangPai> guipaiList = dangpaiGuipaiListMap.get(shijipai);
-			MajiangPai guipai = guipaiList.remove(0);
-			if (guipaiList.isEmpty()) {
-				dangpaiGuipaiListMap.remove(shijipai);
-			}
-			return new GuipaiDangPai(guipai, shijipai);
-		} else {
-			return new BenPai(shijipai);
-		}
-	}
-
 	public List<Danpai> getDanpaiList() {
 		return danpaiList;
 	}

@@ -73,6 +73,23 @@ public class ShoupaiGangziZu implements ShoupaiMajiangPaiFenZu {
 		return count;
 	}
 
+	public int countGuipaiDangQitapai() {
+		int count = 0;
+		if (pai1.dangType().equals(GuipaiDangPai.dangType) && !pai1.getYuanPaiType().equals(pai1.getZuoyongPaiType())) {
+			count++;
+		}
+		if (pai2.dangType().equals(GuipaiDangPai.dangType) && !pai2.getYuanPaiType().equals(pai2.getZuoyongPaiType())) {
+			count++;
+		}
+		if (pai3.dangType().equals(GuipaiDangPai.dangType) && !pai3.getYuanPaiType().equals(pai3.getZuoyongPaiType())) {
+			count++;
+		}
+		if (pai4.dangType().equals(GuipaiDangPai.dangType) && !pai4.getYuanPaiType().equals(pai4.getZuoyongPaiType())) {
+			count++;
+		}
+		return count;
+	}
+
 	public Gangzi getGangzi() {
 		return gangzi;
 	}

@@ -61,6 +61,23 @@ public class ShoupaiKeziZu implements ShoupaiMajiangPaiFenZu {
 		return count;
 	}
 
+	/**
+	 * 鬼牌当其他牌的次数，当鬼牌本牌不算
+	 */
+	public int countGuipaiDangQitapai() {
+		int count = 0;
+		if (pai1.dangType().equals(GuipaiDangPai.dangType) && !pai1.getYuanPaiType().equals(pai1.getZuoyongPaiType())) {
+			count++;
+		}
+		if (pai2.dangType().equals(GuipaiDangPai.dangType) && !pai2.getYuanPaiType().equals(pai2.getZuoyongPaiType())) {
+			count++;
+		}
+		if (pai3.dangType().equals(GuipaiDangPai.dangType) && !pai3.getYuanPaiType().equals(pai3.getZuoyongPaiType())) {
+			count++;
+		}
+		return count;
+	}
+
 	public Kezi getKezi() {
 		return kezi;
 	}

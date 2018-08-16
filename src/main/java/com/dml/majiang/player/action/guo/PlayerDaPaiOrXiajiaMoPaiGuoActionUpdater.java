@@ -6,7 +6,6 @@ import com.dml.majiang.pan.frame.PanActionFrame;
 import com.dml.majiang.player.MajiangPlayer;
 import com.dml.majiang.player.action.MajiangPlayerAction;
 import com.dml.majiang.player.action.MajiangPlayerActionType;
-import com.dml.majiang.player.action.da.MajiangDaAction;
 import com.dml.majiang.player.action.mo.LundaoMopai;
 import com.dml.majiang.player.action.mo.MajiangMoAction;
 
@@ -33,9 +32,9 @@ public class PlayerDaPaiOrXiajiaMoPaiGuoActionUpdater implements MajiangPlayerGu
 		} else if (action.getType().equals(MajiangPlayerActionType.da)) {// 过的是别人打出牌之后我可以吃碰杠胡
 			if (currentPan.allPlayerHasNoActionCandidates()) {// 如果所有玩家啥也干不了
 				// 打牌那家的下家摸牌 TODO 还没处理牌摸完
-				MajiangDaAction daAction = (MajiangDaAction) action;
+				// 打牌那家的下家摸牌
 				MajiangPlayer xiajiaPlayer = currentPan
-						.findXiajia(currentPan.findPlayerById(daAction.getActionPlayerId()));
+						.findXiajia(currentPan.findPlayerById(action.getActionPlayerId()));
 				xiajiaPlayer.addActionCandidate(new MajiangMoAction(xiajiaPlayer.getId(), new LundaoMopai()));
 			}
 		} else {
