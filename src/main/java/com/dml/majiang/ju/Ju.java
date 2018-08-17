@@ -18,10 +18,8 @@ import com.dml.majiang.pan.guipai.GuipaiDeterminer;
 import com.dml.majiang.pan.publicwaitingplayer.CurrentPanPublicWaitingPlayerDeterminer;
 import com.dml.majiang.pan.result.CurrentPanResultBuilder;
 import com.dml.majiang.pan.result.PanResult;
-import com.dml.majiang.player.action.ActionStatisticsListenerManager;
 import com.dml.majiang.player.action.MajiangPlayerAction;
 import com.dml.majiang.player.action.MajiangPlayerActionNotFoundException;
-import com.dml.majiang.player.action.MajiangPlayerActionStatisticsListener;
 import com.dml.majiang.player.action.MajiangPlayerActionType;
 import com.dml.majiang.player.action.chi.MajiangChiAction;
 import com.dml.majiang.player.action.chi.MajiangPlayerChiActionProcessor;
@@ -38,6 +36,8 @@ import com.dml.majiang.player.action.guo.MajiangPlayerGuoActionUpdater;
 import com.dml.majiang.player.action.hu.MajiangHuAction;
 import com.dml.majiang.player.action.hu.MajiangPlayerHuActionProcessor;
 import com.dml.majiang.player.action.initial.MajiangPlayerInitialActionUpdater;
+import com.dml.majiang.player.action.listener.ActionStatisticsListenerManager;
+import com.dml.majiang.player.action.listener.MajiangPlayerActionStatisticsListener;
 import com.dml.majiang.player.action.mo.MajiangMoAction;
 import com.dml.majiang.player.action.mo.MajiangPlayerMoActionProcessor;
 import com.dml.majiang.player.action.mo.MajiangPlayerMoActionUpdater;
@@ -176,11 +176,11 @@ public class Ju {
 			daActionUpdater.updateActions((MajiangDaAction) action, this);
 		} else if (actionType.equals(MajiangPlayerActionType.chi)) {
 			chiActionProcessor.process((MajiangChiAction) action, this);
-			// TODO listener
+			actionStatisticsListenerManager.updateChiActionListener((MajiangChiAction) action, this);
 			chiActionUpdater.updateActions((MajiangChiAction) action, this);
 		} else if (actionType.equals(MajiangPlayerActionType.peng)) {
 			pengActionProcessor.process((MajiangPengAction) action, this);
-			// TODO listener
+			actionStatisticsListenerManager.updatePengActionListener((MajiangPengAction) action, this);
 			pengActionUpdater.updateActions((MajiangPengAction) action, this);
 		} else if (actionType.equals(MajiangPlayerActionType.gang)) {
 			gangActionProcessor.process((MajiangGangAction) action, this);

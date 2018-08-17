@@ -13,9 +13,7 @@ public class PengPlayerDaPaiPengActionUpdater implements MajiangPlayerPengAction
 		MajiangPlayer player = currentPan.findPlayerById(pengAction.getActionPlayerId());
 
 		// 碰的那个人要打出牌
-		if (player.getActionCandidates().isEmpty()) {
-			player.generateDaActions();
-		}
+		player.generateDaActions();
 
 	}
 

@@ -1,8 +1,9 @@
-package com.dml.majiang.player.action.mo;
+package com.dml.majiang.player.action.listener.mo;
 
 import com.dml.majiang.ju.Ju;
 import com.dml.majiang.pan.Pan;
 import com.dml.majiang.player.MajiangPlayer;
+import com.dml.majiang.player.action.mo.MajiangMoAction;
 
 /**
  * 统计摸了几张鬼牌

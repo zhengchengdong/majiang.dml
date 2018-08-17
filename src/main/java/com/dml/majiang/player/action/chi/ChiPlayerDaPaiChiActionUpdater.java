@@ -20,9 +20,7 @@ public class ChiPlayerDaPaiChiActionUpdater implements MajiangPlayerChiActionUpd
 		MajiangPlayer player = currentPan.findPlayerById(chiAction.getActionPlayerId());
 
 		// 吃的那个人要打出牌
-		if (player.getActionCandidates().isEmpty()) {
-			player.generateDaActions();
-		}
+		player.generateDaActions();
 
 	}
 

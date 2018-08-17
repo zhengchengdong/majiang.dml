@@ -1,6 +1,7 @@
-package com.dml.majiang.player.action.gang;
+package com.dml.majiang.player.action.listener.gang;
 
 import com.dml.majiang.ju.Ju;
+import com.dml.majiang.player.action.gang.MajiangGangAction;
 
 public class GangCounter implements MajiangPlayerGangActionStatisticsListener {
 
