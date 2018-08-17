@@ -18,6 +18,11 @@ public enum MajiangPai {
 		return (ordinal >= 26 && ordinal <= 32);
 	}
 
+	public static boolean isFengpai(MajiangPai pai) {
+		int ordinal = pai.ordinal();
+		return (ordinal >= 26 && ordinal <= 29);
+	}
+
 	public static MajiangPai[] xushupaiAndZipaiArray() {
 		MajiangPai[] xushupaiAndZipaiArray = new MajiangPai[34];
 		System.arraycopy(array, 0, xushupaiAndZipaiArray, 0, 34);
