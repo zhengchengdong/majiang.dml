@@ -1,5 +1,7 @@
 package com.dml.majiang.player.action.listener.comprehensive;
 
+import java.util.Arrays;
+
 import com.dml.majiang.ju.Ju;
 import com.dml.majiang.pai.MajiangPai;
 import com.dml.majiang.player.action.da.MajiangDaAction;
@@ -26,6 +28,11 @@ public class JuezhangStatisticsListener
 	@Override
 	public void update(MajiangPengAction pengAction, Ju ju) throws Exception {
 		mingpaiCountArray[pengAction.getPai().ordinal()] += 2;
+	}
+
+	@Override
+	public void updateForNextPan() {
+		Arrays.fill(mingpaiCountArray, 0);
 	}
 
 	public boolean ifJuezhang(MajiangPai pai) {

@@ -454,6 +454,10 @@ public class MajiangPlayer {
 		return fangruShoupaiList.size();
 	}
 
+	public int countDachupai() {
+		return dachupaiList.size();
+	}
+
 	public boolean ifPengchu(MajiangPai paiType) {
 		for (PengchuPaiZu pengchuPaiZu : pengchupaiZuList) {
 			if (pengchuPaiZu.getKezi().getPaiType().equals(paiType)) {

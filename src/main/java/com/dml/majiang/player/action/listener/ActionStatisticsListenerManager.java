@@ -79,4 +79,8 @@ public class ActionStatisticsListenerManager {
 		return (T) listenerTypeNameListenerMap.get(type.getName());
 	}
 
+	public void updateListenersForNextPan() {
+		listenerTypeNameListenerMap.values().forEach((listener) -> listener.updateForNextPan());
+	}
+
 }

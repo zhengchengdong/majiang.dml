@@ -24,6 +24,11 @@ public class MoGuipaiCounter implements MajiangPlayerMoActionStatisticsListener 
 		}
 	}
 
+	@Override
+	public void updateForNextPan() {
+		count = 0;
+	}
+
 	public int getCount() {
 		return count;
 	}
