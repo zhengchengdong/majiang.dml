@@ -40,4 +40,12 @@ public class DianpaoDihuOpportunityDetector implements MajiangPlayerDaActionStat
 		}
 	}
 
+	public int getZhuangDaCount() {
+		return zhuangDaCount;
+	}
+
+	public void setZhuangDaCount(int zhuangDaCount) {
+		this.zhuangDaCount = zhuangDaCount;
+	}
+
 }

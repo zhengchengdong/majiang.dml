@@ -220,9 +220,9 @@ public class Ju {
 	}
 
 	public void startNextPan() throws Exception {
-		startNextPanProcess.startNextPan(this);
 		actionStatisticsListenerManager.updateListenersForNextPan();
 		createNextPanDeterminer.reset();
+		startNextPanProcess.startNextPan(this);
 	}
 
 	public StartFirstPanProcess getStartFirstPanProcess() {
