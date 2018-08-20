@@ -15,12 +15,12 @@ public enum MajiangPai {
 
 	public static boolean isZipai(MajiangPai pai) {
 		int ordinal = pai.ordinal();
-		return (ordinal >= 26 && ordinal <= 32);
+		return (ordinal >= 27 && ordinal <= 33);
 	}
 
 	public static boolean isFengpai(MajiangPai pai) {
 		int ordinal = pai.ordinal();
-		return (ordinal >= 26 && ordinal <= 29);
+		return (ordinal >= 27 && ordinal <= 30);
 	}
 
 	public static MajiangPai[] xushupaiAndZipaiArray() {
