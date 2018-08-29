@@ -12,7 +12,9 @@ import com.dml.majiang.player.action.gang.MajiangGangAction;
 import com.dml.majiang.player.action.listener.chi.MajiangPlayerChiActionStatisticsListener;
 import com.dml.majiang.player.action.listener.da.MajiangPlayerDaActionStatisticsListener;
 import com.dml.majiang.player.action.listener.gang.MajiangPlayerGangActionStatisticsListener;
+import com.dml.majiang.player.action.listener.mo.MajiangPlayerMoActionStatisticsListener;
 import com.dml.majiang.player.action.listener.peng.MajiangPlayerPengActionStatisticsListener;
+import com.dml.majiang.player.action.mo.MajiangMoAction;
 import com.dml.majiang.player.action.peng.MajiangPengAction;
 
 public class ActionStatisticsListenerManager {
@@ -23,6 +25,7 @@ public class ActionStatisticsListenerManager {
 	private List<String> chiListenerTypeNameList = new ArrayList<>();
 	private List<String> pengListenerTypeNameList = new ArrayList<>();
 	private List<String> gangListenerTypeNameList = new ArrayList<>();
+	private List<String> moListenerTypeNameList = new ArrayList<>();
 
 	public void addListener(MajiangPlayerActionStatisticsListener listener) {
 		String typeName = listener.getClass().getName();
@@ -39,6 +42,9 @@ public class ActionStatisticsListenerManager {
 			}
 			if (listener instanceof MajiangPlayerGangActionStatisticsListener) {
 				gangListenerTypeNameList.add(typeName);
+			}
+			if (listener instanceof MajiangPlayerMoActionStatisticsListener) {
+				moListenerTypeNameList.add(typeName);
 			}
 		}
 	}
@@ -72,6 +78,14 @@ public class ActionStatisticsListenerManager {
 			MajiangPlayerChiActionStatisticsListener listener = (MajiangPlayerChiActionStatisticsListener) listenerTypeNameListenerMap
 					.get(typeName);
 			listener.update(chiAction, ju);
+		}
+	}
+
+	public void updateMoActionListener(MajiangMoAction moAction, Ju ju) throws Exception {
+		for (String typeName : moListenerTypeNameList) {
+			MajiangPlayerMoActionStatisticsListener listener = (MajiangPlayerMoActionStatisticsListener) listenerTypeNameListenerMap
+					.get(typeName);
+			listener.update(moAction, ju);
 		}
 	}
 

@@ -168,7 +168,7 @@ public class Ju {
 		MajiangPlayerActionType actionType = action.getType();
 		if (actionType.equals(MajiangPlayerActionType.mo)) {
 			moActionProcessor.process((MajiangMoAction) action, this);
-			// TODO listener
+			actionStatisticsListenerManager.updateMoActionListener((MajiangMoAction) action, this);
 			moActionUpdater.updateActions((MajiangMoAction) action, this);
 		} else if (actionType.equals(MajiangPlayerActionType.da)) {
 			daActionProcessor.process((MajiangDaAction) action, this);
