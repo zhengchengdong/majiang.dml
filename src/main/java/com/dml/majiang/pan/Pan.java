@@ -303,6 +303,21 @@ public class Pan {
 		return null;
 	}
 
+	/**
+	 * 多胡的情况下调用此方法,返回所有胡的玩家
+	 * 
+	 * @return
+	 */
+	public List<MajiangPlayer> findAllHuPlayers() {
+		List<MajiangPlayer> huPlayerList = new ArrayList<>();
+		for (MajiangPlayer player : majiangPlayerIdMajiangPlayerMap.values()) {
+			if (player.getHu() != null) {
+				huPlayerList.add(player);
+			}
+		}
+		return huPlayerList;
+	}
+
 	public PanActionFrame findLatestActionFrame() {
 		if (!actionFrameList.isEmpty()) {
 			return actionFrameList.get(actionFrameList.size() - 1);
