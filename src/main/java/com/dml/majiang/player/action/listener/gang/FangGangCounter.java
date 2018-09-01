@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.dml.majiang.ju.Ju;
+import com.dml.majiang.pai.fenzu.GangType;
 import com.dml.majiang.player.action.gang.MajiangGangAction;
 
 /**
@@ -23,12 +24,14 @@ public class FangGangCounter implements MajiangPlayerGangActionStatisticsListene
 
 	@Override
 	public void update(MajiangGangAction gangAction, Ju ju) throws Exception {
-		String dachupaiPlayerId = gangAction.getDachupaiPlayerId();
-		if (playerIdFangGangShuMap.containsKey(dachupaiPlayerId)) {
-			Integer count = playerIdFangGangShuMap.get(dachupaiPlayerId) + 1;
-			playerIdFangGangShuMap.put(dachupaiPlayerId, count);
-		} else {
-			playerIdFangGangShuMap.put(dachupaiPlayerId, 1);
+		if (gangAction.getGangType().equals(GangType.gangdachu)) {
+			String dachupaiPlayerId = gangAction.getDachupaiPlayerId();
+			if (playerIdFangGangShuMap.containsKey(dachupaiPlayerId)) {
+				Integer count = playerIdFangGangShuMap.get(dachupaiPlayerId) + 1;
+				playerIdFangGangShuMap.put(dachupaiPlayerId, count);
+			} else {
+				playerIdFangGangShuMap.put(dachupaiPlayerId, 1);
+			}
 		}
 	}
 
