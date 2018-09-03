@@ -14,103 +14,109 @@ import java.util.Map;
  */
 public class GouXingCalculator {
 
+	private int maxShouPai;
+	private int maxGuiPai;
+
 	/**
 	 * 连续牌组构型索引,小空间连续牌组编码作为数组下标,值为 排好序的 List<LianXuPaiZu> 的下标
 	 */
-	public static int[] lianXuPaiZuGouXingsIdxArray = new int[134217728];// 9连顺子*3位牌数=27,27个1=134217727
+	public int[] lianXuPaiZuGouXingsIdxArray = new int[134217728];// 9连顺子*3位牌数=27,27个1=134217727
 
 	/**
 	 * 连续牌组构型索引,key为大空间连续牌组编码,值为 排好序的 List<LianXuPaiZu> 的下标
 	 */
-	public static Map<Long, Integer> lianXuPaiZuGouXingsIdxMap = new HashMap<>();
+	public Map<Long, Integer> lianXuPaiZuGouXingsIdxMap = new HashMap<>();
 
 	/**
 	 * 一个连续牌组组成手牌的构型
 	 */
-	public static LianXuPaiZuGouXing[][] yiLianXuPaiZuGouXingsArray;
+	public LianXuPaiZuGouXing[][] yiLianXuPaiZuGouXingsArray;
 
 	/**
 	 * 二个连续牌组组成手牌的构型
 	 */
-	public static LianXuPaiZuZuHeGouXing[][] erLianXuPaiZuGouXingsArray;
-	public static int erLianXuPaiZuGouXingsArrayIdx1Mod;
+	public LianXuPaiZuZuHeGouXing[][] erLianXuPaiZuGouXingsArray;
+	public int erLianXuPaiZuGouXingsArrayIdx1Mod;
 
 	/**
 	 * 三个连续牌组组成手牌的构型
 	 */
-	public static LianXuPaiZuZuHeGouXing[][] sanLianXuPaiZuGouXingsArray;
-	public static int sanLianXuPaiZuGouXingsArrayIdx1Mod;
-	public static int sanLianXuPaiZuGouXingsArrayIdx2Mod;
+	public LianXuPaiZuZuHeGouXing[][] sanLianXuPaiZuGouXingsArray;
+	public int sanLianXuPaiZuGouXingsArrayIdx1Mod;
+	public int sanLianXuPaiZuGouXingsArrayIdx2Mod;
 
 	/**
 	 * 四个连续牌组组成手牌的构型
 	 */
-	public static LianXuPaiZuZuHeGouXing[][] siLianXuPaiZuGouXingsArray;
-	public static int siLianXuPaiZuGouXingsArrayIdx1Mod;
-	public static int siLianXuPaiZuGouXingsArrayIdx2Mod;
-	public static int siLianXuPaiZuGouXingsArrayIdx3Mod;
+	public LianXuPaiZuZuHeGouXing[][] siLianXuPaiZuGouXingsArray;
+	public int siLianXuPaiZuGouXingsArrayIdx1Mod;
+	public int siLianXuPaiZuGouXingsArrayIdx2Mod;
+	public int siLianXuPaiZuGouXingsArrayIdx3Mod;
 
 	/**
 	 * 五个连续牌组组成手牌的构型
 	 */
-	public static LianXuPaiZuZuHeGouXing[][] wuLianXuPaiZuGouXingsArray;
-	public static int wuLianXuPaiZuGouXingsArrayIdx1Mod;
-	public static int wuLianXuPaiZuGouXingsArrayIdx2Mod;
-	public static int wuLianXuPaiZuGouXingsArrayIdx3Mod;
-	public static int wuLianXuPaiZuGouXingsArrayIdx4Mod;
+	public LianXuPaiZuZuHeGouXing[][] wuLianXuPaiZuGouXingsArray;
+	public int wuLianXuPaiZuGouXingsArrayIdx1Mod;
+	public int wuLianXuPaiZuGouXingsArrayIdx2Mod;
+	public int wuLianXuPaiZuGouXingsArrayIdx3Mod;
+	public int wuLianXuPaiZuGouXingsArrayIdx4Mod;
 
 	/**
 	 * 独立牌组构型索引,独立牌组编码作为数组下标,值是duLiPaiZuGouXingsArray的下标
 	 */
-	public static int[] duLiPaiZuGouXingsIdxArray = new int[16777216];
+	public int[] duLiPaiZuGouXingsIdxArray = new int[16777216];
 
 	/**
 	 * 只有独立牌组组成手牌的构型,按牌少到牌多排序
 	 */
-	public static DuLiPaiZuGouXing[][] duLiPaiZuGouXingsArray;
+	public DuLiPaiZuGouXing[][] duLiPaiZuGouXingsArray;
 
 	/**
 	 * 一个连续牌组和独立牌组组成手牌的构型
 	 */
-	public static LianXuPaiZuDuLiPaiZuZuHeGouXing[][] yiLianXuPaiZuAndDuLiPaiZuGouXingsArray;
-	public static int yiLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod;
+	public LianXuPaiZuDuLiPaiZuZuHeGouXing[][] yiLianXuPaiZuAndDuLiPaiZuGouXingsArray;
+	public int yiLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod;
 
 	/**
 	 * 二个连续牌组和独立牌组组成手牌的构型
 	 */
-	public static LianXuPaiZuDuLiPaiZuZuHeGouXing[][] erLianXuPaiZuAndDuLiPaiZuGouXingsArray;
-	public static int erLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod;
-	public static int erLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx2Mod;
+	public LianXuPaiZuDuLiPaiZuZuHeGouXing[][] erLianXuPaiZuAndDuLiPaiZuGouXingsArray;
+	public int erLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod;
+	public int erLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx2Mod;
 
 	/**
 	 * 三个连续牌组和独立牌组组成手牌的构型
 	 */
-	public static LianXuPaiZuDuLiPaiZuZuHeGouXing[][] sanLianXuPaiZuAndDuLiPaiZuGouXingsArray;
-	public static int sanLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod;
-	public static int sanLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx2Mod;
-	public static int sanLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx3Mod;
+	public LianXuPaiZuDuLiPaiZuZuHeGouXing[][] sanLianXuPaiZuAndDuLiPaiZuGouXingsArray;
+	public int sanLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod;
+	public int sanLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx2Mod;
+	public int sanLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx3Mod;
 
 	/**
 	 * 四个连续牌组和独立牌组组成手牌的构型
 	 */
-	public static LianXuPaiZuDuLiPaiZuZuHeGouXing[][] siLianXuPaiZuAndDuLiPaiZuGouXingsArray;
-	public static int siLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod;
-	public static int siLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx2Mod;
-	public static int siLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx3Mod;
-	public static int siLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx4Mod;
+	public LianXuPaiZuDuLiPaiZuZuHeGouXing[][] siLianXuPaiZuAndDuLiPaiZuGouXingsArray;
+	public int siLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod;
+	public int siLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx2Mod;
+	public int siLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx3Mod;
+	public int siLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx4Mod;
 
 	/**
 	 * 五个连续牌组和独立牌组组成手牌的构型
 	 */
-	public static LianXuPaiZuDuLiPaiZuZuHeGouXing[][] wuLianXuPaiZuAndDuLiPaiZuGouXingsArray;
-	public static int wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod;
-	public static int wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx2Mod;
-	public static int wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx3Mod;
-	public static int wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx4Mod;
-	public static int wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx5Mod;
+	public LianXuPaiZuDuLiPaiZuZuHeGouXing[][] wuLianXuPaiZuAndDuLiPaiZuGouXingsArray;
+	public int wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod;
+	public int wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx2Mod;
+	public int wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx3Mod;
+	public int wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx4Mod;
+	public int wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx5Mod;
 
-	static {
+	public GouXingCalculator(int maxShouPai, int maxGuiPai) {
 		long startTime = System.currentTimeMillis();
+
+		this.maxShouPai = maxShouPai;
+		this.maxGuiPai = maxGuiPai;
 
 		// 花色: 什么牌，一万，三条，发财等
 		// 牌型: 牌型是一个划分好的杠子、刻子、顺子、对子、单牌的集合,它能完全描述一个牌的集合
@@ -134,8 +140,6 @@ public class GouXingCalculator {
 		// 独立牌组构型对象: 包含有构型编码
 		// 连续牌组独立牌组组合构型对象: 包含有构型编码，和组合出这个构型的连续牌组构型对象和独立牌组构型编码
 
-		int maxShouPai = 17;
-		int maxGuiPai = 3;
 		int maxShouPaiLianXuPaiZu = maxShouPai / 3;// 手牌最多可能几个连续牌组
 
 		// 连续牌组是抽象的，其目的是为了计算抽象的构型，显然，不同花色但是相同连续牌组的两组牌一定同构
@@ -186,7 +190,7 @@ public class GouXingCalculator {
 
 	}
 
-	private static void calculateGouXingForLianXuPaiZuAndDuLiPaiZu(List<LianXuPaiZu> lianXuPaiZuList,
+	private void calculateGouXingForLianXuPaiZuAndDuLiPaiZu(List<LianXuPaiZu> lianXuPaiZuList,
 			List<DuLiPaiZu> duLiPaiZuList, int maxShouPai, int maxGuiPai, int maxShouPaiLianXuPaiZu) {
 		if (maxShouPaiLianXuPaiZu >= 1) {
 			// 先计算数组规模
@@ -735,7 +739,7 @@ public class GouXingCalculator {
 
 	}
 
-	private static void calculateGouXingForDuLiPaiZu(List<DuLiPaiZu> duLiPaiZuList) {
+	private void calculateGouXingForDuLiPaiZu(List<DuLiPaiZu> duLiPaiZuList) {
 		duLiPaiZuList.forEach((duLiPaiZu) -> duLiPaiZu.calculateGouXing());
 		duLiPaiZuGouXingsArray = new DuLiPaiZuGouXing[duLiPaiZuList.size()][];
 		for (int i = 0; i < duLiPaiZuList.size(); i++) {
@@ -745,7 +749,7 @@ public class GouXingCalculator {
 		}
 	}
 
-	private static List<DuLiPaiZu> calculateDuLiPaiZu(int maxShouPai, int maxGuiPai) {
+	private List<DuLiPaiZu> calculateDuLiPaiZu(int maxShouPai, int maxGuiPai) {
 		List<DuLiPaiZu> result = new ArrayList<>();
 		// 低到高--5位单牌个数，4位对子个数，3位刻子个数，3位杠子个数，2位5同牌个数，2位6同牌个数，2位7同牌个数，1位8同牌个数，1位9同牌个数，1位10同牌个数
 		for (int code = 1; code < 16777216; code++) {
@@ -774,8 +778,8 @@ public class GouXingCalculator {
 		return result;
 	}
 
-	private static void calculateLianXuPaiZuZuHeGouXing(List<LianXuPaiZu> lianXuPaiZuList, int maxShouPai,
-			int maxGuiPai, int maxShouPaiLianXuPaiZu) {
+	private void calculateLianXuPaiZuZuHeGouXing(List<LianXuPaiZu> lianXuPaiZuList, int maxShouPai, int maxGuiPai,
+			int maxShouPaiLianXuPaiZu) {
 		if (maxShouPaiLianXuPaiZu >= 1) {
 			yiLianXuPaiZuGouXingsArray = new LianXuPaiZuGouXing[lianXuPaiZuList.size()][];
 			for (int i = 0; i < lianXuPaiZuList.size(); i++) {
@@ -1307,6 +1311,14 @@ public class GouXingCalculator {
 			}
 		}
 		System.out.println(shouPai + "张牌" + lian + "连连续牌组计算完毕！已有" + list.size() + "个结果");
+	}
+
+	public int getMaxShouPai() {
+		return maxShouPai;
+	}
+
+	public int getMaxGuiPai() {
+		return maxGuiPai;
 	}
 
 }

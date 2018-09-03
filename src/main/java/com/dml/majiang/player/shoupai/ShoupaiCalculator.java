@@ -9,7 +9,7 @@ import com.dml.majiang.pai.fenzu.Shunzi;
 import com.dml.majiang.player.shoupai.gouxing.DuLiPaiZu;
 import com.dml.majiang.player.shoupai.gouxing.DuLiPaiZuGouXing;
 import com.dml.majiang.player.shoupai.gouxing.GouXing;
-import com.dml.majiang.player.shoupai.gouxing.GouXingCalculator;
+import com.dml.majiang.player.shoupai.gouxing.GouXingCalculatorHelper;
 import com.dml.majiang.player.shoupai.gouxing.JutihuaLianXuPaiZu;
 import com.dml.majiang.player.shoupai.gouxing.LianXuPaiZu;
 import com.dml.majiang.player.shoupai.gouxing.LianXuPaiZuDuLiPaiZuZuHeGouXing;
@@ -66,7 +66,7 @@ public class ShoupaiCalculator {
 		if (hasLianXuPaiZu && !hasDuLiPaiZu) {// 手牌全由连续牌组组成
 			if (lianXuPaiZuList.size() == 1) {// 只有一个连续牌组
 				int idx = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(0));
-				LianXuPaiZuGouXing[] lianXuPaiZuGouXingArray = GouXingCalculator.yiLianXuPaiZuGouXingsArray[idx];
+				LianXuPaiZuGouXing[] lianXuPaiZuGouXingArray = GouXingCalculatorHelper.gouXingCalculator.yiLianXuPaiZuGouXingsArray[idx];
 				for (int i = 0; i < lianXuPaiZuGouXingArray.length; i++) {
 					result.add(lianXuPaiZuGouXingArray[i]);
 				}
@@ -75,8 +75,8 @@ public class ShoupaiCalculator {
 
 				int idx2 = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(1));
 
-				LianXuPaiZuZuHeGouXing[] lianXuPaiZuZuHeGouXingArray = GouXingCalculator.erLianXuPaiZuGouXingsArray[idx1
-						* GouXingCalculator.erLianXuPaiZuGouXingsArrayIdx1Mod + idx2];
+				LianXuPaiZuZuHeGouXing[] lianXuPaiZuZuHeGouXingArray = GouXingCalculatorHelper.gouXingCalculator.erLianXuPaiZuGouXingsArray[idx1
+						* GouXingCalculatorHelper.gouXingCalculator.erLianXuPaiZuGouXingsArrayIdx1Mod + idx2];
 
 				for (int i = 0; i < lianXuPaiZuZuHeGouXingArray.length; i++) {
 					result.add(lianXuPaiZuZuHeGouXingArray[i]);
@@ -88,9 +88,9 @@ public class ShoupaiCalculator {
 
 				int idx3 = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(2));
 
-				LianXuPaiZuZuHeGouXing[] lianXuPaiZuZuHeGouXingArray = GouXingCalculator.sanLianXuPaiZuGouXingsArray[idx1
-						* GouXingCalculator.sanLianXuPaiZuGouXingsArrayIdx1Mod
-						+ idx2 * GouXingCalculator.sanLianXuPaiZuGouXingsArrayIdx2Mod + idx3];
+				LianXuPaiZuZuHeGouXing[] lianXuPaiZuZuHeGouXingArray = GouXingCalculatorHelper.gouXingCalculator.sanLianXuPaiZuGouXingsArray[idx1
+						* GouXingCalculatorHelper.gouXingCalculator.sanLianXuPaiZuGouXingsArrayIdx1Mod
+						+ idx2 * GouXingCalculatorHelper.gouXingCalculator.sanLianXuPaiZuGouXingsArrayIdx2Mod + idx3];
 
 				for (int i = 0; i < lianXuPaiZuZuHeGouXingArray.length; i++) {
 					result.add(lianXuPaiZuZuHeGouXingArray[i]);
@@ -104,10 +104,10 @@ public class ShoupaiCalculator {
 
 				int idx4 = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(3));
 
-				LianXuPaiZuZuHeGouXing[] lianXuPaiZuZuHeGouXingArray = GouXingCalculator.siLianXuPaiZuGouXingsArray[idx1
-						* GouXingCalculator.siLianXuPaiZuGouXingsArrayIdx1Mod
-						+ idx2 * GouXingCalculator.siLianXuPaiZuGouXingsArrayIdx2Mod
-						+ idx3 * GouXingCalculator.siLianXuPaiZuGouXingsArrayIdx3Mod + idx4];
+				LianXuPaiZuZuHeGouXing[] lianXuPaiZuZuHeGouXingArray = GouXingCalculatorHelper.gouXingCalculator.siLianXuPaiZuGouXingsArray[idx1
+						* GouXingCalculatorHelper.gouXingCalculator.siLianXuPaiZuGouXingsArrayIdx1Mod
+						+ idx2 * GouXingCalculatorHelper.gouXingCalculator.siLianXuPaiZuGouXingsArrayIdx2Mod
+						+ idx3 * GouXingCalculatorHelper.gouXingCalculator.siLianXuPaiZuGouXingsArrayIdx3Mod + idx4];
 
 				for (int i = 0; i < lianXuPaiZuZuHeGouXingArray.length; i++) {
 					result.add(lianXuPaiZuZuHeGouXingArray[i]);
@@ -124,11 +124,11 @@ public class ShoupaiCalculator {
 
 				int idx5 = calculateLianXuPaiZuGouXingIdx(lianXuPaiZuList.get(4));
 
-				LianXuPaiZuZuHeGouXing[] lianXuPaiZuZuHeGouXingArray = GouXingCalculator.wuLianXuPaiZuGouXingsArray[idx1
-						* GouXingCalculator.wuLianXuPaiZuGouXingsArrayIdx1Mod
-						+ idx2 * GouXingCalculator.wuLianXuPaiZuGouXingsArrayIdx2Mod
-						+ idx3 * GouXingCalculator.wuLianXuPaiZuGouXingsArrayIdx3Mod
-						+ idx4 * GouXingCalculator.wuLianXuPaiZuGouXingsArrayIdx4Mod + idx5];
+				LianXuPaiZuZuHeGouXing[] lianXuPaiZuZuHeGouXingArray = GouXingCalculatorHelper.gouXingCalculator.wuLianXuPaiZuGouXingsArray[idx1
+						* GouXingCalculatorHelper.gouXingCalculator.wuLianXuPaiZuGouXingsArrayIdx1Mod
+						+ idx2 * GouXingCalculatorHelper.gouXingCalculator.wuLianXuPaiZuGouXingsArrayIdx2Mod
+						+ idx3 * GouXingCalculatorHelper.gouXingCalculator.wuLianXuPaiZuGouXingsArrayIdx3Mod
+						+ idx4 * GouXingCalculatorHelper.gouXingCalculator.wuLianXuPaiZuGouXingsArrayIdx4Mod + idx5];
 
 				for (int i = 0; i < lianXuPaiZuZuHeGouXingArray.length; i++) {
 					result.add(lianXuPaiZuZuHeGouXingArray[i]);
@@ -136,7 +136,7 @@ public class ShoupaiCalculator {
 			}
 		} else if (!hasLianXuPaiZu && hasDuLiPaiZu) {// 手牌全由独立牌组成
 			int idx = calculateDuLiPaiZuGouXingIdx(duLiPaiIdxList);
-			DuLiPaiZuGouXing[] duLiPaiZuGouXingArray = GouXingCalculator.duLiPaiZuGouXingsArray[idx];
+			DuLiPaiZuGouXing[] duLiPaiZuGouXingArray = GouXingCalculatorHelper.gouXingCalculator.duLiPaiZuGouXingsArray[idx];
 			for (int i = 0; i < duLiPaiZuGouXingArray.length; i++) {
 				result.add(duLiPaiZuGouXingArray[i]);
 			}
@@ -146,8 +146,9 @@ public class ShoupaiCalculator {
 
 				int duLiIdx = calculateDuLiPaiZuGouXingIdx(duLiPaiIdxList);
 
-				LianXuPaiZuDuLiPaiZuZuHeGouXing[] lianXuPaiZuDuLiPaiZuZuHeGouXingArray = GouXingCalculator.yiLianXuPaiZuAndDuLiPaiZuGouXingsArray[lianXuIdx
-						* GouXingCalculator.yiLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod + duLiIdx];
+				LianXuPaiZuDuLiPaiZuZuHeGouXing[] lianXuPaiZuDuLiPaiZuZuHeGouXingArray = GouXingCalculatorHelper.gouXingCalculator.yiLianXuPaiZuAndDuLiPaiZuGouXingsArray[lianXuIdx
+						* GouXingCalculatorHelper.gouXingCalculator.yiLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod
+						+ duLiIdx];
 				for (int i = 0; i < lianXuPaiZuDuLiPaiZuZuHeGouXingArray.length; i++) {
 					result.add(lianXuPaiZuDuLiPaiZuZuHeGouXingArray[i]);
 				}
@@ -158,9 +159,11 @@ public class ShoupaiCalculator {
 
 				int duLiIdx = calculateDuLiPaiZuGouXingIdx(duLiPaiIdxList);
 
-				LianXuPaiZuDuLiPaiZuZuHeGouXing[] lianXuPaiZuDuLiPaiZuZuHeGouXingArray = GouXingCalculator.erLianXuPaiZuAndDuLiPaiZuGouXingsArray[lianXuIdx1
-						* GouXingCalculator.erLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod
-						+ lianXuIdx2 * GouXingCalculator.erLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx2Mod + duLiIdx];
+				LianXuPaiZuDuLiPaiZuZuHeGouXing[] lianXuPaiZuDuLiPaiZuZuHeGouXingArray = GouXingCalculatorHelper.gouXingCalculator.erLianXuPaiZuAndDuLiPaiZuGouXingsArray[lianXuIdx1
+						* GouXingCalculatorHelper.gouXingCalculator.erLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod
+						+ lianXuIdx2
+								* GouXingCalculatorHelper.gouXingCalculator.erLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx2Mod
+						+ duLiIdx];
 				for (int i = 0; i < lianXuPaiZuDuLiPaiZuZuHeGouXingArray.length; i++) {
 					result.add(lianXuPaiZuDuLiPaiZuZuHeGouXingArray[i]);
 				}
@@ -173,10 +176,13 @@ public class ShoupaiCalculator {
 
 				int duLiIdx = calculateDuLiPaiZuGouXingIdx(duLiPaiIdxList);
 
-				LianXuPaiZuDuLiPaiZuZuHeGouXing[] lianXuPaiZuDuLiPaiZuZuHeGouXingArray = GouXingCalculator.sanLianXuPaiZuAndDuLiPaiZuGouXingsArray[lianXuIdx1
-						* GouXingCalculator.sanLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod
-						+ lianXuIdx2 * GouXingCalculator.sanLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx2Mod
-						+ lianXuIdx3 * GouXingCalculator.sanLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx3Mod + duLiIdx];
+				LianXuPaiZuDuLiPaiZuZuHeGouXing[] lianXuPaiZuDuLiPaiZuZuHeGouXingArray = GouXingCalculatorHelper.gouXingCalculator.sanLianXuPaiZuAndDuLiPaiZuGouXingsArray[lianXuIdx1
+						* GouXingCalculatorHelper.gouXingCalculator.sanLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod
+						+ lianXuIdx2
+								* GouXingCalculatorHelper.gouXingCalculator.sanLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx2Mod
+						+ lianXuIdx3
+								* GouXingCalculatorHelper.gouXingCalculator.sanLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx3Mod
+						+ duLiIdx];
 				for (int i = 0; i < lianXuPaiZuDuLiPaiZuZuHeGouXingArray.length; i++) {
 					result.add(lianXuPaiZuDuLiPaiZuZuHeGouXingArray[i]);
 				}
@@ -191,11 +197,15 @@ public class ShoupaiCalculator {
 
 				int duLiIdx = calculateDuLiPaiZuGouXingIdx(duLiPaiIdxList);
 
-				LianXuPaiZuDuLiPaiZuZuHeGouXing[] lianXuPaiZuDuLiPaiZuZuHeGouXingArray = GouXingCalculator.siLianXuPaiZuAndDuLiPaiZuGouXingsArray[lianXuIdx1
-						* GouXingCalculator.siLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod
-						+ lianXuIdx2 * GouXingCalculator.siLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx2Mod
-						+ lianXuIdx3 * GouXingCalculator.siLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx3Mod
-						+ lianXuIdx4 * GouXingCalculator.siLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx4Mod + duLiIdx];
+				LianXuPaiZuDuLiPaiZuZuHeGouXing[] lianXuPaiZuDuLiPaiZuZuHeGouXingArray = GouXingCalculatorHelper.gouXingCalculator.siLianXuPaiZuAndDuLiPaiZuGouXingsArray[lianXuIdx1
+						* GouXingCalculatorHelper.gouXingCalculator.siLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod
+						+ lianXuIdx2
+								* GouXingCalculatorHelper.gouXingCalculator.siLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx2Mod
+						+ lianXuIdx3
+								* GouXingCalculatorHelper.gouXingCalculator.siLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx3Mod
+						+ lianXuIdx4
+								* GouXingCalculatorHelper.gouXingCalculator.siLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx4Mod
+						+ duLiIdx];
 				for (int i = 0; i < lianXuPaiZuDuLiPaiZuZuHeGouXingArray.length; i++) {
 					result.add(lianXuPaiZuDuLiPaiZuZuHeGouXingArray[i]);
 				}
@@ -212,12 +222,17 @@ public class ShoupaiCalculator {
 
 				int duLiIdx = calculateDuLiPaiZuGouXingIdx(duLiPaiIdxList);
 
-				LianXuPaiZuDuLiPaiZuZuHeGouXing[] lianXuPaiZuDuLiPaiZuZuHeGouXingArray = GouXingCalculator.wuLianXuPaiZuAndDuLiPaiZuGouXingsArray[lianXuIdx1
-						* GouXingCalculator.wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod
-						+ lianXuIdx2 * GouXingCalculator.wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx2Mod
-						+ lianXuIdx3 * GouXingCalculator.wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx3Mod
-						+ lianXuIdx4 * GouXingCalculator.wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx4Mod
-						+ lianXuIdx5 * GouXingCalculator.wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx5Mod + duLiIdx];
+				LianXuPaiZuDuLiPaiZuZuHeGouXing[] lianXuPaiZuDuLiPaiZuZuHeGouXingArray = GouXingCalculatorHelper.gouXingCalculator.wuLianXuPaiZuAndDuLiPaiZuGouXingsArray[lianXuIdx1
+						* GouXingCalculatorHelper.gouXingCalculator.wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx1Mod
+						+ lianXuIdx2
+								* GouXingCalculatorHelper.gouXingCalculator.wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx2Mod
+						+ lianXuIdx3
+								* GouXingCalculatorHelper.gouXingCalculator.wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx3Mod
+						+ lianXuIdx4
+								* GouXingCalculatorHelper.gouXingCalculator.wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx4Mod
+						+ lianXuIdx5
+								* GouXingCalculatorHelper.gouXingCalculator.wuLianXuPaiZuAndDuLiPaiZuGouXingsArrayIdx5Mod
+						+ duLiIdx];
 				for (int i = 0; i < lianXuPaiZuDuLiPaiZuZuHeGouXingArray.length; i++) {
 					result.add(lianXuPaiZuDuLiPaiZuZuHeGouXingArray[i]);
 				}
@@ -228,9 +243,9 @@ public class ShoupaiCalculator {
 
 	private int calculateLianXuPaiZuGouXingIdx(LianXuPaiZu lianXuPaiZu) {
 		if (!lianXuPaiZu.isBigCodeMode()) {
-			return GouXingCalculator.lianXuPaiZuGouXingsIdxArray[lianXuPaiZu.getSmallCode()];
+			return GouXingCalculatorHelper.gouXingCalculator.lianXuPaiZuGouXingsIdxArray[lianXuPaiZu.getSmallCode()];
 		} else {
-			return GouXingCalculator.lianXuPaiZuGouXingsIdxMap.get(lianXuPaiZu.getBigCode());
+			return GouXingCalculatorHelper.gouXingCalculator.lianXuPaiZuGouXingsIdxMap.get(lianXuPaiZu.getBigCode());
 		}
 	}
 
@@ -244,7 +259,7 @@ public class ShoupaiCalculator {
 		}
 		DuLiPaiZu duLiPaiZu = new DuLiPaiZu(0, duLiPaiCountArray, totalPai, 0);
 		duLiPaiZu.calculateCode();
-		int idx = GouXingCalculator.duLiPaiZuGouXingsIdxArray[duLiPaiZu.getCode()];
+		int idx = GouXingCalculatorHelper.gouXingCalculator.duLiPaiZuGouXingsIdxArray[duLiPaiZu.getCode()];
 		return idx;
 	}
 
