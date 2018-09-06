@@ -273,23 +273,22 @@ public class MajiangPlayer {
 		}
 	}
 
-	public void tryChiGenerateCandidateActions(String dachupaiPlayerId, MajiangPai pai, boolean baibanDangGuipai) {
-		MajiangPai[] guipaiTypes = new MajiangPai[guipaiTypeSet.size()];
-		guipaiTypeSet.toArray(guipaiTypes);
-		Shunzi shunzi1 = shoupaiCalculator.tryShunziWithPai1(pai, guipaiTypes[0], baibanDangGuipai);
+	public boolean tryGenerateChiCandidateActions(String dachupaiPlayerId, MajiangPai pai) {
+		Shunzi shunzi1 = shoupaiCalculator.tryAndMakeShunziWithPai1(pai);
 		if (shunzi1 != null) {
-			addActionCandidate(new MajiangChiAction(id, dachupaiPlayerId, pai, shunzi1));
+			return true;
 		}
 
-		Shunzi shunzi2 = shoupaiCalculator.tryShunziWithPai2(pai, guipaiTypes[0], baibanDangGuipai);
+		Shunzi shunzi2 = shoupaiCalculator.tryAndMakeShunziWithPai2(pai);
 		if (shunzi2 != null) {
-			addActionCandidate(new MajiangChiAction(id, dachupaiPlayerId, pai, shunzi2));
+			return true;
 		}
 
-		Shunzi shunzi3 = shoupaiCalculator.tryShunziWithPai3(pai, guipaiTypes[0], baibanDangGuipai);
+		Shunzi shunzi3 = shoupaiCalculator.tryAndMakeShunziWithPai3(pai);
 		if (shunzi3 != null) {
-			addActionCandidate(new MajiangChiAction(id, dachupaiPlayerId, pai, shunzi3));
+			return true;
 		}
+		return false;
 	}
 
 	public void tryPengAndGenerateCandidateAction(String dachupaiPlayerId, MajiangPai pai) {
