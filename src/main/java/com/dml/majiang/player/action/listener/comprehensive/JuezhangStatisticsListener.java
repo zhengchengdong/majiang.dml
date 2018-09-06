@@ -39,4 +39,7 @@ public class JuezhangStatisticsListener
 		return mingpaiCountArray[pai.ordinal()] == 3;
 	}
 
+	public boolean ifMingPai(MajiangPai pai) {
+		return mingpaiCountArray[pai.ordinal()] > 0;
+	}
 }
