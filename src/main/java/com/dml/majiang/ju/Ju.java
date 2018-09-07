@@ -100,6 +100,7 @@ public class Ju {
 
 	public void determinePlayersMenFengForFirstPan() throws Exception {
 		playersMenFengDeterminerForFirstPan.determinePlayersMenFeng(this);
+		// TODO 或许每个determiner运行过之后都需要统计一些个性化的信息，比如目前谁连庄了几次
 	}
 
 	public void determinePlayersMenFengForNextPan() throws Exception {
