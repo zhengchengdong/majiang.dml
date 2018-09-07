@@ -395,6 +395,41 @@ public class MajiangPlayer {
 		return false;
 	}
 
+	public boolean hasOneOfPaiInSet(Set<MajiangPai> paiSet) {
+		for (ChichuPaiZu chichuPaiZu : chichupaiZuList) {
+			if (paiSet.contains(chichuPaiZu.getShunzi().getPai1())) {
+				return true;
+			}
+			if (paiSet.contains(chichuPaiZu.getShunzi().getPai2())) {
+				return true;
+			}
+			if (paiSet.contains(chichuPaiZu.getShunzi().getPai3())) {
+				return true;
+			}
+		}
+		for (PengchuPaiZu pengchuPaiZu : pengchupaiZuList) {
+			if (paiSet.contains(pengchuPaiZu.getKezi().getPaiType())) {
+				return true;
+			}
+		}
+		for (GangchuPaiZu gangchuPaiZu : gangchupaiZuList) {
+			if (paiSet.contains(gangchuPaiZu.getGangzi().getPaiType())) {
+				return true;
+			}
+		}
+		for (MajiangPai shoupai : fangruShoupaiList) {
+			if (paiSet.contains(shoupai)) {
+				return true;
+			}
+		}
+		if (gangmoShoupai != null) {
+			if (paiSet.contains(gangmoShoupai)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	/**
 	 * 序数牌都是万牌，或者筒牌，或者条牌。通常鬼牌即使是序数牌也不加入计算
 	 * 
@@ -403,12 +438,41 @@ public class MajiangPlayer {
 	public boolean allXushupaiInSameCategory() {
 		Set<XushupaiCategory> cSet = new HashSet<>();
 		for (ChichuPaiZu chichuPaiZu : chichupaiZuList) {
-			XushupaiCategory xushupaiCategory = XushupaiCategory
+			XushupaiCategory pai1XushupaiCategory = XushupaiCategory
 					.getCategoryforXushupai(chichuPaiZu.getShunzi().getPai1());
+			if (pai1XushupaiCategory != null) {
+				cSet.add(pai1XushupaiCategory);
+			}
+
+			XushupaiCategory pai2XushupaiCategory = XushupaiCategory
+					.getCategoryforXushupai(chichuPaiZu.getShunzi().getPai2());
+			if (pai2XushupaiCategory != null) {
+				cSet.add(pai2XushupaiCategory);
+			}
+
+			XushupaiCategory pai3XushupaiCategory = XushupaiCategory
+					.getCategoryforXushupai(chichuPaiZu.getShunzi().getPai3());
+			if (pai3XushupaiCategory != null) {
+				cSet.add(pai3XushupaiCategory);
+			}
+		}
+
+		for (PengchuPaiZu pengchuPaiZu : pengchupaiZuList) {
+			XushupaiCategory xushupaiCategory = XushupaiCategory
+					.getCategoryforXushupai(pengchuPaiZu.getKezi().getPaiType());
 			if (xushupaiCategory != null) {
 				cSet.add(xushupaiCategory);
 			}
 		}
+
+		for (GangchuPaiZu gangchuPaiZu : gangchupaiZuList) {
+			XushupaiCategory xushupaiCategory = XushupaiCategory
+					.getCategoryforXushupai(gangchuPaiZu.getGangzi().getPaiType());
+			if (xushupaiCategory != null) {
+				cSet.add(xushupaiCategory);
+			}
+		}
+
 		for (MajiangPai shoupai : fangruShoupaiList) {
 			if (!guipaiTypeSet.contains(shoupai)) {
 				XushupaiCategory xushupaiCategory = XushupaiCategory.getCategoryforXushupai(shoupai);
