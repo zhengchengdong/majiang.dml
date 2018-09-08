@@ -1,8 +1,6 @@
 package com.dml.majiang.player.menfeng;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.dml.majiang.ju.Ju;
 import com.dml.majiang.pan.Pan;
@@ -18,7 +16,8 @@ import com.dml.majiang.position.MajiangPositionUtil;
  */
 public class ZhuangXiajiaIsDongIfZhuangNotHuPlayersMenFengDeterminer implements PlayersMenFengDeterminer {
 
-	private Map<String, Integer> playerLianZhuangCountMap = new HashMap<>();
+	private String zhuangPlayerId;
+	private int lianZhunagCount = 1;
 
 	@Override
 	public void determinePlayersMenFeng(Ju ju) throws Exception {
@@ -29,8 +28,8 @@ public class ZhuangXiajiaIsDongIfZhuangNotHuPlayersMenFengDeterminer implements 
 			// 先找出庄的下家
 			String zhuangXiajiaPlayerId = latestFinishedPanResult.findXiajiaPlayerId(zhuangPlayerId);
 			// 下家连庄次数为一
-			playerLianZhuangCountMap = new HashMap<>();
-			playerLianZhuangCountMap.put(zhuangXiajiaPlayerId, 1);
+			zhuangPlayerId = zhuangXiajiaPlayerId;
+			lianZhunagCount = 1;
 			// 再计算要顺时针移几步到东
 			MajiangPosition p = latestFinishedPanResult.playerMenFeng(zhuangXiajiaPlayerId);
 			int n = 0;
@@ -55,18 +54,29 @@ public class ZhuangXiajiaIsDongIfZhuangNotHuPlayersMenFengDeterminer implements 
 			}
 		} else {
 			// 连庄次数加一
-			Integer lianZhuangCount = playerLianZhuangCountMap.get(zhuangPlayerId);
-			if (lianZhuangCount == null) {// 第一盘map为空
-				playerLianZhuangCountMap.put(zhuangPlayerId, 2);
-			} else {
-				playerLianZhuangCountMap.put(zhuangPlayerId, lianZhuangCount + 1);
-			}
+			lianZhunagCount += 1;
 			List<String> allPlayerIds = latestFinishedPanResult.allPlayerIds();
 			for (String playerId : allPlayerIds) {
 				MajiangPosition playerMenFeng = latestFinishedPanResult.playerMenFeng(playerId);
 				currentPan.updatePlayerMenFeng(playerId, playerMenFeng);
 			}
 		}
+	}
+
+	public String getZhuangPlayerId() {
+		return zhuangPlayerId;
+	}
+
+	public void setZhuangPlayerId(String zhuangPlayerId) {
+		this.zhuangPlayerId = zhuangPlayerId;
+	}
+
+	public int getLianZhunagCount() {
+		return lianZhunagCount;
+	}
+
+	public void setLianZhunagCount(int lianZhunagCount) {
+		this.lianZhunagCount = lianZhunagCount;
 	}
 
 }

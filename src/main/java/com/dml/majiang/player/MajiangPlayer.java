@@ -273,24 +273,6 @@ public class MajiangPlayer {
 		}
 	}
 
-	public boolean tryGenerateChiCandidateActions(String dachupaiPlayerId, MajiangPai pai) {
-		Shunzi shunzi1 = shoupaiCalculator.tryAndMakeShunziWithPai1(pai);
-		if (shunzi1 != null) {
-			return true;
-		}
-
-		Shunzi shunzi2 = shoupaiCalculator.tryAndMakeShunziWithPai2(pai);
-		if (shunzi2 != null) {
-			return true;
-		}
-
-		Shunzi shunzi3 = shoupaiCalculator.tryAndMakeShunziWithPai3(pai);
-		if (shunzi3 != null) {
-			return true;
-		}
-		return false;
-	}
-
 	public void tryPengAndGenerateCandidateAction(String dachupaiPlayerId, MajiangPai pai) {
 		int count = shoupaiCalculator.count(pai);
 		if (count >= 2) {
