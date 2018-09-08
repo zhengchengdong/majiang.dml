@@ -44,6 +44,11 @@ public class BenPai extends ShoupaiJiesuanPai {
 		return dangType;
 	}
 
+	@Override
+	public boolean dangBenPai() {
+		return true;
+	}
+
 	public MajiangPai getPai() {
 		return pai;
 	}

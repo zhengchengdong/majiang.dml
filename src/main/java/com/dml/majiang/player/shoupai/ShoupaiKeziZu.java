@@ -78,6 +78,16 @@ public class ShoupaiKeziZu implements ShoupaiMajiangPaiFenZu {
 		return count;
 	}
 
+	@Override
+	public boolean containsLastActionPai() {
+		return (pai1.isLastActionPai() || pai2.isLastActionPai() || pai3.isLastActionPai());
+	}
+
+	@Override
+	public boolean yuanPaiFenZu() {
+		return (pai1.dangBenPai() && pai2.dangBenPai() && pai3.dangBenPai());
+	}
+
 	public Kezi getKezi() {
 		return kezi;
 	}

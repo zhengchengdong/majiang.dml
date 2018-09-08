@@ -56,6 +56,11 @@ public class ShoupaiGangziZu implements ShoupaiMajiangPaiFenZu {
 		}
 	}
 
+	@Override
+	public boolean yuanPaiFenZu() {
+		return (pai1.dangBenPai() && pai2.dangBenPai() && pai3.dangBenPai() && pai4.dangBenPai());
+	}
+
 	public int countGuipai() {
 		int count = 0;
 		if (pai1.dangType().equals(GuipaiDangPai.dangType)) {
@@ -88,6 +93,11 @@ public class ShoupaiGangziZu implements ShoupaiMajiangPaiFenZu {
 			count++;
 		}
 		return count;
+	}
+
+	@Override
+	public boolean containsLastActionPai() {
+		return (pai1.isLastActionPai() || pai2.isLastActionPai() || pai3.isLastActionPai() || pai4.isLastActionPai());
 	}
 
 	public Gangzi getGangzi() {

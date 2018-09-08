@@ -47,6 +47,16 @@ public class ShoupaiDuiziZu implements ShoupaiMajiangPaiFenZu {
 		}
 	}
 
+	@Override
+	public boolean containsLastActionPai() {
+		return (pai1.isLastActionPai() || pai2.isLastActionPai());
+	}
+
+	@Override
+	public boolean yuanPaiFenZu() {
+		return (pai1.dangBenPai() && pai2.dangBenPai());
+	}
+
 	public MajiangPai getDuiziType() {
 		return duiziType;
 	}

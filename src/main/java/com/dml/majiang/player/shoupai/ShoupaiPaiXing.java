@@ -169,6 +169,15 @@ public class ShoupaiPaiXing {
 		return false;
 	}
 
+	public ShoupaiKeziZu findYuanPaiKeziZuForPaiType(MajiangPai paiType) {
+		for (ShoupaiKeziZu shoupaiKeziZu : keziList) {
+			if (shoupaiKeziZu.getKezi().getPaiType().equals(paiType) && shoupaiKeziZu.yuanPaiFenZu()) {
+				return shoupaiKeziZu;
+			}
+		}
+		return null;
+	}
+
 	public ShoupaiKeziZu findFirstKeziZuForPaiType(MajiangPai paiType) {
 		for (ShoupaiKeziZu shoupaiKeziZu : keziList) {
 			if (shoupaiKeziZu.getKezi().getPaiType().equals(paiType)) {

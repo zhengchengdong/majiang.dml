@@ -48,6 +48,11 @@ public class GuipaiDangPai extends ShoupaiJiesuanPai {
 		return dangType;
 	}
 
+	@Override
+	public boolean dangBenPai() {
+		return guipai.equals(dangpai);
+	}
+
 	public MajiangPai getGuipai() {
 		return guipai;
 	}

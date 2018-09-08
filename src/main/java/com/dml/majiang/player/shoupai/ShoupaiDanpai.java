@@ -34,6 +34,11 @@ public class ShoupaiDanpai implements ShoupaiMajiangPaiFenZu {
 		return newShoupaiDanpai;
 	}
 
+	@Override
+	public boolean yuanPaiFenZu() {
+		return pai.dangBenPai();
+	}
+
 	public MajiangPai getDanpaiType() {
 		return danpaiType;
 	}
@@ -48,6 +53,11 @@ public class ShoupaiDanpai implements ShoupaiMajiangPaiFenZu {
 
 	public void setPai(ShoupaiJiesuanPai pai) {
 		this.pai = pai;
+	}
+
+	@Override
+	public boolean containsLastActionPai() {
+		return pai.isLastActionPai();
 	}
 
 }

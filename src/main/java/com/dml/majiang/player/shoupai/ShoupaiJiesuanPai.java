@@ -20,6 +20,8 @@ public abstract class ShoupaiJiesuanPai {
 
 	public abstract ShoupaiJiesuanPai copy();
 
+	public abstract boolean dangBenPai();
+
 	public boolean isLastActionPai() {
 		return lastActionPai;
 	}

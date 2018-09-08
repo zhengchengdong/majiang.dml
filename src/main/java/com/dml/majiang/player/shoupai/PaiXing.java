@@ -92,7 +92,8 @@ public class PaiXing {
 	 * @param guipaiDangPaiArray
 	 * @return
 	 */
-	public List<ShoupaiPaiXing> generateShoupaiPaiXingByGuipaiDangPai(GuipaiDangPai[] guipaiDangPaiArray) {
+	public List<ShoupaiPaiXing> generateShoupaiPaiXingByGuipaiDangPai(GuipaiDangPai[] guipaiDangPaiArray) {// TODO
+																											// 此方法要改成通用，比如还要支持白板当
 		List<ShoupaiPaiXing> shoupaiPaiXingList = new ArrayList<>();
 		int allFenZuCount = danpaiList.size() + duiziList.size() + keziList.size() + gangziList.size()
 				+ shunziList.size();

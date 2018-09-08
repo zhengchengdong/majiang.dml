@@ -14,4 +14,8 @@ public interface ShoupaiMajiangPaiFenZu {
 
 	public <T extends ShoupaiMajiangPaiFenZu> T copy();
 
+	public boolean containsLastActionPai();
+
+	public boolean yuanPaiFenZu();
+
 }
