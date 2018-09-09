@@ -231,6 +231,151 @@ public class PaiXing {
 		return shoupaiPaiXingList;
 	}
 
+	/**
+	 * 未测试
+	 * 
+	 * @param jiesuanPaiArray
+	 * @return
+	 */
+	public List<ShoupaiPaiXing> generateShoupaiPaiXingByShoupaiJiesuanPai(ShoupaiJiesuanPai[] jiesuanPaiArray) {
+		List<ShoupaiPaiXing> shoupaiPaiXingList = new ArrayList<>();
+		int allFenZuCount = danpaiList.size() + duiziList.size() + keziList.size() + gangziList.size()
+				+ shunziList.size();
+		int jiesuanpaiCount = jiesuanPaiArray.length;
+		MajiangPaiFenZu[] allFenZuArray = new MajiangPaiFenZu[allFenZuCount];
+		int i = 0;
+		for (MajiangPaiFenZu fenZu : danpaiList) {
+			allFenZuArray[i++] = fenZu;
+		}
+		for (MajiangPaiFenZu fenZu : duiziList) {
+			allFenZuArray[i++] = fenZu;
+		}
+		for (MajiangPaiFenZu fenZu : keziList) {
+			allFenZuArray[i++] = fenZu;
+		}
+		for (MajiangPaiFenZu fenZu : gangziList) {
+			allFenZuArray[i++] = fenZu;
+		}
+		for (MajiangPaiFenZu fenZu : shunziList) {
+			allFenZuArray[i++] = fenZu;
+		}
+
+		List<Integer>[] jiesuanpaiFenZuIdxListArray = new List[jiesuanpaiCount];
+		for (int j = 0; j < jiesuanpaiCount; j++) {
+			List<Integer> jiesuanpaiFenZuIdxList = new ArrayList<>();
+			jiesuanpaiFenZuIdxListArray[j] = jiesuanpaiFenZuIdxList;
+			ShoupaiJiesuanPai jiesuanPai = jiesuanPaiArray[j];
+			for (int k = 0; k < allFenZuCount; k++) {
+				MajiangPaiFenZu fenZu = allFenZuArray[k];
+				if (fenZu.countPai(jiesuanPai.getZuoyongPaiType()) > 0) {
+					jiesuanpaiFenZuIdxList.add(k);
+				}
+			}
+		}
+
+		int maxZuheCode = 1;
+		int[] guipaiDangFenZuIdxListCountArray = new int[jiesuanpaiCount];
+		for (int j = 0; j < jiesuanpaiCount; j++) {
+			int count = jiesuanpaiFenZuIdxListArray[j].size();
+			guipaiDangFenZuIdxListCountArray[j] = count;
+			maxZuheCode *= count;
+		}
+
+		int[] modArray = new int[jiesuanpaiCount];
+		int mod = 1;
+		for (int j = 0; j < guipaiDangFenZuIdxListCountArray.length; j++) {
+			modArray[jiesuanpaiCount - 1 - j] = mod;
+			mod *= guipaiDangFenZuIdxListCountArray[guipaiDangFenZuIdxListCountArray.length - 1 - j];
+		}
+
+		int[] jiesuanpaiFenZuIdxZuheArray = new int[jiesuanpaiCount];
+		for (int code = 0; code < maxZuheCode; code++) {
+			int temp = code;
+			for (int j = 0; j < modArray.length; j++) {
+				int shang = temp / modArray[j];
+				jiesuanpaiFenZuIdxZuheArray[j] = jiesuanpaiFenZuIdxListArray[j].get(shang);
+				temp = temp % modArray[j];
+			}
+			// guipaiDangFenZuIdxZuheArray是一种组合结果，需要先对其验证是否超当
+			// 对哪个分组的什么牌当了几次，这个次数是否合法是需要验证的
+			Map<Integer, Map<MajiangPai, Integer>> map = new HashMap<>();
+			for (int k = 0; k < jiesuanpaiCount; k++) {
+				ShoupaiJiesuanPai jiesuanPai = jiesuanPaiArray[k];
+				int fenZuIdx = jiesuanpaiFenZuIdxZuheArray[k];
+				Map<MajiangPai, Integer> mapT = map.get(fenZuIdx);
+				if (mapT == null) {
+					mapT = new HashMap<>();
+					map.put(fenZuIdx, mapT);
+				}
+				Integer dangCount = mapT.get(jiesuanPai.getZuoyongPaiType());
+				if (dangCount == null) {
+					dangCount = 0;
+				}
+				mapT.put(jiesuanPai.getZuoyongPaiType(), dangCount + 1);
+			}
+			boolean allSuccess = true;
+			// 该方法正确性需验证
+			for (Entry<Integer, Map<MajiangPai, Integer>> entry : map.entrySet()) {
+				MajiangPaiFenZu fenZu = allFenZuArray[entry.getKey()];
+				Map<MajiangPai, Integer> mapT = entry.getValue();
+				boolean success = true;
+				for (Entry<MajiangPai, Integer> entryT : mapT.entrySet()) {
+					if (fenZu.countPai(entryT.getKey()) < entryT.getValue()) {// 不合法
+						success = false;
+						break;
+					}
+				}
+				if (!success) {
+					allSuccess = false;
+					break;
+				}
+			}
+
+			if (allSuccess) {// 验证通过
+				// 对该种组合生成结果
+				ShoupaiPaiXing shoupaiPaiXing = new ShoupaiPaiXing();
+				List<ShoupaiDanpai> danpaiList = new ArrayList<>();
+				List<ShoupaiDuiziZu> duiziList = new ArrayList<>();
+				List<ShoupaiKeziZu> keziList = new ArrayList<>();
+				List<ShoupaiGangziZu> gangziList = new ArrayList<>();
+				List<ShoupaiShunziZu> shunziList = new ArrayList<>();
+				shoupaiPaiXing.setDanpaiList(danpaiList);
+				shoupaiPaiXing.setDuiziList(duiziList);
+				shoupaiPaiXing.setGangziList(gangziList);
+				shoupaiPaiXing.setKeziList(keziList);
+				shoupaiPaiXing.setShunziList(shunziList);
+
+				for (int j = 0; j < allFenZuCount; j++) {
+					MajiangPaiFenZu fenZu = allFenZuArray[j];
+					ShoupaiMajiangPaiFenZu shoupaiFenZu = fenZu.generateShoupaiMajiangPaiFenZuSkeleton();
+					for (int k = 0; k < jiesuanpaiCount; k++) {
+						int jieaunpaiFenZuIdx = jiesuanpaiFenZuIdxZuheArray[k];
+						if (jieaunpaiFenZuIdx == j) {
+							ShoupaiJiesuanPai jiesuanPai = jiesuanPaiArray[k];
+							shoupaiFenZu.addShoupaiJiesuanPai(jiesuanPai);
+						}
+					}
+					shoupaiFenZu.fillAllBlankPaiWithBenPai();
+					if (shoupaiFenZu instanceof ShoupaiDanpai) {
+						danpaiList.add((ShoupaiDanpai) shoupaiFenZu);
+					} else if (shoupaiFenZu instanceof ShoupaiDuiziZu) {
+						duiziList.add((ShoupaiDuiziZu) shoupaiFenZu);
+					} else if (shoupaiFenZu instanceof ShoupaiKeziZu) {
+						keziList.add((ShoupaiKeziZu) shoupaiFenZu);
+					} else if (shoupaiFenZu instanceof ShoupaiGangziZu) {
+						gangziList.add((ShoupaiGangziZu) shoupaiFenZu);
+					} else if (shoupaiFenZu instanceof ShoupaiShunziZu) {
+						shunziList.add((ShoupaiShunziZu) shoupaiFenZu);
+					}
+
+				}
+				shoupaiPaiXingList.add(shoupaiPaiXing);
+			}
+
+		}
+		return shoupaiPaiXingList;
+	}
+
 	public List<Danpai> getDanpaiList() {
 		return danpaiList;
 	}

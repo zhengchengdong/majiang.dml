@@ -24,11 +24,12 @@ public class ZhuangXiajiaIsDongIfZhuangNotHuPlayersMenFengDeterminer implements 
 		Pan currentPan = ju.getCurrentPan();
 		PanResult latestFinishedPanResult = ju.findLatestFinishedPanResult();
 		String zhuangPlayerId = latestFinishedPanResult.findZhuangPlayerId();
+		this.zhuangPlayerId = zhuangPlayerId;
 		if (!latestFinishedPanResult.ifPlayerHu(zhuangPlayerId)) {// 庄没有胡
 			// 先找出庄的下家
 			String zhuangXiajiaPlayerId = latestFinishedPanResult.findXiajiaPlayerId(zhuangPlayerId);
 			// 下家连庄次数为一
-			zhuangPlayerId = zhuangXiajiaPlayerId;
+			this.zhuangPlayerId = zhuangXiajiaPlayerId;
 			lianZhunagCount = 1;
 			// 再计算要顺时针移几步到东
 			MajiangPosition p = latestFinishedPanResult.playerMenFeng(zhuangXiajiaPlayerId);
