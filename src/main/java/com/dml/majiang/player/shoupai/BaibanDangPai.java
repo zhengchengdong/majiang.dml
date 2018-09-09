@@ -68,8 +68,4 @@ public class BaibanDangPai extends ShoupaiJiesuanPai {
 		this.dangpai = dangpai;
 	}
 
-	public static String getDangtype() {
-		return dangType;
-	}
-
 }

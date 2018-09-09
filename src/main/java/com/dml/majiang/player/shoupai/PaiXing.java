@@ -87,17 +87,17 @@ public class PaiXing {
 	}
 
 	/**
-	 * 返回list是因为在确定鬼牌当牌方案的情况下,对于某个鬼牌当的花色有多张牌,又分属不同组的情况（比如两个一万，一个属于一万对子，一个属于一二三万顺子）,产生多个ShoupaiPaiXing
+	 * 输入为各种当，比如鬼牌当、白板当等等<br/>
+	 * 返回list是因为在确定当牌方案的情况下,对于某个鬼牌当的花色有多张牌,又分属不同组的情况（比如两个一万，一个属于一万对子，一个属于一二三万顺子）,产生多个ShoupaiPaiXing
 	 * 
-	 * @param guipaiDangPaiArray
+	 * @param dangPaiArray
 	 * @return
 	 */
-	public List<ShoupaiPaiXing> generateShoupaiPaiXingByGuipaiDangPai(GuipaiDangPai[] guipaiDangPaiArray) {// TODO
-																											// 此方法要改成通用，比如还要支持白板当
+	public List<ShoupaiPaiXing> generateShoupaiPaiXingByDangPai(ShoupaiJiesuanPai[] dangPaiArray) {
 		List<ShoupaiPaiXing> shoupaiPaiXingList = new ArrayList<>();
 		int allFenZuCount = danpaiList.size() + duiziList.size() + keziList.size() + gangziList.size()
 				+ shunziList.size();
-		int guipaiCount = guipaiDangPaiArray.length;
+		int dangPaiCount = dangPaiArray.length;
 		MajiangPaiFenZu[] allFenZuArray = new MajiangPaiFenZu[allFenZuCount];
 		int i = 0;
 		for (MajiangPaiFenZu fenZu : danpaiList) {
@@ -116,58 +116,58 @@ public class PaiXing {
 			allFenZuArray[i++] = fenZu;
 		}
 
-		List<Integer>[] guipaiDangFenZuIdxListArray = new List[guipaiCount];
-		for (int j = 0; j < guipaiCount; j++) {
-			List<Integer> guipaiDangFenZuIdxList = new ArrayList<>();
-			guipaiDangFenZuIdxListArray[j] = guipaiDangFenZuIdxList;
-			GuipaiDangPai guipaiDangPai = guipaiDangPaiArray[j];
+		List<Integer>[] dangPaiDangFenZuIdxListArray = new List[dangPaiCount];
+		for (int j = 0; j < dangPaiCount; j++) {
+			List<Integer> dangPaiDangFenZuIdxList = new ArrayList<>();
+			dangPaiDangFenZuIdxListArray[j] = dangPaiDangFenZuIdxList;
+			ShoupaiJiesuanPai dangPai = dangPaiArray[j];
 			for (int k = 0; k < allFenZuCount; k++) {
 				MajiangPaiFenZu fenZu = allFenZuArray[k];
-				if (fenZu.countPai(guipaiDangPai.getDangpai()) > 0) {
-					guipaiDangFenZuIdxList.add(k);
+				if (fenZu.countPai(dangPai.getZuoyongPaiType()) > 0) {
+					dangPaiDangFenZuIdxList.add(k);
 				}
 			}
 		}
 
 		int maxZuheCode = 1;
-		int[] guipaiDangFenZuIdxListCountArray = new int[guipaiCount];
-		for (int j = 0; j < guipaiCount; j++) {
-			int count = guipaiDangFenZuIdxListArray[j].size();
-			guipaiDangFenZuIdxListCountArray[j] = count;
+		int[] dangPaiDangFenZuIdxListCountArray = new int[dangPaiCount];
+		for (int j = 0; j < dangPaiCount; j++) {
+			int count = dangPaiDangFenZuIdxListArray[j].size();
+			dangPaiDangFenZuIdxListCountArray[j] = count;
 			maxZuheCode *= count;
 		}
 
-		int[] modArray = new int[guipaiCount];
+		int[] modArray = new int[dangPaiCount];
 		int mod = 1;
-		for (int j = 0; j < guipaiDangFenZuIdxListCountArray.length; j++) {
-			modArray[guipaiCount - 1 - j] = mod;
-			mod *= guipaiDangFenZuIdxListCountArray[guipaiDangFenZuIdxListCountArray.length - 1 - j];
+		for (int j = 0; j < dangPaiDangFenZuIdxListCountArray.length; j++) {
+			modArray[dangPaiCount - 1 - j] = mod;
+			mod *= dangPaiDangFenZuIdxListCountArray[dangPaiDangFenZuIdxListCountArray.length - 1 - j];
 		}
 
-		int[] guipaiDangFenZuIdxZuheArray = new int[guipaiCount];
+		int[] dangPaiDangFenZuIdxZuheArray = new int[dangPaiCount];
 		for (int code = 0; code < maxZuheCode; code++) {
 			int temp = code;
 			for (int j = 0; j < modArray.length; j++) {
 				int shang = temp / modArray[j];
-				guipaiDangFenZuIdxZuheArray[j] = guipaiDangFenZuIdxListArray[j].get(shang);
+				dangPaiDangFenZuIdxZuheArray[j] = dangPaiDangFenZuIdxListArray[j].get(shang);
 				temp = temp % modArray[j];
 			}
-			// guipaiDangFenZuIdxZuheArray是一种组合结果，需要先对其验证是否超当
+			// dangPaiDangFenZuIdxZuheArray是一种组合结果，需要先对其验证是否超当
 			// 对哪个分组的什么牌当了几次，这个次数是否合法是需要验证的
 			Map<Integer, Map<MajiangPai, Integer>> map = new HashMap<>();
-			for (int k = 0; k < guipaiCount; k++) {
-				GuipaiDangPai guipaiDangPai = guipaiDangPaiArray[k];
-				int fenZuIdx = guipaiDangFenZuIdxZuheArray[k];
+			for (int k = 0; k < dangPaiCount; k++) {
+				ShoupaiJiesuanPai dangPai = dangPaiArray[k];
+				int fenZuIdx = dangPaiDangFenZuIdxZuheArray[k];
 				Map<MajiangPai, Integer> mapT = map.get(fenZuIdx);
 				if (mapT == null) {
 					mapT = new HashMap<>();
 					map.put(fenZuIdx, mapT);
 				}
-				Integer dangCount = mapT.get(guipaiDangPai.getDangpai());
+				Integer dangCount = mapT.get(dangPai.getZuoyongPaiType());
 				if (dangCount == null) {
 					dangCount = 0;
 				}
-				mapT.put(guipaiDangPai.getDangpai(), dangCount + 1);
+				mapT.put(dangPai.getZuoyongPaiType(), dangCount + 1);
 			}
 			boolean allSuccess = true;
 			for (Entry<Integer, Map<MajiangPai, Integer>> entry : map.entrySet()) {
@@ -203,11 +203,11 @@ public class PaiXing {
 				for (int j = 0; j < allFenZuCount; j++) {
 					MajiangPaiFenZu fenZu = allFenZuArray[j];
 					ShoupaiMajiangPaiFenZu shoupaiFenZu = fenZu.generateShoupaiMajiangPaiFenZuSkeleton();
-					for (int k = 0; k < guipaiCount; k++) {
-						int guipaiDangFenZuIdx = guipaiDangFenZuIdxZuheArray[k];
+					for (int k = 0; k < dangPaiCount; k++) {
+						int guipaiDangFenZuIdx = dangPaiDangFenZuIdxZuheArray[k];
 						if (guipaiDangFenZuIdx == j) {
-							GuipaiDangPai guipaiDangPai = guipaiDangPaiArray[k];
-							shoupaiFenZu.addShoupaiJiesuanPai(guipaiDangPai);
+							ShoupaiJiesuanPai dangPai = dangPaiArray[k];
+							shoupaiFenZu.addShoupaiJiesuanPai(dangPai);
 						}
 					}
 					shoupaiFenZu.fillAllBlankPaiWithBenPai();
