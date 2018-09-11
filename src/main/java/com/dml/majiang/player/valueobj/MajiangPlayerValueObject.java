@@ -204,6 +204,7 @@ public class MajiangPlayerValueObject implements ByteBufferAble {
 		bb.put((byte) menFeng.ordinal());
 		majiangPaiListToByteBuffer(fangruShoupaiList, bb);
 		majiangPaiListToByteBuffer(fangruGuipaiList, bb);
+		bb.putInt(totalShoupaiCount);
 		majiangPaiListToByteBuffer(publicPaiList, bb);
 		majiangPaiListToByteBuffer(guipaiTypeList, bb);
 		ByteBufferSerializer.listToByteBuffer(new ArrayList<>(actionCandidates), bb);
@@ -221,6 +222,7 @@ public class MajiangPlayerValueObject implements ByteBufferAble {
 		menFeng = MajiangPosition.valueOf(bb.get());
 		fangruShoupaiList = fillMajiangPaiList(bb);
 		fangruGuipaiList = fillMajiangPaiList(bb);
+		totalShoupaiCount = bb.getInt();
 		publicPaiList = fillMajiangPaiList(bb);
 		guipaiTypeList = fillMajiangPaiList(bb);
 		actionCandidates = new ArrayList<>();
