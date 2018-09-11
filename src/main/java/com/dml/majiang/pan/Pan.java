@@ -2,6 +2,7 @@ package com.dml.majiang.pan;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -328,6 +329,12 @@ public class Pan {
 
 	public int countAvaliablePai() {
 		return avaliablePaiList.size();
+	}
+
+	public void updateShoupaiListSortComparatorForAllPlayers(Comparator<MajiangPai> comparator) {
+		for (MajiangPlayer player : majiangPlayerIdMajiangPlayerMap.values()) {
+			player.setFangruShoupaiListSortComparator(comparator);
+		}
 	}
 
 	public int getNo() {

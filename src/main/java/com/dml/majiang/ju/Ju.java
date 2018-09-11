@@ -1,6 +1,7 @@
 package com.dml.majiang.ju;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import com.dml.majiang.ju.finish.JuFinishiDeterminer;
@@ -9,6 +10,7 @@ import com.dml.majiang.ju.nextpan.CreateNextPanDeterminer;
 import com.dml.majiang.ju.nextpan.StartNextPanProcess;
 import com.dml.majiang.ju.result.JuResult;
 import com.dml.majiang.ju.result.JuResultBuilder;
+import com.dml.majiang.pai.MajiangPai;
 import com.dml.majiang.pan.Pan;
 import com.dml.majiang.pan.avaliablepai.AvaliablePaiFiller;
 import com.dml.majiang.pan.fapai.FaPaiStrategy;
@@ -228,6 +230,10 @@ public class Ju {
 
 	public StartFirstPanProcess getStartFirstPanProcess() {
 		return startFirstPanProcess;
+	}
+
+	public void updateShoupaiListSortComparatorForAllPlayersInCurrentPan(Comparator<MajiangPai> comparator) {
+		currentPan.updateShoupaiListSortComparatorForAllPlayers(comparator);
 	}
 
 	public void setStartFirstPanProcess(StartFirstPanProcess startFirstPanProcess) {

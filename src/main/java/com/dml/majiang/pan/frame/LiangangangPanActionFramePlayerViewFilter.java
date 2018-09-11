@@ -24,8 +24,8 @@ public class LiangangangPanActionFramePlayerViewFilter implements PanActionFrame
 				if (gangmoShoupai != null) {
 					gangmoShoupai.setPai(null);
 				}
-				player.getFangruShoupaiList().setGuipaiShoupaiList(null);
-				player.getFangruShoupaiList().setPutongShoupaiList(null);
+				player.setFangruShoupaiList(null);
+				player.setFangruGuipaiList(null);
 			}
 		});
 	}

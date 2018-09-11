@@ -23,7 +23,19 @@ public class MajiangPlayerValueObject implements ByteBufferAble {
 	 * 门风
 	 */
 	private MajiangPosition menFeng;
-	private FangruShoupaiListValueObject fangruShoupaiList;
+
+	/**
+	 * 已放入的手牌列表（不包含鬼牌，不包含公开牌）
+	 */
+	private List<MajiangPai> fangruShoupaiList;
+
+	/**
+	 * 已放入的鬼牌手牌列表（全部是鬼牌）
+	 */
+	private List<MajiangPai> fangruGuipaiList;
+
+	private int totalShoupaiCount;
+
 	/**
 	 * 公开的牌，不能行牌
 	 */
@@ -58,7 +70,9 @@ public class MajiangPlayerValueObject implements ByteBufferAble {
 	public MajiangPlayerValueObject(MajiangPlayer player) {
 		id = player.getId();
 		menFeng = player.getMenFeng();
-		fangruShoupaiList = new FangruShoupaiListValueObject(player.getFangruShoupaiList(), player.getGuipaiTypeSet());
+		fangruShoupaiList = new ArrayList<>(player.getFangruShoupaiList());
+		fangruGuipaiList = new ArrayList<>(player.getFangruGuipaiList());
+		totalShoupaiCount = player.countAllFangruShoupai();
 		publicPaiList = new ArrayList<>(player.getPublicPaiList());
 		guipaiTypeList = new ArrayList<>(player.getGuipaiTypeSet());
 		actionCandidates = new ArrayList<>(player.getActionCandidates().values());
@@ -88,12 +102,28 @@ public class MajiangPlayerValueObject implements ByteBufferAble {
 		this.menFeng = menFeng;
 	}
 
-	public FangruShoupaiListValueObject getFangruShoupaiList() {
+	public List<MajiangPai> getFangruShoupaiList() {
 		return fangruShoupaiList;
 	}
 
-	public void setFangruShoupaiList(FangruShoupaiListValueObject fangruShoupaiList) {
+	public void setFangruShoupaiList(List<MajiangPai> fangruShoupaiList) {
 		this.fangruShoupaiList = fangruShoupaiList;
+	}
+
+	public List<MajiangPai> getFangruGuipaiList() {
+		return fangruGuipaiList;
+	}
+
+	public void setFangruGuipaiList(List<MajiangPai> fangruGuipaiList) {
+		this.fangruGuipaiList = fangruGuipaiList;
+	}
+
+	public int getTotalShoupaiCount() {
+		return totalShoupaiCount;
+	}
+
+	public void setTotalShoupaiCount(int totalShoupaiCount) {
+		this.totalShoupaiCount = totalShoupaiCount;
 	}
 
 	public List<MajiangPai> getPublicPaiList() {
@@ -172,7 +202,8 @@ public class MajiangPlayerValueObject implements ByteBufferAble {
 	public void toByteBuffer(ByteBuffer bb) throws Throwable {
 		ByteBufferSerializer.stringToByteBuffer(id, bb);
 		bb.put((byte) menFeng.ordinal());
-		ByteBufferSerializer.objToByteBuffer(fangruShoupaiList, bb);
+		majiangPaiListToByteBuffer(fangruShoupaiList, bb);
+		majiangPaiListToByteBuffer(fangruGuipaiList, bb);
 		majiangPaiListToByteBuffer(publicPaiList, bb);
 		majiangPaiListToByteBuffer(guipaiTypeList, bb);
 		ByteBufferSerializer.listToByteBuffer(new ArrayList<>(actionCandidates), bb);
@@ -188,7 +219,8 @@ public class MajiangPlayerValueObject implements ByteBufferAble {
 	public void fillByByteBuffer(ByteBuffer bb) throws Throwable {
 		id = ByteBufferSerializer.byteBufferToString(bb);
 		menFeng = MajiangPosition.valueOf(bb.get());
-		fangruShoupaiList = ByteBufferSerializer.byteBufferToObj(bb);
+		fangruShoupaiList = fillMajiangPaiList(bb);
+		fangruGuipaiList = fillMajiangPaiList(bb);
 		publicPaiList = fillMajiangPaiList(bb);
 		guipaiTypeList = fillMajiangPaiList(bb);
 		actionCandidates = new ArrayList<>();

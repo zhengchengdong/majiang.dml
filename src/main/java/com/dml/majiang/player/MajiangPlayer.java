@@ -2,6 +2,7 @@ package com.dml.majiang.player;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -26,6 +27,7 @@ import com.dml.majiang.player.chupaizu.ChichuPaiZu;
 import com.dml.majiang.player.chupaizu.GangchuPaiZu;
 import com.dml.majiang.player.chupaizu.PengchuPaiZu;
 import com.dml.majiang.player.shoupai.ShoupaiCalculator;
+import com.dml.majiang.player.shoupaisort.MajiangPaiOrderShoupaiSortComparator;
 import com.dml.majiang.position.MajiangPosition;
 import com.dml.majiang.position.MajiangPositionUtil;
 
@@ -39,9 +41,16 @@ public class MajiangPlayer {
 	private MajiangPosition menFeng;
 
 	/**
-	 * 已放入的手牌列表（包含鬼牌，不包含公开牌）
+	 * 已放入的手牌列表（不包含鬼牌，不包含公开牌）
 	 */
 	private List<MajiangPai> fangruShoupaiList = new ArrayList<>();
+
+	private Comparator<MajiangPai> fangruShoupaiListSortComparator = new MajiangPaiOrderShoupaiSortComparator();
+
+	/**
+	 * 已放入的鬼牌手牌列表（全部是鬼牌）
+	 */
+	private List<MajiangPai> fangruGuipaiList = new ArrayList<>();
 
 	/**
 	 * 刚摸进待处理的手牌（未放入）
@@ -81,10 +90,12 @@ public class MajiangPlayer {
 	}
 
 	public void addShoupai(MajiangPai pai) {
-		fangruShoupaiList.add(pai);
-		Collections.sort(fangruShoupaiList);
 		if (!guipaiTypeSet.contains(pai)) {
+			fangruShoupaiList.add(pai);
+			Collections.sort(fangruShoupaiList, fangruShoupaiListSortComparator);
 			shoupaiCalculator.addPai(pai);
+		} else {
+			fangruGuipaiList.add(pai);
 		}
 	}
 
@@ -108,11 +119,9 @@ public class MajiangPlayer {
 	public void generateDaActions() {
 		Set<MajiangPai> daPaiSet = new HashSet<>();
 		fangruShoupaiList.forEach((shoupai) -> {
-			if (!guipaiTypeSet.contains(shoupai)) {
-				if (!daPaiSet.contains(shoupai)) {
-					addActionCandidate(new MajiangDaAction(id, shoupai));
-					daPaiSet.add(shoupai);
-				}
+			if (!daPaiSet.contains(shoupai)) {
+				addActionCandidate(new MajiangDaAction(id, shoupai));
+				daPaiSet.add(shoupai);
 			}
 		});
 
@@ -363,10 +372,8 @@ public class MajiangPlayer {
 			}
 		}
 		for (MajiangPai shoupai : fangruShoupaiList) {
-			if (!guipaiTypeSet.contains(shoupai)) {
-				if (MajiangPai.isZipai(shoupai)) {
-					return true;
-				}
+			if (MajiangPai.isZipai(shoupai)) {
+				return true;
 			}
 		}
 		if (gangmoShoupai != null && !guipaiTypeSet.contains(gangmoShoupai)) {
@@ -456,11 +463,9 @@ public class MajiangPlayer {
 		}
 
 		for (MajiangPai shoupai : fangruShoupaiList) {
-			if (!guipaiTypeSet.contains(shoupai)) {
-				XushupaiCategory xushupaiCategory = XushupaiCategory.getCategoryforXushupai(shoupai);
-				if (xushupaiCategory != null) {
-					cSet.add(xushupaiCategory);
-				}
+			XushupaiCategory xushupaiCategory = XushupaiCategory.getCategoryforXushupai(shoupai);
+			if (xushupaiCategory != null) {
+				cSet.add(xushupaiCategory);
 			}
 		}
 		if (gangmoShoupai != null && !guipaiTypeSet.contains(gangmoShoupai)) {
@@ -473,12 +478,7 @@ public class MajiangPlayer {
 	}
 
 	public List<MajiangPai> findGuipaiList() {
-		List<MajiangPai> guipaiShoupaiList = new ArrayList<>();
-		fangruShoupaiList.forEach((shouPai) -> {
-			if (guipaiTypeSet.contains(shouPai)) {
-				guipaiShoupaiList.add(shouPai);
-			}
-		});
+		List<MajiangPai> guipaiShoupaiList = new ArrayList<>(fangruGuipaiList);
 		if (gangmoShoupai != null && guipaiTypeSet.contains(gangmoShoupai)) {
 			guipaiShoupaiList.add(gangmoShoupai);
 		}
@@ -486,12 +486,7 @@ public class MajiangPlayer {
 	}
 
 	public int countGuipai() {
-		int count = 0;
-		for (MajiangPai shouPai : fangruShoupaiList) {
-			if (guipaiTypeSet.contains(shouPai)) {
-				count++;
-			}
-		}
+		int count = fangruGuipaiList.size();
 		if (gangmoShoupai != null && guipaiTypeSet.contains(gangmoShoupai)) {
 			count++;
 		}
@@ -514,8 +509,11 @@ public class MajiangPlayer {
 		return publicPaiList.size();
 	}
 
-	public int countFangruShoupai() {
-		return fangruShoupaiList.size();
+	/**
+	 * 包含放入的鬼牌
+	 */
+	public int countAllFangruShoupai() {
+		return fangruShoupaiList.size() + fangruGuipaiList.size();
 	}
 
 	public int countDachupai() {
@@ -583,6 +581,22 @@ public class MajiangPlayer {
 
 	public void setFangruShoupaiList(List<MajiangPai> fangruShoupaiList) {
 		this.fangruShoupaiList = fangruShoupaiList;
+	}
+
+	public Comparator<MajiangPai> getFangruShoupaiListSortComparator() {
+		return fangruShoupaiListSortComparator;
+	}
+
+	public void setFangruShoupaiListSortComparator(Comparator<MajiangPai> fangruShoupaiListSortComparator) {
+		this.fangruShoupaiListSortComparator = fangruShoupaiListSortComparator;
+	}
+
+	public List<MajiangPai> getFangruGuipaiList() {
+		return fangruGuipaiList;
+	}
+
+	public void setFangruGuipaiList(List<MajiangPai> fangruGuipaiList) {
+		this.fangruGuipaiList = fangruGuipaiList;
 	}
 
 	public Set<MajiangPai> getGuipaiTypeSet() {
