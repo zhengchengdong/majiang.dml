@@ -187,6 +187,19 @@ public class ShoupaiPaiXing {
 		return null;
 	}
 
+	/**
+	 * 鬼牌当的情况下一种刻子可能有多个
+	 */
+	public List<ShoupaiKeziZu> findAllKeziZuForPaiType(MajiangPai paiType) {
+		List<ShoupaiKeziZu> result = new ArrayList<>();
+		for (ShoupaiKeziZu shoupaiKeziZu : keziList) {
+			if (shoupaiKeziZu.getKezi().getPaiType().equals(paiType)) {
+				result.add(shoupaiKeziZu);
+			}
+		}
+		return result;
+	}
+
 	public boolean hasGangziForPaiType(MajiangPai paiType) {
 		for (ShoupaiGangziZu shoupaiGangziZu : gangziList) {
 			if (shoupaiGangziZu.getGangzi().getPaiType().equals(paiType)) {
