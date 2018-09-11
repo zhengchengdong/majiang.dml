@@ -17,7 +17,7 @@ import com.dml.majiang.position.MajiangPositionUtil;
 public class ZhuangXiajiaIsDongIfZhuangNotHuPlayersMenFengDeterminer implements PlayersMenFengDeterminer {
 
 	private String zhuangPlayerId;
-	private int lianZhunagCount = 1;
+	private int lianZhuangCount = 1;
 
 	@Override
 	public void determinePlayersMenFeng(Ju ju) throws Exception {
@@ -30,7 +30,7 @@ public class ZhuangXiajiaIsDongIfZhuangNotHuPlayersMenFengDeterminer implements 
 			String zhuangXiajiaPlayerId = latestFinishedPanResult.findXiajiaPlayerId(zhuangPlayerId);
 			// 下家连庄次数为一
 			this.zhuangPlayerId = zhuangXiajiaPlayerId;
-			lianZhunagCount = 1;
+			lianZhuangCount = 1;
 			// 再计算要顺时针移几步到东
 			MajiangPosition p = latestFinishedPanResult.playerMenFeng(zhuangXiajiaPlayerId);
 			int n = 0;
@@ -55,7 +55,7 @@ public class ZhuangXiajiaIsDongIfZhuangNotHuPlayersMenFengDeterminer implements 
 			}
 		} else {
 			// 连庄次数加一
-			lianZhunagCount += 1;
+			lianZhuangCount += 1;
 			List<String> allPlayerIds = latestFinishedPanResult.allPlayerIds();
 			for (String playerId : allPlayerIds) {
 				MajiangPosition playerMenFeng = latestFinishedPanResult.playerMenFeng(playerId);
@@ -72,12 +72,12 @@ public class ZhuangXiajiaIsDongIfZhuangNotHuPlayersMenFengDeterminer implements 
 		this.zhuangPlayerId = zhuangPlayerId;
 	}
 
-	public int getLianZhunagCount() {
-		return lianZhunagCount;
+	public int getLianZhuangCount() {
+		return lianZhuangCount;
 	}
 
-	public void setLianZhunagCount(int lianZhunagCount) {
-		this.lianZhunagCount = lianZhunagCount;
+	public void setLianZhuangCount(int lianZhuangCount) {
+		this.lianZhuangCount = lianZhuangCount;
 	}
 
 }
