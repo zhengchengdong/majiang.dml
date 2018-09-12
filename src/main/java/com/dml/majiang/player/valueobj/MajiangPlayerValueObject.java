@@ -53,6 +53,8 @@ public class MajiangPlayerValueObject implements ByteBufferAble {
 	 */
 	private MajiangPaiValueObject gangmoShoupai;
 
+	private int guipaiCount;
+
 	/**
 	 * 打出的牌
 	 */
@@ -79,6 +81,7 @@ public class MajiangPlayerValueObject implements ByteBufferAble {
 		if (player.getGangmoShoupai() != null) {
 			gangmoShoupai = new MajiangPaiValueObject(player.getGangmoShoupai());
 		}
+		guipaiCount = player.countGuipai();
 		dachupaiList = new ArrayList<>(player.getDachupaiList());
 		chichupaiZuList = new ArrayList<>(player.getChichupaiZuList());
 		pengchupaiZuList = new ArrayList<>(player.getPengchupaiZuList());
@@ -158,6 +161,14 @@ public class MajiangPlayerValueObject implements ByteBufferAble {
 		this.gangmoShoupai = gangmoShoupai;
 	}
 
+	public int getGuipaiCount() {
+		return guipaiCount;
+	}
+
+	public void setGuipaiCount(int guipaiCount) {
+		this.guipaiCount = guipaiCount;
+	}
+
 	public List<MajiangPai> getDachupaiList() {
 		return dachupaiList;
 	}
@@ -209,6 +220,7 @@ public class MajiangPlayerValueObject implements ByteBufferAble {
 		majiangPaiListToByteBuffer(guipaiTypeList, bb);
 		ByteBufferSerializer.listToByteBuffer(new ArrayList<>(actionCandidates), bb);
 		ByteBufferSerializer.objToByteBuffer(gangmoShoupai, bb);
+		bb.putInt(guipaiCount);
 		majiangPaiListToByteBuffer(dachupaiList, bb);
 		ByteBufferSerializer.listToByteBuffer(new ArrayList<>(chichupaiZuList), bb);
 		ByteBufferSerializer.listToByteBuffer(new ArrayList<>(pengchupaiZuList), bb);
@@ -228,6 +240,7 @@ public class MajiangPlayerValueObject implements ByteBufferAble {
 		actionCandidates = new ArrayList<>();
 		ByteBufferSerializer.byteBufferToList(bb).forEach((o) -> actionCandidates.add((MajiangPlayerAction) o));
 		gangmoShoupai = ByteBufferSerializer.byteBufferToObj(bb);
+		guipaiCount = bb.getInt();
 		dachupaiList = fillMajiangPaiList(bb);
 		chichupaiZuList = new ArrayList<>();
 		ByteBufferSerializer.byteBufferToList(bb).forEach((o) -> chichupaiZuList.add((ChichuPaiZu) o));

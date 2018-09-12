@@ -9,6 +9,8 @@ import com.dml.majiang.pai.valueobj.PaiListValueObject;
 import com.dml.majiang.pan.Pan;
 import com.dml.majiang.pan.cursor.PaiCursor;
 import com.dml.majiang.player.valueobj.MajiangPlayerValueObject;
+import com.dml.majiang.position.MajiangPosition;
+import com.dml.majiang.position.MajiangPositionUtil;
 import com.dml.majiang.serializer.ByteBufferAble;
 import com.dml.majiang.serializer.ByteBufferSerializer;
 
@@ -53,6 +55,70 @@ public class PanValueObject implements ByteBufferAble {
 		publicGuipaiList = new ArrayList<>(pan.getPublicGuipaiSet());
 		publicWaitingPlayerId = pan.getPublicWaitingPlayerId();
 		activePaiCursor = pan.getActivePaiCursor();
+	}
+
+	public boolean ifPlayerHu(String playerId) {
+		for (MajiangPlayerValueObject player : playerList) {
+			if (player.getId().equals(playerId)) {
+				return player.getHu() != null;
+			}
+		}
+		return false;
+	}
+
+	public MajiangPosition playerMenFeng(String playerId) {
+		for (MajiangPlayerValueObject player : playerList) {
+			if (player.getId().equals(playerId)) {
+				return player.getMenFeng();
+			}
+		}
+		return null;
+	}
+
+	public String findXiajiaPlayerId(String playerId) {
+		MajiangPosition playerMenFeng = playerMenFeng(playerId);
+		MajiangPosition xiajiaMenFeng = MajiangPositionUtil.nextPositionAntiClockwise(playerMenFeng);
+		String xiajiaPlayerId = findPlayerIdByMenFeng(xiajiaMenFeng);
+		while (xiajiaPlayerId == null) {
+			xiajiaMenFeng = MajiangPositionUtil.nextPositionAntiClockwise(xiajiaMenFeng);
+			xiajiaPlayerId = findPlayerIdByMenFeng(xiajiaMenFeng);
+		}
+		return xiajiaPlayerId;
+	}
+
+	private String findPlayerIdByMenFeng(MajiangPosition menFeng) {
+		for (MajiangPlayerValueObject player : playerList) {
+			if (player.getMenFeng().equals(menFeng)) {
+				return player.getId();
+			}
+		}
+		return null;
+	}
+
+	public List<String> allPlayerIds() {
+		List<String> list = new ArrayList<>();
+		for (MajiangPlayerValueObject player : playerList) {
+			list.add(player.getId());
+		}
+		return list;
+	}
+
+	public int playerGuipaiCount(String playerId) {
+		for (MajiangPlayerValueObject player : playerList) {
+			if (player.getId().equals(playerId)) {
+				return player.getGuipaiCount();
+			}
+		}
+		return 0;
+	}
+
+	public MajiangPlayerValueObject findPlayer(String playerId) {
+		for (MajiangPlayerValueObject player : playerList) {
+			if (player.getId().equals(playerId)) {
+				return player;
+			}
+		}
+		return null;
 	}
 
 	public int getNo() {

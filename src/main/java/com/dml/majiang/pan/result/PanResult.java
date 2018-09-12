@@ -2,28 +2,40 @@ package com.dml.majiang.pan.result;
 
 import java.util.List;
 
+import com.dml.majiang.pan.frame.PanValueObject;
+import com.dml.majiang.player.valueobj.MajiangPlayerValueObject;
 import com.dml.majiang.position.MajiangPosition;
 
 public abstract class PanResult {
-	private int panNo;
 	private long panFinishTime;
+	private PanValueObject pan;
 
-	public abstract List<String> allPlayerIds();
-
-	public abstract String findZhuangPlayerId();
-
-	public abstract boolean ifPlayerHu(String playerId);
-
-	public abstract MajiangPosition playerMenFeng(String playerId);
-
-	public abstract String findXiajiaPlayerId(String playerId);
-
-	public int getPanNo() {
-		return panNo;
+	public List<String> allPlayerIds() {
+		return pan.allPlayerIds();
 	}
 
-	public void setPanNo(int panNo) {
-		this.panNo = panNo;
+	public String findZhuangPlayerId() {
+		return pan.getZhuangPlayerId();
+	}
+
+	public boolean ifPlayerHu(String playerId) {
+		return pan.ifPlayerHu(playerId);
+	}
+
+	public MajiangPosition playerMenFeng(String playerId) {
+		return pan.playerMenFeng(playerId);
+	}
+
+	public String findXiajiaPlayerId(String playerId) {
+		return pan.findXiajiaPlayerId(playerId);
+	}
+
+	public int playerGuipaiCount(String playerId) {
+		return pan.playerGuipaiCount(playerId);
+	}
+
+	public MajiangPlayerValueObject findPlayer(String playerId) {
+		return pan.findPlayer(playerId);
 	}
 
 	public long getPanFinishTime() {
@@ -32,6 +44,14 @@ public abstract class PanResult {
 
 	public void setPanFinishTime(long panFinishTime) {
 		this.panFinishTime = panFinishTime;
+	}
+
+	public PanValueObject getPan() {
+		return pan;
+	}
+
+	public void setPan(PanValueObject pan) {
+		this.pan = pan;
 	}
 
 }
