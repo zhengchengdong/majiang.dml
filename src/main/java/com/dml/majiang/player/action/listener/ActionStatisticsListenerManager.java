@@ -9,9 +9,11 @@ import com.dml.majiang.ju.Ju;
 import com.dml.majiang.player.action.chi.MajiangChiAction;
 import com.dml.majiang.player.action.da.MajiangDaAction;
 import com.dml.majiang.player.action.gang.MajiangGangAction;
+import com.dml.majiang.player.action.guo.MajiangGuoAction;
 import com.dml.majiang.player.action.listener.chi.MajiangPlayerChiActionStatisticsListener;
 import com.dml.majiang.player.action.listener.da.MajiangPlayerDaActionStatisticsListener;
 import com.dml.majiang.player.action.listener.gang.MajiangPlayerGangActionStatisticsListener;
+import com.dml.majiang.player.action.listener.guo.MajiangPlayerGuoActionStatisticsListener;
 import com.dml.majiang.player.action.listener.mo.MajiangPlayerMoActionStatisticsListener;
 import com.dml.majiang.player.action.listener.peng.MajiangPlayerPengActionStatisticsListener;
 import com.dml.majiang.player.action.mo.MajiangMoAction;
@@ -26,6 +28,7 @@ public class ActionStatisticsListenerManager {
 	private List<String> pengListenerTypeNameList = new ArrayList<>();
 	private List<String> gangListenerTypeNameList = new ArrayList<>();
 	private List<String> moListenerTypeNameList = new ArrayList<>();
+	private List<String> guoListenerTypeNameList = new ArrayList<>();
 
 	public void addListener(MajiangPlayerActionStatisticsListener listener) {
 		String typeName = listener.getClass().getName();
@@ -45,6 +48,9 @@ public class ActionStatisticsListenerManager {
 			}
 			if (listener instanceof MajiangPlayerMoActionStatisticsListener) {
 				moListenerTypeNameList.add(typeName);
+			}
+			if (listener instanceof MajiangPlayerGuoActionStatisticsListener) {
+				guoListenerTypeNameList.add(typeName);
 			}
 		}
 	}
@@ -86,6 +92,14 @@ public class ActionStatisticsListenerManager {
 			MajiangPlayerMoActionStatisticsListener listener = (MajiangPlayerMoActionStatisticsListener) listenerTypeNameListenerMap
 					.get(typeName);
 			listener.update(moAction, ju);
+		}
+	}
+
+	public void updateGuoActionListener(MajiangGuoAction guoAction, Ju ju) throws Exception {
+		for (String typeName : guoListenerTypeNameList) {
+			MajiangPlayerGuoActionStatisticsListener listener = (MajiangPlayerGuoActionStatisticsListener) listenerTypeNameListenerMap
+					.get(typeName);
+			listener.update(guoAction, ju);
 		}
 	}
 
