@@ -57,4 +57,12 @@ public class GuoPengBuPengStatisticsListener
 		}
 	}
 
+	public Set<String> getCanNotPengPlayers() {
+		return canNotPengPlayers;
+	}
+
+	public void setCanNotPengPlayers(Set<String> canNotPengPlayers) {
+		this.canNotPengPlayers = canNotPengPlayers;
+	}
+
 }
