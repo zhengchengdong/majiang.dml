@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.dml.majiang.ju.finish.JuFinishiDeterminer;
 import com.dml.majiang.ju.firstpan.StartFirstPanProcess;
-import com.dml.majiang.ju.nextpan.CreateNextPanDeterminer;
 import com.dml.majiang.ju.nextpan.StartNextPanProcess;
 import com.dml.majiang.ju.result.JuResult;
 import com.dml.majiang.ju.result.JuResultBuilder;
@@ -37,6 +36,7 @@ import com.dml.majiang.player.action.guo.MajiangPlayerGuoActionProcessor;
 import com.dml.majiang.player.action.guo.MajiangPlayerGuoActionUpdater;
 import com.dml.majiang.player.action.hu.MajiangHuAction;
 import com.dml.majiang.player.action.hu.MajiangPlayerHuActionProcessor;
+import com.dml.majiang.player.action.hu.MajiangPlayerHuActionUpdater;
 import com.dml.majiang.player.action.initial.MajiangPlayerInitialActionUpdater;
 import com.dml.majiang.player.action.listener.ActionStatisticsListenerManager;
 import com.dml.majiang.player.action.listener.MajiangPlayerActionStatisticsListener;
@@ -78,7 +78,6 @@ public class Ju {
 	private GouXingPanHu GouXingPanHu;
 	private CurrentPanPublicWaitingPlayerDeterminer currentPanPublicWaitingPlayerDeterminer;
 	private CurrentPanResultBuilder currentPanResultBuilder;
-	private CreateNextPanDeterminer createNextPanDeterminer;
 	private JuFinishiDeterminer juFinishiDeterminer;
 	private JuResultBuilder juResultBuilder;
 	private MajiangPlayerInitialActionUpdater initialActionUpdater;
@@ -95,10 +94,7 @@ public class Ju {
 	private MajiangPlayerGuoActionProcessor guoActionProcessor;
 	private MajiangPlayerGuoActionUpdater guoActionUpdater;
 	private MajiangPlayerHuActionProcessor huActionProcessor;
-
-	public boolean determineToCreateNextPan() {
-		return createNextPanDeterminer.determineToCreateNextPan(this);
-	}
+	private MajiangPlayerHuActionUpdater huActionUpdater;
 
 	public void determinePlayersMenFengForFirstPan() throws Exception {
 		playersMenFengDeterminerForFirstPan.determinePlayersMenFeng(this);
@@ -196,7 +192,7 @@ public class Ju {
 		} else if (actionType.equals(MajiangPlayerActionType.hu)) {
 			huActionProcessor.process((MajiangHuAction) action, this);
 			// TODO listener?
-			// TODO updater?
+			huActionUpdater.updateActions((MajiangHuAction) action, this);
 		} else {
 		}
 
@@ -224,7 +220,6 @@ public class Ju {
 
 	public void startNextPan() throws Exception {
 		actionStatisticsListenerManager.updateListenersForNextPan();
-		createNextPanDeterminer.reset();
 		startNextPanProcess.startNextPan(this);
 	}
 
@@ -361,14 +356,6 @@ public class Ju {
 		this.currentPanResultBuilder = currentPanResultBuilder;
 	}
 
-	public CreateNextPanDeterminer getCreateNextPanDeterminer() {
-		return createNextPanDeterminer;
-	}
-
-	public void setCreateNextPanDeterminer(CreateNextPanDeterminer createNextPanDeterminer) {
-		this.createNextPanDeterminer = createNextPanDeterminer;
-	}
-
 	public JuFinishiDeterminer getJuFinishiDeterminer() {
 		return juFinishiDeterminer;
 	}
@@ -503,6 +490,14 @@ public class Ju {
 
 	public void setActionStatisticsListenerManager(ActionStatisticsListenerManager actionStatisticsListenerManager) {
 		this.actionStatisticsListenerManager = actionStatisticsListenerManager;
+	}
+
+	public MajiangPlayerHuActionUpdater getHuActionUpdater() {
+		return huActionUpdater;
+	}
+
+	public void setHuActionUpdater(MajiangPlayerHuActionUpdater huActionUpdater) {
+		this.huActionUpdater = huActionUpdater;
 	}
 
 }
