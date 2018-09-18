@@ -13,7 +13,6 @@ public class PlayerSetHuHuActionProcessor implements MajiangPlayerHuActionProces
 		Pan currentPan = ju.getCurrentPan();
 		MajiangPlayer huPlayer = currentPan.findPlayerById(action.getActionPlayerId());
 		huPlayer.setHu(hu);
-		huPlayer.clearActionCandidates();
 	}
 
 }

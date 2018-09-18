@@ -37,6 +37,7 @@ import com.dml.majiang.player.action.guo.MajiangPlayerGuoActionProcessor;
 import com.dml.majiang.player.action.guo.MajiangPlayerGuoActionUpdater;
 import com.dml.majiang.player.action.hu.MajiangHuAction;
 import com.dml.majiang.player.action.hu.MajiangPlayerHuActionProcessor;
+import com.dml.majiang.player.action.hu.MajiangPlayerHuActionUpdater;
 import com.dml.majiang.player.action.initial.MajiangPlayerInitialActionUpdater;
 import com.dml.majiang.player.action.listener.ActionStatisticsListenerManager;
 import com.dml.majiang.player.action.listener.MajiangPlayerActionStatisticsListener;
@@ -95,6 +96,7 @@ public class Ju {
 	private MajiangPlayerGuoActionProcessor guoActionProcessor;
 	private MajiangPlayerGuoActionUpdater guoActionUpdater;
 	private MajiangPlayerHuActionProcessor huActionProcessor;
+	private MajiangPlayerHuActionUpdater huActionUpdater;
 
 	public boolean determineToCreateNextPan() {
 		return createNextPanDeterminer.determineToCreateNextPan(this);
@@ -196,7 +198,7 @@ public class Ju {
 		} else if (actionType.equals(MajiangPlayerActionType.hu)) {
 			huActionProcessor.process((MajiangHuAction) action, this);
 			// TODO listener?
-			// TODO updater?
+			huActionUpdater.updateActions((MajiangHuAction) action, this);
 		} else {
 		}
 
@@ -503,6 +505,14 @@ public class Ju {
 
 	public void setActionStatisticsListenerManager(ActionStatisticsListenerManager actionStatisticsListenerManager) {
 		this.actionStatisticsListenerManager = actionStatisticsListenerManager;
+	}
+
+	public MajiangPlayerHuActionUpdater getHuActionUpdater() {
+		return huActionUpdater;
+	}
+
+	public void setHuActionUpdater(MajiangPlayerHuActionUpdater huActionUpdater) {
+		this.huActionUpdater = huActionUpdater;
 	}
 
 }
