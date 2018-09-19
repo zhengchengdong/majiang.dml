@@ -23,7 +23,9 @@ public class RandomGuipaiDeterminer implements GuipaiDeterminer {
 	public void determineGuipai(Ju ju) throws Exception {
 		Pan currentPan = ju.getCurrentPan();
 		List<MajiangPai> paiTypeList = currentPan.getPaiTypeList();
-		MajiangPai guipaiType = paiTypeList.get(new Random(seed + currentPan.getNo()).nextInt(paiTypeList.size()));
+		Random r = new Random(seed + currentPan.getNo());
+		r.nextInt(paiTypeList.size());
+		MajiangPai guipaiType = paiTypeList.get(r.nextInt(paiTypeList.size()));
 		currentPan.publicGuipaiAndRemoveFromList(guipaiType);
 		for (MajiangPlayer majiangPlayer : currentPan.getMajiangPlayerIdMajiangPlayerMap().values()) {
 			majiangPlayer.addGuipaiType(guipaiType);
