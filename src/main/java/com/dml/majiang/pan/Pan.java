@@ -327,6 +327,26 @@ public class Pan {
 		}
 	}
 
+	public PanActionFrame findNotGuoLatestActionFrame() {
+		if (!actionFrameList.isEmpty()) {
+			int i = 1;
+			PanActionFrame panActionFrame = actionFrameList.get(actionFrameList.size() - i);
+			MajiangPlayerAction action = panActionFrame.getAction();
+			while (true) {
+				if (!action.getType().equals(MajiangPlayerActionType.guo)) {
+					break;
+				} else {
+					i++;
+					panActionFrame = actionFrameList.get(actionFrameList.size() - i);
+					action = panActionFrame.getAction();
+				}
+			}
+			return panActionFrame;
+		} else {
+			return null;
+		}
+	}
+
 	public int countAvaliablePai() {
 		return avaliablePaiList.size();
 	}
