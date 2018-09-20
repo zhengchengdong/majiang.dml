@@ -277,6 +277,16 @@ public class Pan {
 		return true;
 	}
 
+	public boolean allPlayerHasNoHuActionCandidates() {
+		for (MajiangPlayer player : majiangPlayerIdMajiangPlayerMap.values()) {
+			Set<MajiangPlayerActionType> actionTypesSet = player.collectActionCandidatesType();
+			if (actionTypesSet.contains(MajiangPlayerActionType.hu)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	public int countPlayers() {
 		return majiangPlayerIdMajiangPlayerMap.size();
 	}
