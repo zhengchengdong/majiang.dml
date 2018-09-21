@@ -1,15 +1,16 @@
 package com.dml.majiang.player.action.listener.comprehensive;
 
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import com.dml.majiang.ju.Ju;
+import com.dml.majiang.pai.MajiangPai;
 import com.dml.majiang.pan.Pan;
 import com.dml.majiang.pan.frame.PanActionFrame;
 import com.dml.majiang.player.MajiangPlayer;
 import com.dml.majiang.player.action.MajiangPlayerAction;
 import com.dml.majiang.player.action.MajiangPlayerActionType;
+import com.dml.majiang.player.action.da.MajiangDaAction;
 import com.dml.majiang.player.action.guo.MajiangGuoAction;
 import com.dml.majiang.player.action.listener.guo.MajiangPlayerGuoActionStatisticsListener;
 import com.dml.majiang.player.action.listener.mo.MajiangPlayerMoActionStatisticsListener;
@@ -24,17 +25,17 @@ import com.dml.majiang.player.action.mo.MajiangMoAction;
 public class GuoPengBuPengStatisticsListener
 		implements MajiangPlayerGuoActionStatisticsListener, MajiangPlayerMoActionStatisticsListener {
 
-	private Set<String> canNotPengPlayers = new HashSet<>();
+	private Map<String, MajiangPai> canNotPengPlayersPaiMap = new HashMap<>();
 
 	@Override
 	public void updateForNextPan() {
-		canNotPengPlayers = new HashSet<>();
+		canNotPengPlayersPaiMap = new HashMap<>();
 	}
 
 	@Override
 	public void update(MajiangMoAction moAction, Ju ju) throws Exception {
-		if (canNotPengPlayers.contains(moAction.getActionPlayerId())) {
-			canNotPengPlayers.remove(moAction.getActionPlayerId());
+		if (canNotPengPlayersPaiMap.containsKey(moAction.getActionPlayerId())) {
+			canNotPengPlayersPaiMap.remove(moAction.getActionPlayerId());
 		}
 	}
 
@@ -46,23 +47,24 @@ public class GuoPengBuPengStatisticsListener
 		PanActionFrame latestPanActionFrame = currentPan.findNotGuoLatestActionFrame();
 		MajiangPlayerAction lastAction = latestPanActionFrame.getAction();
 		if (lastAction.getType().equals(MajiangPlayerActionType.da)) {// 过的是别人打出牌之后我可以吃碰杠胡
+			MajiangPai guoPai = ((MajiangDaAction) lastAction).getPai();
 			MajiangPlayer player = currentPan.findPlayerById(guoAction.getActionPlayerId());
 			Map<Integer, MajiangPlayerAction> actionCandidates = player.getActionCandidates();
 			for (int i = 1; i <= actionCandidates.size(); i++) {
 				MajiangPlayerAction action = actionCandidates.get(i);
 				if (action.getType().equals(MajiangPlayerActionType.peng)) {// 如果能碰
-					canNotPengPlayers.add(guoAction.getActionPlayerId());
+					canNotPengPlayersPaiMap.put(guoAction.getActionPlayerId(), guoPai);
 				}
 			}
 		}
 	}
 
-	public Set<String> getCanNotPengPlayers() {
-		return canNotPengPlayers;
+	public Map<String, MajiangPai> getCanNotPengPlayersPaiMap() {
+		return canNotPengPlayersPaiMap;
 	}
 
-	public void setCanNotPengPlayers(Set<String> canNotPengPlayers) {
-		this.canNotPengPlayers = canNotPengPlayers;
+	public void setCanNotPengPlayersPaiMap(Map<String, MajiangPai> canNotPengPlayersPaiMap) {
+		this.canNotPengPlayersPaiMap = canNotPengPlayersPaiMap;
 	}
 
 }
