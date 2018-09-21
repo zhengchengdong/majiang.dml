@@ -13,7 +13,7 @@ import com.dml.majiang.player.action.MajiangPlayerActionType;
  * @author lsc
  *
  */
-public class PengganghuFirstListenChiActionProcessor implements MajiangPlayerChiActionProcessor {
+public class PengganghuFirstBuChiActionProcessor implements MajiangPlayerChiActionProcessor {
 
 	@Override
 	public void process(MajiangChiAction action, Ju ju) throws Exception {
