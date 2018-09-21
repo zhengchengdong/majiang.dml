@@ -169,13 +169,13 @@ public class ShoupaiPaiXing {
 		return false;
 	}
 
-	public ShoupaiKeziZu findYuanPaiKeziZuForPaiType(MajiangPai paiType) {
+	public boolean hasYuanPaiKeziZuForPaiType(MajiangPai paiType) {
 		for (ShoupaiKeziZu shoupaiKeziZu : keziList) {
 			if (shoupaiKeziZu.getKezi().getPaiType().equals(paiType) && shoupaiKeziZu.yuanPaiFenZu()) {
-				return shoupaiKeziZu;
+				return true;
 			}
 		}
-		return null;
+		return false;
 	}
 
 	public ShoupaiKeziZu findFirstKeziZuForPaiType(MajiangPai paiType) {
