@@ -15,26 +15,20 @@ import com.dml.majiang.player.action.listener.guo.MajiangPlayerGuoActionStatisti
 import com.dml.majiang.player.action.listener.mo.MajiangPlayerMoActionStatisticsListener;
 import com.dml.majiang.player.action.mo.MajiangMoAction;
 
-/**
- * 过碰不碰
- * 
- * @author lsc
- *
- */
-public class GuoPengBuPengStatisticsListener
+public class GuoHuBuHuStatisticsListener
 		implements MajiangPlayerGuoActionStatisticsListener, MajiangPlayerMoActionStatisticsListener {
 
-	private Set<String> canNotPengPlayers = new HashSet<>();
+	private Set<String> canNotHuPlayers = new HashSet<>();
 
 	@Override
 	public void updateForNextPan() {
-		canNotPengPlayers = new HashSet<>();
+		canNotHuPlayers = new HashSet<>();
 	}
 
 	@Override
 	public void update(MajiangMoAction moAction, Ju ju) throws Exception {
-		if (canNotPengPlayers.contains(moAction.getActionPlayerId())) {
-			canNotPengPlayers.remove(moAction.getActionPlayerId());
+		if (canNotHuPlayers.contains(moAction.getActionPlayerId())) {
+			canNotHuPlayers.remove(moAction.getActionPlayerId());
 		}
 	}
 
@@ -50,19 +44,19 @@ public class GuoPengBuPengStatisticsListener
 			Map<Integer, MajiangPlayerAction> actionCandidates = player.getActionCandidates();
 			for (int i = 1; i <= actionCandidates.size(); i++) {
 				MajiangPlayerAction action = actionCandidates.get(i);
-				if (action.getType().equals(MajiangPlayerActionType.peng)) {// 如果能碰
-					canNotPengPlayers.add(guoAction.getActionPlayerId());
+				if (action.getType().equals(MajiangPlayerActionType.hu)) {// 如果能胡
+					canNotHuPlayers.add(guoAction.getActionPlayerId());
 				}
 			}
 		}
 	}
 
-	public Set<String> getCanNotPengPlayers() {
-		return canNotPengPlayers;
+	public Set<String> getCanNotHuPlayers() {
+		return canNotHuPlayers;
 	}
 
-	public void setCanNotPengPlayers(Set<String> canNotPengPlayers) {
-		this.canNotPengPlayers = canNotPengPlayers;
+	public void setCanNotHuPlayers(Set<String> canNotHuPlayers) {
+		this.canNotHuPlayers = canNotHuPlayers;
 	}
 
 }
