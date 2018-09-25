@@ -559,6 +559,23 @@ public class MajiangPlayer {
 		return typesSet;
 	}
 
+	public boolean hasActionCandidateForType(MajiangPlayerActionType actionType) {
+		for (MajiangPlayerAction xiajiaAction : actionCandidates.values()) {
+			if (xiajiaAction.getType().equals(actionType)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void disableActionCandidateForType(MajiangPlayerActionType actionType) {
+		for (MajiangPlayerAction xiajiaAction : actionCandidates.values()) {
+			if (xiajiaAction.getType().equals(actionType)) {
+				xiajiaAction.setDisabledByHigherPriorityAction(true);
+			}
+		}
+	}
+
 	public String getId() {
 		return id;
 	}

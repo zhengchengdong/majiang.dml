@@ -367,6 +367,32 @@ public class Pan {
 		}
 	}
 
+	/**
+	 * 针对目前所有玩家的候选actions，我们运用最常见的 “胡比碰杠优先，碰杠比吃优先” 优先规则，对同时出现的低优先actions disable掉。
+	 * <br/>
+	 * 有特殊优先规则的麻将不能调用此方法。
+	 */
+	public void disablePlayerActionsByHuPengGangChiPriority() {
+		for (MajiangPlayer player : majiangPlayerIdMajiangPlayerMap.values()) {
+			if (player.hasActionCandidateForType(MajiangPlayerActionType.hu)) {
+				for (MajiangPlayer otherPlayer : majiangPlayerIdMajiangPlayerMap.values()) {
+					if (!otherPlayer.getId().equals(player.getId())) {
+						otherPlayer.disableActionCandidateForType(MajiangPlayerActionType.peng);
+						otherPlayer.disableActionCandidateForType(MajiangPlayerActionType.gang);
+						otherPlayer.disableActionCandidateForType(MajiangPlayerActionType.chi);
+					}
+				}
+			} else if (player.hasActionCandidateForType(MajiangPlayerActionType.peng)) {
+				for (MajiangPlayer otherPlayer : majiangPlayerIdMajiangPlayerMap.values()) {
+					if (!otherPlayer.getId().equals(player.getId())) {
+						otherPlayer.disableActionCandidateForType(MajiangPlayerActionType.chi);
+					}
+				}
+			} else {
+			}
+		}
+	}
+
 	public int getNo() {
 		return no;
 	}
