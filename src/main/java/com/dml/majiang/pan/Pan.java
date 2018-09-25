@@ -337,13 +337,17 @@ public class Pan {
 		}
 	}
 
+	/**
+	 * 找到最后一个不是“过”，并且真正执行的动作
+	 */
 	public PanActionFrame findNotGuoLatestActionFrame() {
 		if (!actionFrameList.isEmpty()) {
 			int i = 1;
 			PanActionFrame panActionFrame = actionFrameList.get(actionFrameList.size() - i);
 			MajiangPlayerAction action = panActionFrame.getAction();
 			while (true) {
-				if (!action.getType().equals(MajiangPlayerActionType.guo)) {
+				if (!action.getType().equals(MajiangPlayerActionType.guo)
+						&& !action.isDisabledByHigherPriorityAction()) {
 					break;
 				} else {
 					i++;
