@@ -19,6 +19,8 @@ public abstract class MajiangPlayerAction implements ByteBufferAble {
 
 	private String actionPlayerId;
 
+	private boolean disabledByHigherPriorityAction;
+
 	public MajiangPlayerAction() {
 	}
 
@@ -69,6 +71,14 @@ public abstract class MajiangPlayerAction implements ByteBufferAble {
 
 	public void setActionPlayerId(String actionPlayerId) {
 		this.actionPlayerId = actionPlayerId;
+	}
+
+	public boolean isDisabledByHigherPriorityAction() {
+		return disabledByHigherPriorityAction;
+	}
+
+	public void setDisabledByHigherPriorityAction(boolean disabledByHigherPriorityAction) {
+		this.disabledByHigherPriorityAction = disabledByHigherPriorityAction;
 	}
 
 }
