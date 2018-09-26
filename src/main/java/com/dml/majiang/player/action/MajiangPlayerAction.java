@@ -34,6 +34,7 @@ public abstract class MajiangPlayerAction implements ByteBufferAble {
 		bb.putInt(id);
 		bb.put((byte) type.ordinal());
 		ByteBufferSerializer.stringToByteBuffer(actionPlayerId, bb);
+		ByteBufferSerializer.booleanToByteBuffer(disabledByHigherPriorityAction, bb);
 		contentToByteBuffer(bb);
 	}
 
@@ -44,6 +45,7 @@ public abstract class MajiangPlayerAction implements ByteBufferAble {
 		id = bb.getInt();
 		type = MajiangPlayerActionType.valueOf(bb.get());
 		actionPlayerId = ByteBufferSerializer.byteBufferToString(bb);
+		disabledByHigherPriorityAction = ByteBufferSerializer.byteBufferToBoolean(bb);
 		fillContentByByteBuffer(bb);
 	}
 
