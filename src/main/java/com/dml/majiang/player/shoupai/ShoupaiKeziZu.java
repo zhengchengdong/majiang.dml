@@ -47,20 +47,6 @@ public class ShoupaiKeziZu implements ShoupaiMajiangPaiFenZu {
 		}
 	}
 
-	public int countGuipai() {
-		int count = 0;
-		if (pai1.dangType().equals(GuipaiDangPai.dangType)) {
-			count++;
-		}
-		if (pai2.dangType().equals(GuipaiDangPai.dangType)) {
-			count++;
-		}
-		if (pai3.dangType().equals(GuipaiDangPai.dangType)) {
-			count++;
-		}
-		return count;
-	}
-
 	/**
 	 * 鬼牌当其他牌的次数，当鬼牌本牌不算
 	 */
@@ -86,6 +72,21 @@ public class ShoupaiKeziZu implements ShoupaiMajiangPaiFenZu {
 	@Override
 	public boolean yuanPaiFenZu() {
 		return (pai1.dangBenPai() && pai2.dangBenPai() && pai3.dangBenPai());
+	}
+
+	@Override
+	public int countDangPai(String dangType) {
+		int count = 0;
+		if (pai1.dangType().equals(dangType)) {
+			count++;
+		}
+		if (pai2.dangType().equals(dangType)) {
+			count++;
+		}
+		if (pai3.dangType().equals(dangType)) {
+			count++;
+		}
+		return count;
 	}
 
 	public Kezi getKezi() {

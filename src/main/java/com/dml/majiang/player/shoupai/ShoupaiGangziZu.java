@@ -100,6 +100,24 @@ public class ShoupaiGangziZu implements ShoupaiMajiangPaiFenZu {
 		return (pai1.isLastActionPai() || pai2.isLastActionPai() || pai3.isLastActionPai() || pai4.isLastActionPai());
 	}
 
+	@Override
+	public int countDangPai(String dangType) {
+		int count = 0;
+		if (pai1.dangType().equals(dangType)) {
+			count++;
+		}
+		if (pai2.dangType().equals(dangType)) {
+			count++;
+		}
+		if (pai3.dangType().equals(dangType)) {
+			count++;
+		}
+		if (pai4.dangType().equals(dangType)) {
+			count++;
+		}
+		return count;
+	}
+
 	public Gangzi getGangzi() {
 		return gangzi;
 	}

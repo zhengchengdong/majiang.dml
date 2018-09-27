@@ -39,6 +39,20 @@ public class ShoupaiDanpai implements ShoupaiMajiangPaiFenZu {
 		return pai.dangBenPai();
 	}
 
+	@Override
+	public boolean containsLastActionPai() {
+		return pai.isLastActionPai();
+	}
+
+	@Override
+	public int countDangPai(String dangType) {
+		int count = 0;
+		if (pai.dangType().equals(dangType)) {
+			count++;
+		}
+		return count;
+	}
+
 	public MajiangPai getDanpaiType() {
 		return danpaiType;
 	}
@@ -53,11 +67,6 @@ public class ShoupaiDanpai implements ShoupaiMajiangPaiFenZu {
 
 	public void setPai(ShoupaiJiesuanPai pai) {
 		this.pai = pai;
-	}
-
-	@Override
-	public boolean containsLastActionPai() {
-		return pai.isLastActionPai();
 	}
 
 }

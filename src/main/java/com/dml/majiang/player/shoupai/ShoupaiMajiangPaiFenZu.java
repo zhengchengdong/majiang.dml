@@ -18,4 +18,6 @@ public interface ShoupaiMajiangPaiFenZu {
 
 	public boolean yuanPaiFenZu();
 
+	public int countDangPai(String dangType);
+
 }

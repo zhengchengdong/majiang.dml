@@ -57,6 +57,21 @@ public class ShoupaiShunziZu implements ShoupaiMajiangPaiFenZu {
 		return (pai1.dangBenPai() && pai2.dangBenPai() && pai3.dangBenPai());
 	}
 
+	@Override
+	public int countDangPai(String dangType) {
+		int count = 0;
+		if (pai1.dangType().equals(dangType)) {
+			count++;
+		}
+		if (pai2.dangType().equals(dangType)) {
+			count++;
+		}
+		if (pai3.dangType().equals(dangType)) {
+			count++;
+		}
+		return count;
+	}
+
 	public Shunzi getShunzi() {
 		return shunzi;
 	}
