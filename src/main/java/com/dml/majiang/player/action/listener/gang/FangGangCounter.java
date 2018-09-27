@@ -23,7 +23,7 @@ public class FangGangCounter implements MajiangPlayerGangActionStatisticsListene
 	}
 
 	@Override
-	public void update(MajiangGangAction gangAction, Ju ju) throws Exception {
+	public void update(MajiangGangAction gangAction, Ju ju) {
 		if (gangAction.getGangType().equals(GangType.gangdachu)) {
 			String dachupaiPlayerId = gangAction.getDachupaiPlayerId();
 			if (playerIdFangGangShuMap.containsKey(dachupaiPlayerId)) {

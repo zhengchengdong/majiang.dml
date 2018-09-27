@@ -19,7 +19,7 @@ public class LastMoActionPlayerRecorder implements MajiangPlayerMoActionStatisti
 	}
 
 	@Override
-	public void update(MajiangMoAction moAction, Ju ju) throws Exception {
+	public void update(MajiangMoAction moAction, Ju ju) {
 		lastMoActionPlayerId = moAction.getActionPlayerId();
 	}
 

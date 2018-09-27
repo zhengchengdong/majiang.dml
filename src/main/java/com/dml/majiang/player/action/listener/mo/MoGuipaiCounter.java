@@ -16,7 +16,7 @@ public class MoGuipaiCounter implements MajiangPlayerMoActionStatisticsListener 
 	private int count = 0;
 
 	@Override
-	public void update(MajiangMoAction moAction, Ju ju) throws Exception {
+	public void update(MajiangMoAction moAction, Ju ju) {
 		Pan currentPan = ju.getCurrentPan();
 		MajiangPlayer player = currentPan.findPlayerById(moAction.getActionPlayerId());
 		if (player.gangmoGuipai()) {

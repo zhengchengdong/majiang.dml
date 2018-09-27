@@ -110,12 +110,11 @@ public class Pan {
 		}
 	}
 
-	public void addPlayerActionCandidate(MajiangPlayerAction action) throws MajiangPlayerNotFoundException {
+	public void addPlayerActionCandidate(MajiangPlayerAction action) {
 		MajiangPlayer player = majiangPlayerIdMajiangPlayerMap.get(action.getActionPlayerId());
-		if (player == null) {
-			throw new MajiangPlayerNotFoundException();
+		if (player != null) {
+			player.addActionCandidate(action);
 		}
-		player.addActionCandidate(action);
 	}
 
 	public MajiangPlayerAction findPlayerActionCandidate(String playerId, int actionId)
@@ -236,12 +235,11 @@ public class Pan {
 		player.keziGangShoupai(pai);
 	}
 
-	public void playerClearActionCandidates(String playerId) throws MajiangPlayerNotFoundException {
+	public void playerClearActionCandidates(String playerId) {
 		MajiangPlayer player = majiangPlayerIdMajiangPlayerMap.get(playerId);
-		if (player == null) {
-			throw new MajiangPlayerNotFoundException();
+		if (player != null) {
+			player.clearActionCandidates();
 		}
-		player.clearActionCandidates();
 	}
 
 	public void clearAllPlayersActionCandidates() {

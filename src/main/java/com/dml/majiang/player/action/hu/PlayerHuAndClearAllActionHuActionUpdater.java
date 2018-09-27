@@ -13,7 +13,7 @@ import com.dml.majiang.player.MajiangPlayer;
 public class PlayerHuAndClearAllActionHuActionUpdater implements MajiangPlayerHuActionUpdater {
 
 	@Override
-	public void updateActions(MajiangHuAction huAction, Ju ju) throws Exception {
+	public void updateActions(MajiangHuAction huAction, Ju ju) {
 		Pan currentPan = ju.getCurrentPan();
 		MajiangPlayer huPlayer = currentPan.findPlayerById(huAction.getActionPlayerId());
 		huPlayer.clearActionCandidates();

@@ -29,7 +29,7 @@ public class DianpaoDihuOpportunityDetector implements MajiangPlayerDaActionStat
 	}
 
 	@Override
-	public void update(MajiangDaAction daAction, Ju ju) throws Exception {
+	public void update(MajiangDaAction daAction, Ju ju) {
 		if (zhuangDaCount < 2) {
 			Pan currentPan = ju.getCurrentPan();
 			MajiangPlayer daPlayer = currentPan.findPlayerById(daAction.getActionPlayerId());

@@ -33,14 +33,14 @@ public class GuoPengBuPengStatisticsListener
 	}
 
 	@Override
-	public void update(MajiangMoAction moAction, Ju ju) throws Exception {
+	public void update(MajiangMoAction moAction, Ju ju) {
 		if (canNotPengPlayersPaiMap.containsKey(moAction.getActionPlayerId())) {
 			canNotPengPlayersPaiMap.remove(moAction.getActionPlayerId());
 		}
 	}
 
 	@Override
-	public void update(MajiangGuoAction guoAction, Ju ju) throws Exception {
+	public void update(MajiangGuoAction guoAction, Ju ju) {
 		Pan currentPan = ju.getCurrentPan();
 
 		// 首先看一下,我过的是什么? 是我摸牌之后的胡,杠? 还是别人打出牌之后我可以吃碰杠胡

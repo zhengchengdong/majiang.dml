@@ -8,7 +8,7 @@ public class GangCounter implements MajiangPlayerGangActionStatisticsListener {
 	private int count = 0;
 
 	@Override
-	public void update(MajiangGangAction gangAction, Ju ju) throws Exception {
+	public void update(MajiangGangAction gangAction, Ju ju) {
 		count++;
 	}
 

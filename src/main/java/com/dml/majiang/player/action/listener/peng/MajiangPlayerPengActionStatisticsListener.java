@@ -5,5 +5,5 @@ import com.dml.majiang.player.action.listener.MajiangPlayerActionStatisticsListe
 import com.dml.majiang.player.action.peng.MajiangPengAction;
 
 public interface MajiangPlayerPengActionStatisticsListener extends MajiangPlayerActionStatisticsListener {
-	public void update(MajiangPengAction pengAction, Ju ju) throws Exception;
+	public void update(MajiangPengAction pengAction, Ju ju);
 }

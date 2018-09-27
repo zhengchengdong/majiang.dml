@@ -13,7 +13,7 @@ import com.dml.majiang.player.MajiangPlayer;
 public class ChiPlayerDaPaiChiActionUpdater implements MajiangPlayerChiActionUpdater {
 
 	@Override
-	public void updateActions(MajiangChiAction chiAction, Ju ju) throws Exception {
+	public void updateActions(MajiangChiAction chiAction, Ju ju) {
 		Pan currentPan = ju.getCurrentPan();
 		currentPan.clearAllPlayersActionCandidates();
 

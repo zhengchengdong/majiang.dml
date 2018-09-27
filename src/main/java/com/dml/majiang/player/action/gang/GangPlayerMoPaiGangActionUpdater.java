@@ -9,7 +9,7 @@ import com.dml.majiang.player.action.mo.MajiangMoAction;
 public class GangPlayerMoPaiGangActionUpdater implements MajiangPlayerGangActionUpdater {
 
 	@Override
-	public void updateActions(MajiangGangAction gangAction, Ju ju) throws Exception {
+	public void updateActions(MajiangGangAction gangAction, Ju ju) {
 		Pan currentPan = ju.getCurrentPan();
 		currentPan.clearAllPlayersActionCandidates();
 		MajiangPlayer player = currentPan.findPlayerById(gangAction.getActionPlayerId());

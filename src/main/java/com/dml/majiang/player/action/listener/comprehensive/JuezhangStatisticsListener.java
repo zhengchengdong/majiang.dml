@@ -21,12 +21,12 @@ public class JuezhangStatisticsListener
 	private int[] mingpaiCountArray = new int[MajiangPai.values().length];
 
 	@Override
-	public void update(MajiangDaAction daAction, Ju ju) throws Exception {
+	public void update(MajiangDaAction daAction, Ju ju) {
 		mingpaiCountArray[daAction.getPai().ordinal()]++;
 	}
 
 	@Override
-	public void update(MajiangPengAction pengAction, Ju ju) throws Exception {
+	public void update(MajiangPengAction pengAction, Ju ju) {
 		mingpaiCountArray[pengAction.getPai().ordinal()] += 2;
 	}
 

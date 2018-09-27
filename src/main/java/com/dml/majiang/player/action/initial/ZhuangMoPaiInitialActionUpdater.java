@@ -8,7 +8,7 @@ import com.dml.majiang.player.action.mo.MajiangMoAction;
 public class ZhuangMoPaiInitialActionUpdater implements MajiangPlayerInitialActionUpdater {
 
 	@Override
-	public void updateActions(Ju ju) throws Exception {
+	public void updateActions(Ju ju) {
 		Pan currentPan = ju.getCurrentPan();
 		currentPan.addPlayerActionCandidate(new MajiangMoAction(currentPan.getZhuangPlayerId(), new LundaoMopai()));
 		currentPan.updatePublicWaitingPlayerIdToZhuang();
