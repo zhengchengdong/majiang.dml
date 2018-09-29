@@ -3,49 +3,91 @@ package com.dml.majiang.player.action.listener.comprehensive;
 import com.dml.majiang.ju.Ju;
 import com.dml.majiang.pan.Pan;
 import com.dml.majiang.player.MajiangPlayer;
+import com.dml.majiang.player.action.chi.MajiangChiAction;
 import com.dml.majiang.player.action.da.MajiangDaAction;
+import com.dml.majiang.player.action.gang.MajiangGangAction;
+import com.dml.majiang.player.action.listener.chi.MajiangPlayerChiActionStatisticsListener;
 import com.dml.majiang.player.action.listener.da.MajiangPlayerDaActionStatisticsListener;
+import com.dml.majiang.player.action.listener.gang.MajiangPlayerGangActionStatisticsListener;
+import com.dml.majiang.player.action.listener.mo.MajiangPlayerMoActionStatisticsListener;
+import com.dml.majiang.player.action.listener.peng.MajiangPlayerPengActionStatisticsListener;
+import com.dml.majiang.player.action.mo.MajiangMoAction;
+import com.dml.majiang.player.action.peng.MajiangPengAction;
 
 /**
- * 检测点炮地胡可能。点炮地胡是最常见的地胡。
+ * 检测点炮地胡可能。点炮地胡是最常见的地胡。 <br/>
+ * 需要联合所有动作检测庄家打出的牌没有了。
  * 
  * @author Neo
  *
  */
-public class DianpaoDihuOpportunityDetector implements MajiangPlayerDaActionStatisticsListener {
+public class DianpaoDihuOpportunityDetector implements MajiangPlayerDaActionStatisticsListener,
+		MajiangPlayerChiActionStatisticsListener, MajiangPlayerPengActionStatisticsListener,
+		MajiangPlayerGangActionStatisticsListener, MajiangPlayerMoActionStatisticsListener
+
+{
 
 	/**
-	 * 庄打了几次。0没打，1打了一次，2打了多次
+	 * 0初始，1庄打了第一张牌，2庄打的第一张牌没有了
 	 */
-	private int zhuangDaCount;
+	private int state;
 
 	public boolean ifDihuOpportunity() {
-		return zhuangDaCount == 1;
+		return state == 1;
 	}
 
 	@Override
 	public void updateForNextPan() {
-		zhuangDaCount = 0;
+		state = 0;
 	}
 
 	@Override
 	public void update(MajiangDaAction daAction, Ju ju) {
-		if (zhuangDaCount < 2) {
+		if (state == 0) {
 			Pan currentPan = ju.getCurrentPan();
 			MajiangPlayer daPlayer = currentPan.findPlayerById(daAction.getActionPlayerId());
-			boolean zhuangDa = currentPan.getZhuangPlayerId().equals(daPlayer.getId());
-			if (zhuangDa) {
-				zhuangDaCount++;
+			if (currentPan.getZhuangPlayerId().equals(daPlayer.getId())) {
+				state = 1;
 			}
+		} else if (state == 1) {
+			state = 2;
 		}
 	}
 
-	public int getZhuangDaCount() {
-		return zhuangDaCount;
+	@Override
+	public void update(MajiangMoAction moAction, Ju ju) {
+		if (state == 1) {
+			state = 2;
+		}
 	}
 
-	public void setZhuangDaCount(int zhuangDaCount) {
-		this.zhuangDaCount = zhuangDaCount;
+	@Override
+	public void update(MajiangGangAction gangAction, Ju ju) {
+		if (state == 1) {
+			state = 2;
+		}
+	}
+
+	@Override
+	public void update(MajiangPengAction pengAction, Ju ju) {
+		if (state == 1) {
+			state = 2;
+		}
+	}
+
+	@Override
+	public void update(MajiangChiAction chiAction, Ju ju) {
+		if (state == 1) {
+			state = 2;
+		}
+	}
+
+	public int getState() {
+		return state;
+	}
+
+	public void setState(int state) {
+		this.state = state;
 	}
 
 }
