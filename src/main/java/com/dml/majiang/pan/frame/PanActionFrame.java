@@ -8,6 +8,7 @@ import com.dml.majiang.serializer.ByteBufferSerializer;
 
 public class PanActionFrame implements ByteBufferAble {
 
+	private int no;
 	private MajiangPlayerAction action;
 	private PanValueObject panAfterAction;
 	private long actionTime;
@@ -19,6 +20,14 @@ public class PanActionFrame implements ByteBufferAble {
 		this.action = action;
 		this.panAfterAction = panAfterAction;
 		this.actionTime = actionTime;
+	}
+
+	public int getNo() {
+		return no;
+	}
+
+	public void setNo(int no) {
+		this.no = no;
 	}
 
 	public MajiangPlayerAction getAction() {
@@ -47,6 +56,7 @@ public class PanActionFrame implements ByteBufferAble {
 
 	@Override
 	public void toByteBuffer(ByteBuffer bb) throws Throwable {
+		bb.putInt(no);
 		ByteBufferSerializer.objToByteBuffer(action, bb);
 		ByteBufferSerializer.objToByteBuffer(panAfterAction, bb);
 		bb.putLong(actionTime);
@@ -54,6 +64,7 @@ public class PanActionFrame implements ByteBufferAble {
 
 	@Override
 	public void fillByByteBuffer(ByteBuffer bb) throws Throwable {
+		no = bb.getInt();
 		action = ByteBufferSerializer.byteBufferToObj(bb);
 		panAfterAction = ByteBufferSerializer.byteBufferToObj(bb);
 		actionTime = bb.getLong();

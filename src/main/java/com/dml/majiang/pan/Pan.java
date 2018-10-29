@@ -146,6 +146,7 @@ public class Pan {
 
 	public PanActionFrame recordPanActionFrame(MajiangPlayerAction action, long actionTime) {
 		PanActionFrame frame = new PanActionFrame(action, new PanValueObject(this), actionTime);
+		frame.setNo(actionFrameList.size());
 		actionFrameList.add(frame);
 		return frame;
 	}
