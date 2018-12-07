@@ -543,6 +543,12 @@ public class MajiangPlayer {
 			if (gangchuPaiZu.getGangzi().getPaiType().equals(paiType) && gangchuPaiZu.getGangType().equals(gangType)) {
 				return true;
 			}
+			// 碰后杠牌算杠打出
+			if (GangType.gangdachu.equals(gangType) && gangchuPaiZu.getDachuPlayerId() != null
+					&& gangchuPaiZu.getGangzi().getPaiType().equals(paiType)
+					&& gangchuPaiZu.getGangType().equals(GangType.kezigangshoupai)) {
+				return true;
+			}
 		}
 		return false;
 	}
