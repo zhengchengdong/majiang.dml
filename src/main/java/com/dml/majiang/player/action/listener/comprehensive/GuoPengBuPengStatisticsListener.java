@@ -1,6 +1,8 @@
 package com.dml.majiang.player.action.listener.comprehensive;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.dml.majiang.ju.Ju;
@@ -25,7 +27,7 @@ import com.dml.majiang.player.action.mo.MajiangMoAction;
 public class GuoPengBuPengStatisticsListener
 		implements MajiangPlayerGuoActionStatisticsListener, MajiangPlayerMoActionStatisticsListener {
 
-	private Map<String, MajiangPai> canNotPengPlayersPaiMap = new HashMap<>();
+	private Map<String, List<MajiangPai>> canNotPengPlayersPaiMap = new HashMap<>();
 
 	@Override
 	public void updateForNextPan() {
@@ -53,17 +55,22 @@ public class GuoPengBuPengStatisticsListener
 			for (int i = 1; i <= actionCandidates.size(); i++) {
 				MajiangPlayerAction action = actionCandidates.get(i);
 				if (action.getType().equals(MajiangPlayerActionType.peng)) {// 如果能碰
-					canNotPengPlayersPaiMap.put(guoAction.getActionPlayerId(), guoPai);
+					List<MajiangPai> paiList = canNotPengPlayersPaiMap.get(guoAction.getActionPlayerId());
+					if (paiList == null) {
+						paiList = new ArrayList<>();
+					}
+					paiList.add(guoPai);
+					canNotPengPlayersPaiMap.put(guoAction.getActionPlayerId(), paiList);
 				}
 			}
 		}
 	}
 
-	public Map<String, MajiangPai> getCanNotPengPlayersPaiMap() {
+	public Map<String, List<MajiangPai>> getCanNotPengPlayersPaiMap() {
 		return canNotPengPlayersPaiMap;
 	}
 
-	public void setCanNotPengPlayersPaiMap(Map<String, MajiangPai> canNotPengPlayersPaiMap) {
+	public void setCanNotPengPlayersPaiMap(Map<String, List<MajiangPai>> canNotPengPlayersPaiMap) {
 		this.canNotPengPlayersPaiMap = canNotPengPlayersPaiMap;
 	}
 
