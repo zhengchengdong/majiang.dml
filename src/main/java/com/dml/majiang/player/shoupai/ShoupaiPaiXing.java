@@ -227,6 +227,18 @@ public class ShoupaiPaiXing {
 		return false;
 	}
 
+	/**
+	 * 是否有没有财神代替的对子
+	 */
+	public boolean hasDuiziForPaiTypeNoCaishen(MajiangPai paiType) {
+		for (ShoupaiDuiziZu shoupaiDuiziZu : duiziList) {
+			if (shoupaiDuiziZu.yuanPaiFenZu() && shoupaiDuiziZu.getDuiziType().equals(paiType)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public ShoupaiDuiziZu findDuiziZuHasLastActionPai() {
 		for (ShoupaiDuiziZu shoupaiDuiziZu : duiziList) {
 			if (shoupaiDuiziZu.getPai1().isLastActionPai()) {
