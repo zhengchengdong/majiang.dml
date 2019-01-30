@@ -344,7 +344,7 @@ public class Pan {
 			int i = 1;
 			PanActionFrame panActionFrame = actionFrameList.get(actionFrameList.size() - i);
 			MajiangPlayerAction action = panActionFrame.getAction();
-			while (true) {
+			while (action != null && true) {
 				if (!action.getType().equals(MajiangPlayerActionType.guo)
 						&& !action.isDisabledByHigherPriorityAction()) {
 					break;
@@ -355,6 +355,29 @@ public class Pan {
 				}
 			}
 			return panActionFrame;
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * 找到最后一个“打”，并且真正执行的动作
+	 */
+	public MajiangPlayerAction findLatestDaActionFrame() {
+		if (!actionFrameList.isEmpty()) {
+			int i = 1;
+			PanActionFrame panActionFrame = actionFrameList.get(actionFrameList.size() - i);
+			MajiangPlayerAction action = panActionFrame.getAction();
+			while (action != null && true) {
+				if (action.getType().equals(MajiangPlayerActionType.da) && !action.isDisabledByHigherPriorityAction()) {
+					break;
+				} else {
+					i++;
+					panActionFrame = actionFrameList.get(actionFrameList.size() - i);
+					action = panActionFrame.getAction();
+				}
+			}
+			return action;
 		} else {
 			return null;
 		}
