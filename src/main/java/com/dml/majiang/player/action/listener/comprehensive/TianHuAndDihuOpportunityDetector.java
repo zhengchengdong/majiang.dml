@@ -15,13 +15,13 @@ import com.dml.majiang.player.action.mo.MajiangMoAction;
 import com.dml.majiang.player.action.peng.MajiangPengAction;
 
 /**
- * 检测点炮地胡可能。点炮地胡是最常见的地胡。 <br/>
+ * 检测天胡和点炮地胡可能。点炮地胡是最常见的地胡。 <br/>
  * 需要联合所有动作检测庄家打出的牌没有了。
  * 
  * @author Neo
  *
  */
-public class DianpaoDihuOpportunityDetector implements MajiangPlayerDaActionStatisticsListener,
+public class TianHuAndDihuOpportunityDetector implements MajiangPlayerDaActionStatisticsListener,
 		MajiangPlayerChiActionStatisticsListener, MajiangPlayerPengActionStatisticsListener,
 		MajiangPlayerGangActionStatisticsListener, MajiangPlayerMoActionStatisticsListener
 
@@ -34,6 +34,10 @@ public class DianpaoDihuOpportunityDetector implements MajiangPlayerDaActionStat
 
 	public boolean ifDihuOpportunity() {
 		return state == 1;
+	}
+
+	public boolean ifTianhuOpportunity() {
+		return state == 0;
 	}
 
 	@Override
