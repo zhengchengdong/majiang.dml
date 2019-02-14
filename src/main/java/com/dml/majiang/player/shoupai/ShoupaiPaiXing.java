@@ -160,6 +160,15 @@ public class ShoupaiPaiXing {
 		return gangziList.size();
 	}
 
+	public boolean hasShunziWithDangTimes(String dangType, int dangTimes) {
+		for (ShoupaiShunziZu shunziZu : shunziList) {
+			if (shunziZu.countDangPai(dangType) == dangTimes) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public boolean hasKeziForPaiType(MajiangPai paiType) {
 		for (ShoupaiKeziZu shoupaiKeziZu : keziList) {
 			if (shoupaiKeziZu.getKezi().getPaiType().equals(paiType)) {
