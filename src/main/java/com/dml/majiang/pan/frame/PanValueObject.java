@@ -66,6 +66,33 @@ public class PanValueObject implements ByteBufferAble {
 		return false;
 	}
 
+	public boolean hasHu() {
+		for (MajiangPlayerValueObject player : playerList) {
+			if (player.getHu() != null) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean ifPlayerGang(String playerId) {
+		for (MajiangPlayerValueObject player : playerList) {
+			if (player.getId().equals(playerId)) {
+				return player.hasGang();
+			}
+		}
+		return false;
+	}
+
+	public boolean hasGang() {
+		for (MajiangPlayerValueObject player : playerList) {
+			if (player.hasGang()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public MajiangPosition playerMenFeng(String playerId) {
 		for (MajiangPlayerValueObject player : playerList) {
 			if (player.getId().equals(playerId)) {

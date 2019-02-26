@@ -89,6 +89,10 @@ public class MajiangPlayerValueObject implements ByteBufferAble {
 		hu = player.getHu();
 	}
 
+	public boolean hasGang() {
+		return gangchupaiZuList != null && !gangchupaiZuList.isEmpty();
+	}
+
 	public String getId() {
 		return id;
 	}

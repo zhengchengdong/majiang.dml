@@ -22,6 +22,18 @@ public abstract class PanResult {
 		return pan.ifPlayerHu(playerId);
 	}
 
+	public boolean hasHu() {
+		return pan.hasHu();
+	}
+
+	public boolean ifPlayerGang(String playerId) {
+		return pan.ifPlayerGang(playerId);
+	}
+
+	public boolean hasGang() {
+		return pan.hasGang();
+	}
+
 	public MajiangPosition playerMenFeng(String playerId) {
 		return pan.playerMenFeng(playerId);
 	}
