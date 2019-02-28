@@ -151,6 +151,10 @@ public class Pan {
 		return frame;
 	}
 
+	public boolean isNextActionNo(int actionNo) {
+		return actionFrameList.size() == actionNo;
+	}
+
 	public void playerMoPai(String playerId) throws MajiangPlayerNotFoundException {
 		MajiangPlayer player = majiangPlayerIdMajiangPlayerMap.get(playerId);
 		if (player == null) {

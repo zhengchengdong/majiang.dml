@@ -22,6 +22,7 @@ import com.dml.majiang.pan.result.PanResult;
 import com.dml.majiang.player.action.MajiangPlayerAction;
 import com.dml.majiang.player.action.MajiangPlayerActionNotFoundException;
 import com.dml.majiang.player.action.MajiangPlayerActionType;
+import com.dml.majiang.player.action.WrongActionNoException;
 import com.dml.majiang.player.action.chi.MajiangChiAction;
 import com.dml.majiang.player.action.chi.MajiangPlayerChiActionProcessor;
 import com.dml.majiang.player.action.chi.MajiangPlayerChiActionUpdater;
@@ -130,7 +131,10 @@ public class Ju {
 		return currentPan.recordPanActionFrame(null, 0);
 	}
 
-	public PanActionFrame action(String playerId, int actionId, long actionTime) throws Exception {
+	public PanActionFrame action(String playerId, int actionId, int actionNo, long actionTime) throws Exception {
+		if (currentPan.isNextActionNo(actionNo)) {
+			throw new WrongActionNoException();
+		}
 		MajiangPlayerAction action = currentPan.findPlayerActionCandidate(playerId, actionId);
 		if (action == null) {
 			throw new MajiangPlayerActionNotFoundException();
