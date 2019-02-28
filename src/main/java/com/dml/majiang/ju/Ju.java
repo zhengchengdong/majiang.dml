@@ -132,7 +132,7 @@ public class Ju {
 	}
 
 	public PanActionFrame action(String playerId, int actionId, int actionNo, long actionTime) throws Exception {
-		if (currentPan.isNextActionNo(actionNo)) {
+		if (!currentPan.isNextActionNo(actionNo)) {
 			throw new WrongActionNoException();
 		}
 		MajiangPlayerAction action = currentPan.findPlayerActionCandidate(playerId, actionId);
