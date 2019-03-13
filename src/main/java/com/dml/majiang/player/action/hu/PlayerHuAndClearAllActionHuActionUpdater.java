@@ -28,8 +28,8 @@ public class PlayerHuAndClearAllActionHuActionUpdater implements MajiangPlayerHu
 			MajiangPlayer dianpaoPlayer = currentPan.findPlayerById(huAction.getHu().getDianpaoPlayerId());
 			List<GangchuPaiZu> gangchupaiZuList = dianpaoPlayer.getGangchupaiZuList();
 			GangchuPaiZu gangChuPaiZu = gangchupaiZuList.remove(gangchupaiZuList.size() - 1);
-			PengchuPaiZu pengChuPaiZu = new PengchuPaiZu(new Kezi(gangChuPaiZu.getGangzi().getPaiType()), null,
-					dianpaoPlayer.getId());
+			PengchuPaiZu pengChuPaiZu = new PengchuPaiZu(new Kezi(gangChuPaiZu.getGangzi().getPaiType()),
+					gangChuPaiZu.getDachuPlayerId(), dianpaoPlayer.getId());
 			dianpaoPlayer.getPengchupaiZuList().add(pengChuPaiZu);
 		}
 	}

@@ -19,6 +19,7 @@ import com.dml.majiang.pan.guipai.GuipaiDeterminer;
 import com.dml.majiang.pan.publicwaitingplayer.CurrentPanPublicWaitingPlayerDeterminer;
 import com.dml.majiang.pan.result.CurrentPanResultBuilder;
 import com.dml.majiang.pan.result.PanResult;
+import com.dml.majiang.player.action.ActionHasDoneException;
 import com.dml.majiang.player.action.MajiangPlayerAction;
 import com.dml.majiang.player.action.MajiangPlayerActionNotFoundException;
 import com.dml.majiang.player.action.MajiangPlayerActionType;
@@ -133,6 +134,12 @@ public class Ju {
 
 	public PanActionFrame action(String playerId, int actionId, int actionNo, long actionTime) throws Exception {
 		if (!currentPan.isNextActionNo(actionNo)) {
+			PanActionFrame panActionFrame = currentPan.findLatestActionFrame();
+			MajiangPlayerAction action = panActionFrame.getAction();
+			if (panActionFrame.getNo() == actionNo && action.getId() == actionId
+					&& action.getActionPlayerId().equals(playerId)) {
+				throw new ActionHasDoneException();
+			}
 			throw new WrongActionNoException();
 		}
 		MajiangPlayerAction action = currentPan.findPlayerActionCandidate(playerId, actionId);
