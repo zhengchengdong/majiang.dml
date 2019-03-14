@@ -424,8 +424,14 @@ public class MajiangPlayer {
 	 * 
 	 * @return
 	 */
-	public boolean allXushupaiInSameCategory() {
+	public boolean allXushupaiInSameCategory(MajiangPai huPai) {
 		Set<XushupaiCategory> cSet = new HashSet<>();
+		if (huPai != null) {
+			XushupaiCategory pai1XushupaiCategory = XushupaiCategory.getCategoryforXushupai(huPai);
+			if (pai1XushupaiCategory != null) {
+				cSet.add(pai1XushupaiCategory);
+			}
+		}
 		for (ChichuPaiZu chichuPaiZu : chichupaiZuList) {
 			XushupaiCategory pai1XushupaiCategory = XushupaiCategory
 					.getCategoryforXushupai(chichuPaiZu.getShunzi().getPai1());
