@@ -36,7 +36,7 @@ public class ClassicStartNextPanProcess implements StartNextPanProcess {
 		ju.updateInitialAction();
 
 		// 庄家摸第一张牌,进入正式行牌流程
-		ju.action(ju.getCurrentPan().getZhuangPlayerId(), 1, 1, System.currentTimeMillis());
+		ju.action(ju.getCurrentPan().getZhuangPlayerId(), 1, 0, System.currentTimeMillis());
 	}
 
 }
