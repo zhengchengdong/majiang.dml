@@ -1,6 +1,9 @@
 package com.dml.majiang.player.shoupai;
 
+import java.nio.ByteBuffer;
+
 import com.dml.majiang.pai.MajiangPai;
+import com.dml.majiang.serializer.ByteBufferSerializer;
 
 /**
  * 白板当其他牌
@@ -15,6 +18,18 @@ public class BaibanDangPai extends ShoupaiJiesuanPai {
 	private MajiangPai baiban = MajiangPai.baiban;
 
 	private MajiangPai dangpai;
+
+	@Override
+	public void toByteBuffer(ByteBuffer bb) throws Throwable {
+		ByteBufferSerializer.booleanToByteBuffer(isLastActionPai(), bb);
+		bb.put((byte) dangpai.ordinal());
+	}
+
+	@Override
+	public void fillByByteBuffer(ByteBuffer bb) throws Throwable {
+		setLastActionPai(ByteBufferSerializer.byteBufferToBoolean(bb));
+		dangpai = MajiangPai.valueOf(bb.get());
+	}
 
 	public BaibanDangPai() {
 	}

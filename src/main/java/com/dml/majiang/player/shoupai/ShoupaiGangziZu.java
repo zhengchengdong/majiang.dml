@@ -1,13 +1,35 @@
 package com.dml.majiang.player.shoupai;
 
-import com.dml.majiang.pai.fenzu.Gangzi;
+import java.nio.ByteBuffer;
 
-public class ShoupaiGangziZu implements ShoupaiMajiangPaiFenZu {
+import com.dml.majiang.pai.fenzu.Gangzi;
+import com.dml.majiang.serializer.ByteBufferAble;
+import com.dml.majiang.serializer.ByteBufferSerializer;
+
+public class ShoupaiGangziZu implements ShoupaiMajiangPaiFenZu, ByteBufferAble {
 	private Gangzi gangzi;
 	private ShoupaiJiesuanPai pai1;
 	private ShoupaiJiesuanPai pai2;
 	private ShoupaiJiesuanPai pai3;
 	private ShoupaiJiesuanPai pai4;
+
+	@Override
+	public void toByteBuffer(ByteBuffer bb) throws Throwable {
+		ByteBufferSerializer.objToByteBuffer(gangzi, bb);
+		ByteBufferSerializer.objToByteBuffer(pai1, bb);
+		ByteBufferSerializer.objToByteBuffer(pai2, bb);
+		ByteBufferSerializer.objToByteBuffer(pai3, bb);
+		ByteBufferSerializer.objToByteBuffer(pai4, bb);
+	}
+
+	@Override
+	public void fillByByteBuffer(ByteBuffer bb) throws Throwable {
+		gangzi = ByteBufferSerializer.byteBufferToObj(bb);
+		pai1 = ByteBufferSerializer.byteBufferToObj(bb);
+		pai2 = ByteBufferSerializer.byteBufferToObj(bb);
+		pai3 = ByteBufferSerializer.byteBufferToObj(bb);
+		pai4 = ByteBufferSerializer.byteBufferToObj(bb);
+	}
 
 	@Override
 	public ShoupaiGangziZu copy() {

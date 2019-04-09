@@ -1,12 +1,32 @@
 package com.dml.majiang.player.shoupai;
 
-import com.dml.majiang.pai.fenzu.Kezi;
+import java.nio.ByteBuffer;
 
-public class ShoupaiKeziZu implements ShoupaiMajiangPaiFenZu {
+import com.dml.majiang.pai.fenzu.Kezi;
+import com.dml.majiang.serializer.ByteBufferAble;
+import com.dml.majiang.serializer.ByteBufferSerializer;
+
+public class ShoupaiKeziZu implements ShoupaiMajiangPaiFenZu, ByteBufferAble {
 	private Kezi kezi;
 	private ShoupaiJiesuanPai pai1;
 	private ShoupaiJiesuanPai pai2;
 	private ShoupaiJiesuanPai pai3;
+
+	@Override
+	public void toByteBuffer(ByteBuffer bb) throws Throwable {
+		ByteBufferSerializer.objToByteBuffer(kezi, bb);
+		ByteBufferSerializer.objToByteBuffer(pai1, bb);
+		ByteBufferSerializer.objToByteBuffer(pai2, bb);
+		ByteBufferSerializer.objToByteBuffer(pai3, bb);
+	}
+
+	@Override
+	public void fillByByteBuffer(ByteBuffer bb) throws Throwable {
+		kezi = ByteBufferSerializer.byteBufferToObj(bb);
+		pai1 = ByteBufferSerializer.byteBufferToObj(bb);
+		pai2 = ByteBufferSerializer.byteBufferToObj(bb);
+		pai3 = ByteBufferSerializer.byteBufferToObj(bb);
+	}
 
 	@Override
 	public ShoupaiKeziZu copy() {

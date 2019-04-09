@@ -1,17 +1,53 @@
 package com.dml.majiang.player.shoupai;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.dml.majiang.pai.MajiangPai;
+import com.dml.majiang.serializer.ByteBufferAble;
+import com.dml.majiang.serializer.ByteBufferSerializer;
 
-public class ShoupaiPaiXing {
+public class ShoupaiPaiXing implements ByteBufferAble {
 
 	private List<ShoupaiDanpai> danpaiList;
 	private List<ShoupaiDuiziZu> duiziList;
 	private List<ShoupaiKeziZu> keziList;
 	private List<ShoupaiGangziZu> gangziList;
 	private List<ShoupaiShunziZu> shunziList;
+
+	@Override
+	public void toByteBuffer(ByteBuffer bb) throws Throwable {
+		ByteBufferSerializer.listToByteBuffer(new ArrayList<>(danpaiList), bb);
+		ByteBufferSerializer.listToByteBuffer(new ArrayList<>(duiziList), bb);
+		ByteBufferSerializer.listToByteBuffer(new ArrayList<>(keziList), bb);
+		ByteBufferSerializer.listToByteBuffer(new ArrayList<>(gangziList), bb);
+		ByteBufferSerializer.listToByteBuffer(new ArrayList<>(shunziList), bb);
+	}
+
+	@Override
+	public void fillByByteBuffer(ByteBuffer bb) throws Throwable {
+		danpaiList = new ArrayList<>();
+		ByteBufferSerializer.byteBufferToList(bb).forEach((danpai) -> {
+			danpaiList.add((ShoupaiDanpai) danpai);
+		});
+		duiziList = new ArrayList<>();
+		ByteBufferSerializer.byteBufferToList(bb).forEach((duizi) -> {
+			duiziList.add((ShoupaiDuiziZu) duizi);
+		});
+		keziList = new ArrayList<>();
+		ByteBufferSerializer.byteBufferToList(bb).forEach((kezi) -> {
+			keziList.add((ShoupaiKeziZu) kezi);
+		});
+		gangziList = new ArrayList<>();
+		ByteBufferSerializer.byteBufferToList(bb).forEach((gangzi) -> {
+			gangziList.add((ShoupaiGangziZu) gangzi);
+		});
+		shunziList = new ArrayList<>();
+		ByteBufferSerializer.byteBufferToList(bb).forEach((shunzi) -> {
+			shunziList.add((ShoupaiShunziZu) shunzi);
+		});
+	}
 
 	/**
 	 * 通过变换‘最后弄来的牌’在不同分组的归属，分化出不同的ShoupaiPaiXing

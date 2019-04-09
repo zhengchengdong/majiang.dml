@@ -1,6 +1,10 @@
 package com.dml.majiang.player.shoupai;
 
+import java.nio.ByteBuffer;
+
 import com.dml.majiang.pai.MajiangPai;
+import com.dml.majiang.serializer.ByteBufferAble;
+import com.dml.majiang.serializer.ByteBufferSerializer;
 
 /**
  * 手牌对子组
@@ -8,13 +12,27 @@ import com.dml.majiang.pai.MajiangPai;
  * @author Neo
  *
  */
-public class ShoupaiDuiziZu implements ShoupaiMajiangPaiFenZu {
+public class ShoupaiDuiziZu implements ShoupaiMajiangPaiFenZu, ByteBufferAble {
 
 	private MajiangPai duiziType;
 
 	private ShoupaiJiesuanPai pai1;
 
 	private ShoupaiJiesuanPai pai2;
+
+	@Override
+	public void toByteBuffer(ByteBuffer bb) throws Throwable {
+		bb.put((byte) duiziType.ordinal());
+		ByteBufferSerializer.objToByteBuffer(pai1, bb);
+		ByteBufferSerializer.objToByteBuffer(pai2, bb);
+	}
+
+	@Override
+	public void fillByByteBuffer(ByteBuffer bb) throws Throwable {
+		duiziType = MajiangPai.valueOf(bb.get());
+		pai1 = ByteBufferSerializer.byteBufferToObj(bb);
+		pai2 = ByteBufferSerializer.byteBufferToObj(bb);
+	}
 
 	@Override
 	public ShoupaiDuiziZu copy() {

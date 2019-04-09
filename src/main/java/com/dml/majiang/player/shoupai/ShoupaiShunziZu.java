@@ -1,12 +1,32 @@
 package com.dml.majiang.player.shoupai;
 
-import com.dml.majiang.pai.fenzu.Shunzi;
+import java.nio.ByteBuffer;
 
-public class ShoupaiShunziZu implements ShoupaiMajiangPaiFenZu {
+import com.dml.majiang.pai.fenzu.Shunzi;
+import com.dml.majiang.serializer.ByteBufferAble;
+import com.dml.majiang.serializer.ByteBufferSerializer;
+
+public class ShoupaiShunziZu implements ShoupaiMajiangPaiFenZu, ByteBufferAble {
 	private Shunzi shunzi;
 	private ShoupaiJiesuanPai pai1;
 	private ShoupaiJiesuanPai pai2;
 	private ShoupaiJiesuanPai pai3;
+
+	@Override
+	public void toByteBuffer(ByteBuffer bb) throws Throwable {
+		ByteBufferSerializer.objToByteBuffer(shunzi, bb);
+		ByteBufferSerializer.objToByteBuffer(pai1, bb);
+		ByteBufferSerializer.objToByteBuffer(pai2, bb);
+		ByteBufferSerializer.objToByteBuffer(pai3, bb);
+	}
+
+	@Override
+	public void fillByByteBuffer(ByteBuffer bb) throws Throwable {
+		shunzi = ByteBufferSerializer.byteBufferToObj(bb);
+		pai1 = ByteBufferSerializer.byteBufferToObj(bb);
+		pai2 = ByteBufferSerializer.byteBufferToObj(bb);
+		pai3 = ByteBufferSerializer.byteBufferToObj(bb);
+	}
 
 	@Override
 	public ShoupaiShunziZu copy() {

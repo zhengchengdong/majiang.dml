@@ -1,6 +1,7 @@
 package com.dml.majiang.player.shoupai;
 
 import com.dml.majiang.pai.MajiangPai;
+import com.dml.majiang.serializer.ByteBufferAble;
 
 /**
  * 手牌结算牌。手牌结算的时候分杠子、刻子、顺子、对子、单牌时当的牌。一个牌参与分组会有不同当法，比如就是本牌当本牌或者一万的鬼牌当作4条或者白板当一万。另外要标注是否是最后搞来的一张牌
@@ -8,7 +9,7 @@ import com.dml.majiang.pai.MajiangPai;
  * @author Neo
  *
  */
-public abstract class ShoupaiJiesuanPai {
+public abstract class ShoupaiJiesuanPai implements ByteBufferAble {
 
 	private boolean lastActionPai;
 

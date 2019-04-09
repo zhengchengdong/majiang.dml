@@ -1,6 +1,9 @@
 package com.dml.majiang.player.shoupai;
 
+import java.nio.ByteBuffer;
+
 import com.dml.majiang.pai.MajiangPai;
+import com.dml.majiang.serializer.ByteBufferSerializer;
 
 /**
  * 鬼牌当的牌。允许当鬼牌本牌。
@@ -67,6 +70,20 @@ public class GuipaiDangPai extends ShoupaiJiesuanPai {
 
 	public void setDangpai(MajiangPai dangpai) {
 		this.dangpai = dangpai;
+	}
+
+	@Override
+	public void toByteBuffer(ByteBuffer bb) throws Throwable {
+		ByteBufferSerializer.booleanToByteBuffer(isLastActionPai(), bb);
+		bb.put((byte) guipai.ordinal());
+		bb.put((byte) dangpai.ordinal());
+	}
+
+	@Override
+	public void fillByByteBuffer(ByteBuffer bb) throws Throwable {
+		setLastActionPai(ByteBufferSerializer.byteBufferToBoolean(bb));
+		guipai = MajiangPai.valueOf(bb.get());
+		dangpai = MajiangPai.valueOf(bb.get());
 	}
 
 }
